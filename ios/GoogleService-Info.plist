@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1069070812702-0sv280epparr6q8c2sjfcqhe76ud9a73.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1069070812702-0sv280epparr6q8c2sjfcqhe76ud9a73</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1069070812702-read5hqf2eklsrojgah9m1hn6r4b7ses.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB3yRSva8JAdapxorPWOu0XBB5q-DchjQk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1069070812702</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.proflow</string>
+	<key>PROJECT_ID</key>
+	<string>proflow-4accc</string>
+	<key>STORAGE_BUCKET</key>
+	<string>proflow-4accc.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1069070812702:ios:3291e435c824262fbb900f</string>
+	<key>DATABASE_URL</key>
+	<string>https://proflow-4accc-default-rtdb.asia-southeast1.firebasedatabase.app</string>
+</dict>
+</plist>
