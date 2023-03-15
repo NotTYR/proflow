@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "1069070812702",
+    "project_id": "proflow-4accc",
+    "storage_bucket": "proflow-4accc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1069070812702:android:38895c821c2f576fbb900f",
+        "android_client_info": {
+          "package_name": "com.example.proflow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1069070812702-read5hqf2eklsrojgah9m1hn6r4b7ses.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.proflow",
+            "certificate_hash": "6333bd960f33bc221669796d9f6f0f90f62bc0c1"
+          }
+        },
+        {
+          "client_id": "1069070812702-1cm24otrveacp5mkfcfojpqdeipmqkv4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqRcJPK6Uq77OjVzJIdbKCgemkvqmPc7I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1069070812702-1cm24otrveacp5mkfcfojpqdeipmqkv4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1069070812702-0sv280epparr6q8c2sjfcqhe76ud9a73.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.proflow"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
