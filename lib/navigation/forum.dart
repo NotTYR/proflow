@@ -1,3 +1,4 @@
+import 'package:ProFlow/appbar.dart';
 import 'package:ProFlow/home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ class _ForumExpState extends State<ForumExp> {
           catchdata['id'] = 'posts';
         }).toList();
         return Scaffold(
+          appBar: ProFlowAppBar(),
           body: ListView(
             children: List.generate(
                 ForumData.length,
@@ -162,7 +164,7 @@ class _PostState extends State<Post> {
                 onPressed: () async {
                   final prefs = await SharedPreferences.getInstance();
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => HomePage()));
+                      MaterialPageRoute(builder: (context) => ForumExp()));
                   final author = await prefs.getString('username');
                   await FirebaseFirestore.instance.collection('posts').add({
                     'title': title,
