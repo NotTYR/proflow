@@ -1,13 +1,10 @@
-import 'package:ProFlow/navigation/find_mentor.dart';
-import 'package:ProFlow/navigation/forum.dart';
-import 'package:ProFlow/navigation/my_projects.dart';
-import 'package:ProFlow/proposal_page.dart';
-import 'package:ProFlow/save_login_data.dart';
+import 'navigation/find_mentor.dart';
+import 'navigation/forum.dart';
+import 'navigation/my_projects.dart';
 import 'package:flutter/material.dart';
-import 'dart:ui';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'guest_page.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'guest_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,19 +14,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int currentPage = 0;
-  List<Widget> pages = const [
-    FindMentor(),
-    MyProjects(),
-    ForumExp(),
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ProFlow'),
-        automaticallyImplyLeading: true,
-        leading: IconButton(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('HOME'),
+            FeatureButton(
+                buttonName: 'Forum',
+                buttonIcon: Icons.chat,
+                buttonRoute: ForumExp())
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
           onPressed: () async {
             try {
               await FirebaseAuth.instance.signOut();
@@ -40,26 +38,36 @@ class _HomePageState extends State<HomePage> {
               print(e.toString());
             }
           },
-          icon: const Icon(Icons.logout_outlined),
-        ),
-      ),
-      body: pages[currentPage],
-      bottomNavigationBar: NavigationBar(
-        destinations: const [
-          NavigationDestination(
-              icon: Icon(Icons.search_outlined), label: 'Find a Mentor'),
-          NavigationDestination(
-              icon: Icon(Icons.list_alt_rounded), label: 'My Projects'),
-          NavigationDestination(
-              icon: Icon(Icons.chat_outlined), label: 'Forum'),
-        ],
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPage = index;
-          });
+          child: Icon(Icons.logout_outlined),
+        ));
+  }
+}
+
+class FeatureButton extends StatelessWidget {
+  FeatureButton(
+      {super.key,
+      required this.buttonName,
+      required this.buttonIcon,
+      required this.buttonRoute});
+  final String buttonName;
+  final IconData buttonIcon;
+  final Widget buttonRoute;
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        onPressed: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => buttonRoute));
         },
-        selectedIndex: currentPage,
-      ),
-    );
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(buttonIcon),
+            Text(
+              buttonName,
+              style: TextStyle(),
+            )
+          ],
+        ));
   }
 }
