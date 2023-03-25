@@ -21,17 +21,17 @@
 	<key>STORAGE_BUCKET</key>
 	<string>proflow-4accc.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1069070812702:ios:3291e435c824262fbb900f</string>
+	<string>1:1069070812702:ios:d5ee32c2d145f39cbb900f</string>
 	<key>DATABASE_URL</key>
 	<string>https://proflow-4accc-default-rtdb.asia-southeast1.firebasedatabase.app</string>
 </dict>
