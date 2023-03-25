@@ -1,3 +1,5 @@
+import 'package:flutter_svg/flutter_svg.dart';
+
 import 'navigation/find_mentor.dart';
 import 'navigation/forum.dart';
 import 'navigation/my_projects.dart';
@@ -19,12 +21,38 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('HOME'),
-            FeatureButton(
-                buttonName: 'Forum',
-                buttonIcon: Icons.chat,
-                buttonRoute: ForumExp())
+          children: <Widget>[
+            Container(
+              child: SvgPicture.asset('assets/proflow.svg'),
+              height: MediaQuery.of(context).size.height * 0.15,
+              width: MediaQuery.of(context).size.height * 0.15,
+              margin: const EdgeInsets.only(bottom: 50.0),
+            ),
+            Container(
+              height: MediaQuery.of(context).size.height * 0.1,
+              width: MediaQuery.of(context).size.width * 0.8,
+              margin: const EdgeInsets.only(
+                top: 0.0,
+                bottom: 50.0,
+              ),
+              child: FittedBox(
+                child: Text(
+                  'ProFlow',
+                  style: TextStyle(
+                    color: Color(0xFF3874CB),
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 70.0,
+              child: FeatureButton(
+                  buttonName: 'Forum',
+                  buttonIcon: Icons.chat,
+                  buttonRoute: ForumExp()),
+            ),
           ],
         ),
         floatingActionButton: FloatingActionButton(

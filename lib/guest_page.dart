@@ -36,12 +36,16 @@ class _GuestPageState extends State<GuestPage> {
                   children: <Widget>[
                     EmptyBox(),
                     Expanded(
-                      child: SvgPicture.asset('assets/proflow.svg'),
+                      child: Container(
+                        child: SvgPicture.asset('assets/proflow.svg'),
+                        margin: const EdgeInsets.only(top: 40.0),
+                      ),
                     ),
                     Expanded(
                         child: Container(
-                      height: MediaQuery.of(context).size.height * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.3,
                       width: MediaQuery.of(context).size.width * 0.8,
+                      margin: const EdgeInsets.only(top: 60.0),
                       child: FittedBox(
                         child: Text(
                           'ProFlow',
@@ -53,12 +57,10 @@ class _GuestPageState extends State<GuestPage> {
                         ),
                       ),
                     )),
-                    EmptyBox(),
                     Expanded(
                         child: Container(
                             width: MediaQuery.of(context).size.width * 0.8,
-                            padding: const EdgeInsets.only(bottom: 40.0),
-                            margin: const EdgeInsets.only(top: 0.0),
+                            margin: const EdgeInsets.only(bottom: 0.0),
                             child: const FittedBox(
                                 child: Text(
                               'Experience Redefined',
