@@ -46,27 +46,32 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 70.0,
-              child: FeatureButton(
-                  buttonName: ' Find a mentor',
-                  buttonIcon: Icons.search_rounded,
-                  buttonRoute: FindMentor()),
-            ),
-            SizedBox(
-              height: 70.0,
-              child: FeatureButton(
-                  buttonName: ' My Projects',
-                  buttonIcon: Icons.list_alt_rounded,
-                  buttonRoute: MyProjects()),
-            ),
-            SizedBox(
-              height: 70.0,
-              child: FeatureButton(
-                  buttonName: ' Forum',
-                  buttonIcon: Icons.chat_outlined,
-                  buttonRoute: ForumExp()),
-            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 80.0,
+                  child: FeatureButton(
+                      buttonName: 'Mentor',
+                      buttonIcon: Icons.search_rounded,
+                      buttonRoute: FindMentor()),
+                ),
+                SizedBox(
+                  height: 80.0,
+                  child: FeatureButton(
+                      buttonName: 'Projects',
+                      buttonIcon: Icons.list_alt_rounded,
+                      buttonRoute: MyProjects()),
+                ),
+                SizedBox(
+                  height: 80.0,
+                  child: FeatureButton(
+                      buttonName: 'Forum',
+                      buttonIcon: Icons.chat_outlined,
+                      buttonRoute: ForumExp()),
+                ),
+              ],
+            )
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -96,25 +101,28 @@ class FeatureButton extends StatelessWidget {
   final Widget buttonRoute;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 0.0),
-      padding: const EdgeInsets.only(top: 6.0, bottom: 6.0, left: 50.0, right: 50.0),
-      child: ElevatedButton(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        RawMaterialButton(
           onPressed: () {
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) => buttonRoute));
           },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(buttonIcon),
-              Text(
-                buttonName,
-                style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width * 0.05),
-              )
-            ],
-          )),
+          fillColor: Color(0xFF3874CB),
+          child: Icon(
+            buttonIcon,
+            color: Colors.white,
+          ),
+          padding: EdgeInsets.all(15.0),
+          shape: CircleBorder(),
+        ),
+        SizedBox(height: 10),
+        Text(
+          buttonName,
+          style: TextStyle(fontWeight: FontWeight.w600),
+        )
+      ],
     );
   }
 }
