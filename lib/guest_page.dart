@@ -71,7 +71,7 @@ class _GuestPageState extends State<GuestPage> {
                             )))),
                     Expanded(
                         child: Container(
-                      width: MediaQuery.of(context).size.width * 0.6,
+                      width: MediaQuery.of(context).size.width * 0.45,
                       child: FittedBox(
                         child: ElevatedButton(
                           onPressed: () async {

@@ -13,26 +13,11 @@ class ProFlowAppBar extends StatelessWidget with PreferredSizeWidget {
       automaticallyImplyLeading: true,
       leading: IconButton(
         onPressed: () {
-          Navigator.push(
+          Navigator.pop(
               context, MaterialPageRoute(builder: ((context) => HomePage())));
         },
         icon: const Icon(Icons.home),
       ),
-      actions: [
-        IconButton(
-          onPressed: () async {
-            try {
-              await FirebaseAuth.instance.signOut();
-              await GoogleSignIn().signOut();
-              Navigator.push(context,
-                  MaterialPageRoute(builder: ((context) => GuestPage())));
-            } catch (e) {
-              print(e.toString());
-            }
-          },
-          icon: const Icon(Icons.logout_outlined),
-        )
-      ],
     );
   }
 

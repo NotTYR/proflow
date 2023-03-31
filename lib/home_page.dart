@@ -49,8 +49,22 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               height: 70.0,
               child: FeatureButton(
-                  buttonName: 'Forum',
-                  buttonIcon: Icons.chat,
+                  buttonName: ' Find a mentor',
+                  buttonIcon: Icons.search_rounded,
+                  buttonRoute: FindMentor()),
+            ),
+            SizedBox(
+              height: 70.0,
+              child: FeatureButton(
+                  buttonName: ' My Projects',
+                  buttonIcon: Icons.list_alt_rounded,
+                  buttonRoute: MyProjects()),
+            ),
+            SizedBox(
+              height: 70.0,
+              child: FeatureButton(
+                  buttonName: ' Forum',
+                  buttonIcon: Icons.chat_outlined,
                   buttonRoute: ForumExp()),
             ),
           ],
@@ -60,7 +74,7 @@ class _HomePageState extends State<HomePage> {
             try {
               await FirebaseAuth.instance.signOut();
               await GoogleSignIn().signOut();
-              Navigator.push(context,
+              Navigator.pop(context,
                   MaterialPageRoute(builder: ((context) => GuestPage())));
             } catch (e) {
               print(e.toString());
@@ -82,20 +96,25 @@ class FeatureButton extends StatelessWidget {
   final Widget buttonRoute;
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-        onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => buttonRoute));
-        },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(buttonIcon),
-            Text(
-              buttonName,
-              style: TextStyle(),
-            )
-          ],
-        ));
+    return Container(
+      margin: const EdgeInsets.only(bottom: 0.0),
+      padding: const EdgeInsets.only(top: 6.0, bottom: 6.0, left: 50.0, right: 50.0),
+      child: ElevatedButton(
+          onPressed: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => buttonRoute));
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(buttonIcon),
+              Text(
+                buttonName,
+                style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.05),
+              )
+            ],
+          )),
+    );
   }
 }

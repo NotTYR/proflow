@@ -1,5 +1,7 @@
-import 'package:ProFlow/proposal_page.dart';
+import 'package:ProFlow/navigation/proposal_page.dart';
 import 'package:flutter/material.dart';
+
+import '../appbar.dart';
 
 class FindMentor extends StatelessWidget {
   const FindMentor({super.key});
@@ -7,6 +9,7 @@ class FindMentor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: ProFlowAppBar(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
