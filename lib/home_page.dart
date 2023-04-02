@@ -2,7 +2,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'navigation/find_mentor.dart';
 import 'navigation/forum.dart';
-import 'navigation/my_projects.dart';
+import 'navigation/my project/modules/home/view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'guest_page.dart';
@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
               child: SvgPicture.asset('assets/proflow.svg'),
               height: MediaQuery.of(context).size.height * 0.15,
               width: MediaQuery.of(context).size.height * 0.15,
-              margin: const EdgeInsets.only(bottom: 50.0),
+              margin: const EdgeInsets.only(bottom: 40.0),
             ),
             Container(
               height: MediaQuery.of(context).size.height * 0.1,
@@ -50,21 +50,21 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: 80.0,
+                  height: 90.0,
                   child: FeatureButton(
                       buttonName: 'Mentor',
                       buttonIcon: Icons.search_rounded,
                       buttonRoute: FindMentor()),
                 ),
                 SizedBox(
-                  height: 80.0,
+                  height: 90.0,
                   child: FeatureButton(
                       buttonName: 'Projects',
                       buttonIcon: Icons.list_alt_rounded,
                       buttonRoute: MyProjects()),
                 ),
                 SizedBox(
-                  height: 80.0,
+                  height: 90.0,
                   child: FeatureButton(
                       buttonName: 'Forum',
                       buttonIcon: Icons.chat_outlined,
