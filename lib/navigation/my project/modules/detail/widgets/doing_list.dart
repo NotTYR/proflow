@@ -15,7 +15,7 @@ class DoingList extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(
                   left: 6.0.wp,
-                  top: 10.0.wp,
+                  top: 30.0.wp,
                   bottom: 10.0.wp,
                 ),
                 child: Image.asset(
