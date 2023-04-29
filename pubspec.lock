@@ -348,10 +348,10 @@ packages:
     dependency: transitive
     description:
       name: googleapis
-      sha256: b98b2e909736ada32fdee433a14f5d37bad0311be0ce6506a1246ce1a50f3bcf
+      sha256: aab0f425bfba6c6310d84f1ef62625e8e0a28a347ae1dd549732bfb5ab20e8ce
       url: "https://pub.dev"
     source: hosted
-    version: "8.1.0"
+    version: "4.0.0"
   googleapis_auth:
     dependency: transitive
     description:
@@ -364,10 +364,10 @@ packages:
     dependency: "direct main"
     description:
       name: gsheets
-      sha256: "953c0ea7bd58a689fe36dbd0d0d48657c9f1ee33894abe35d0bf6b78eda6f9d1"
+      sha256: d9674fbe6d52364df29f7188bf7713c1bfc2548103e6dbf1bb1f3c55cc5fb037
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.2"
+    version: "0.3.2"
   html:
     dependency: transitive
     description:

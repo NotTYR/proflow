@@ -9,6 +9,7 @@ import 'home_page.dart';
 import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'navigation/sheets_api.dart';
 
 void main() async {
   //widgets??
@@ -18,6 +19,8 @@ void main() async {
   //GetStorage
   await GetStorage.init();
   await Get.putAsync(() => StorageService().init());
+  //sheets api
+  await UserSheetsApi.init();
   //technically portrait mode not wokring
   SystemChrome.setPreferredOrientations(
           [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
