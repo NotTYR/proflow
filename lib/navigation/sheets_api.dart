@@ -1,7 +1,12 @@
 import 'package:gsheets/gsheets.dart';
 
 class UserFields {
-  static final String id = 'name';
+  static final String id = 'id';
+  static final String name = 'name';
+  static final String email = 'email';
+  static final String isBeginner = 'isBeginner';
+
+  static List<String> getFields() => [id, name, email, isBeginner];
 }
 
 class UserSheetsApi {
@@ -25,8 +30,15 @@ class UserSheetsApi {
   static Worksheet? _userSheet;
 
   static Future init() async {
-    final _spreadsheet = await _gsheets.spreadsheet(_spreadsheetId);
-    _userSheet = await _getWorkSheet(_spreadsheet, title: 'Sheet1');
+    try {
+      final _spreadsheet = await _gsheets.spreadsheet(_spreadsheetId);
+      _userSheet = await _getWorkSheet(_spreadsheet, title: 'Sheet1');
+      //gets the values
+      final firstRow = UserFields.getFields();
+      _userSheet!.values.insertRow(1, firstRow);
+    } catch (e) {
+      print(e);
+    }
   }
 
   static Future<Worksheet> _getWorkSheet(
