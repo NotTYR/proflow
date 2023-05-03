@@ -26,12 +26,12 @@ dependencies:
   dotted_border: ^2.0.0+3
   step_progress_indicator: ^1.0.2
   intl: ^0.17.0
+  flutter_launcher_icons: ^0.11.0
 
 dev_dependencies:
-  flutter_launcher_icons: "^0.11.0"
   flutter_test:
     sdk: flutter
-  flutter_native_splash: '2.2.16'
+  flutter_native_splash: "2.2.16"
 
 flutter_native_splash:
   image: assets/Icon.png
@@ -46,7 +46,6 @@ flutter_icons:
 flutter:
   uses-material-design: true
   assets:
-    - assets/ProFlow.png
     - assets/ProFlow(2).png
     - assets/proflow.svg
     - assets/note.png
