@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get_storage/get_storage.dart';
 import 'home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -80,6 +82,7 @@ class _GuestPageState extends State<GuestPage> {
                               loading = true;
                             });
                             try {
+                              //hi
                               final GoogleUser = await GoogleSignIn().signIn();
                               final GoogleAuth =
                                   await GoogleUser!.authentication;
@@ -89,13 +92,57 @@ class _GuestPageState extends State<GuestPage> {
                               );
                               final user = await FirebaseAuth.instance
                                   .signInWithCredential(credential);
+                              //student teacher
+                              final email = await GoogleUser.email;
+                              final username = await FirebaseAuth
+                                  .instance.currentUser!.displayName;
                               final prefs =
                                   await SharedPreferences.getInstance();
-                              final username =
-                                  user.user?.displayName.toString();
+                              final uid =
+                                  await FirebaseAuth.instance.currentUser!.uid;
                               await prefs.setString('username', username!);
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => HomePage()));
+                              bool containsuid = false;
+                              final identity = await FirebaseFirestore.instance
+                                  .collection('identity')
+                                  .get()
+                                  .then((identityValue) => {
+                                        for (final doc in identityValue.docs)
+                                          {
+                                            if (doc.data().values.contains(uid))
+                                              {containsuid = true}
+                                          },
+                                        if (containsuid == false)
+                                          {
+                                            print('registering'),
+                                            //dont hv the guy in database
+                                            if (RegExp(r'(\d)').hasMatch(email))
+                                              {
+                                                print('student'),
+                                                //student(contains digits)
+                                                FirebaseFirestore.instance
+                                                    .collection('identity')
+                                                    .add({
+                                                  'uid': uid,
+                                                  'identity': 'student'
+                                                })
+                                              }
+                                            else
+                                              {
+                                                //teacher
+                                                print('not student'),
+                                                FirebaseFirestore.instance
+                                                    .collection('identity')
+                                                    .add({
+                                                  'uid': uid,
+                                                  'identity': 'teacher'
+                                                })
+                                              }
+                                          },
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    HomePage()))
+                                      });
                             } on FirebaseAuthException catch (e) {
                               print(e.toString());
                               loading = false;

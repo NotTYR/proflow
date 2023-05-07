@@ -29,12 +29,10 @@ void main() async {
             home: StreamBuilder(
                 stream: FirebaseAuth.instance.authStateChanges(),
                 builder: (BuildContext context, snapshot) {
-                  print('test');
                   if (snapshot.hasData) {
                     //logged in
                     return HomePage();
                   } else {
-                    print('gp');
                     // not logged in
                     return GuestPage();
                   }
