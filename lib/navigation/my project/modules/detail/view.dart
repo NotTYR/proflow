@@ -1,4 +1,4 @@
-import 'package:ProFlow/navigation/my%20project/core/utils/extensions.dart';
+import 'package:ProFlow/extensions.dart';
 import 'package:ProFlow/navigation/my%20project/modules/detail/widgets/doing_list.dart';
 import 'package:ProFlow/navigation/my%20project/modules/detail/widgets/done_list.dart';
 import 'package:ProFlow/navigation/my%20project/modules/home/controller.dart';

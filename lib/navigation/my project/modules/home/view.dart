@@ -11,7 +11,7 @@ import 'package:ProFlow/appbar.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:ProFlow/navigation/my project/core/utils/extensions.dart';
+import 'package:ProFlow/extensions.dart';
 import 'package:get_storage/get_storage.dart';
 
 // this is the home screen for the task list

@@ -1,4 +1,4 @@
-import 'package:ProFlow/navigation/my%20project/core/utils/extensions.dart';
+import 'package:ProFlow/extensions.dart';
 import 'package:ProFlow/navigation/my%20project/core/values/colors.dart';
 import 'package:ProFlow/navigation/my%20project/modules/home/controller.dart';
 import 'package:flutter/material.dart';
