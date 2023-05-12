@@ -101,6 +101,7 @@ class _GuestPageState extends State<GuestPage> {
                               final uid =
                                   await FirebaseAuth.instance.currentUser!.uid;
                               await prefs.setString('username', username!);
+                              await prefs.setString('email', email);
                               bool containsuid = false;
                               final identity = await FirebaseFirestore.instance
                                   .collection('identity')
