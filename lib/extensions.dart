@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+// some custom extensions that may be useful
+
 extension PercentSized on double {
   double get hp => (Get.height * (this / 100));
   double get wp => (Get.width * (this / 100));
-}
+} // as quoted by chiakp "use relative units"
 
 extension ResponsiveText on double {
   double get sp => Get.width / 100 * (this / 3);
