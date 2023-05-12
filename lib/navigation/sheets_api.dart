@@ -1,12 +1,11 @@
+import 'package:get_storage/get_storage.dart';
 import 'package:gsheets/gsheets.dart';
 
 class UserFields {
-  static final String id = 'id';
   static final String name = 'name';
   static final String email = 'email';
-  static final String isBeginner = 'isBeginner';
 
-  static List<String> getFields() => [id, name, email, isBeginner];
+  static List<String> getFields() => [name, email];
 }
 
 class UserSheetsApi {
@@ -33,12 +32,13 @@ class UserSheetsApi {
     try {
       final _spreadsheet = await _gsheets.spreadsheet(_spreadsheetId);
       _userSheet = await _getWorkSheet(_spreadsheet, title: 'Sheet1');
-      //gets the values
-      final firstRow = UserFields.getFields();
-      _userSheet!.values.insertRow(1, firstRow);
     } catch (e) {
       print(e);
     }
+  }
+
+  static Future insert(List<Map<String, dynamic>> rowList) async {
+    _userSheet!.values.map.appendRows(rowList);
   }
 
   static Future<Worksheet> _getWorkSheet(
