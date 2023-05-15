@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home_page.dart';
 
-class ProFlowAppBar extends StatelessWidget with PreferredSizeWidget {
+class ProFlowAppBar extends StatelessWidget implements PreferredSizeWidget {
   const ProFlowAppBar({super.key});
   @override
   Widget build(BuildContext context) {
