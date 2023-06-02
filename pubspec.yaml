@@ -11,7 +11,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^1.0.0
+  xpath_selector: ^3.0.2
+  flutter_js: ^0.7.0
+  http: ^0.13.0
   cupertino_icons: ^1.0.2
   gsheets: ^0.3.0
   firebase_core: ^2.7.0
