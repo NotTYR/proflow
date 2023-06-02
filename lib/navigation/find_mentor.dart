@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'sheets_api.dart';
-import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
-import 'package:xpath_selector/xpath_selector.dart';
 
 class IspMentorListRequest {
   static VisitIsp() async {
-    final getcookie =
-        await http.get(Uri.https('isphs.hci.edu.sg', 'index.asp'));
+    final getcookie = await http
+        .get(Uri.https('isphs.hci.edu.sg', 'projectwork/mentorlist.asp'));
     final cookie = getcookie.headers["set-cookie"]?.split("; ")[0];
-    print(cookie);
-    final isp = await http.post(Uri.https('isphs.hci.edu.sg', 'pwd_auth.asp'),
-        headers: {'Connection': 'close'},
-        body:
-            'w=30&x=221496r&y=19d4b15c0ffdf482bca91e8fc71d8fc8&z=0.6820141&Remember=0&URL=%2Fprojectwork%2Fmentorlist.asp%3F&v=SENJUGFzc3dvcmQ2OTY5');
-    final htmlstr = isp.body;
-    print(htmlstr);
+    if (cookie != null) {
+      print(cookie);
+      final code = 'code';
+      final isp = await http.post(Uri.https('isphs.hci.edu.sg', 'pwd_auth.asp'),
+          headers: {'Connection': 'close', 'Cookie': cookie},
+          // TODO: crack the encrypted code
+          body: code);
+      final htmlstr = isp.body;
+      print(htmlstr);
+    }
   }
 }
 
