@@ -4,8 +4,10 @@ import 'package:http/http.dart' as http;
 
 class IspMentorListRequest {
   static VisitIsp() async {
-    final getcookie = await http
-        .get(Uri.https('isphs.hci.edu.sg', 'projectwork/mentorlist.asp'));
+    final getcookie = await http.get(Uri.https('isphs.hci.edu.sg'));
+    final rngcode =
+        RegExp('\ name="z" value=".*?\"').firstMatch(getcookie.body.toString());
+    print(rngcode);
     final cookie = getcookie.headers["set-cookie"]?.split("; ")[0];
     if (cookie != null) {
       print(cookie);
