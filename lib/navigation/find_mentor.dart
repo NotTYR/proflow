@@ -20,11 +20,9 @@ class IspMentorListRequest {
       print(cookie);
       final mdhash1 =
           await mdhash(jsRuntime, "HCIPassword6969", 7, 5, 271733878);
-      print('mdhash1');
       print(mdhash1);
-      final mdhash2 = await mdhash(jsRuntime, rngcode + "221496r" + mdhash1,
-          "221496r".length, 30 * 13, 439075796);
-      print('mdhash2');
+      final mdhash2 = await mdhash(
+          jsRuntime, rngcode + "221496r" + mdhash1, 7, 30 * 13, 439075796);
       print(mdhash2);
       final code = 'code';
       final isp = await http.post(Uri.https('isphs.hci.edu.sg', 'pwd_auth.asp'),
@@ -39,7 +37,7 @@ class IspMentorListRequest {
 
 Future<String> mdhash(JavascriptRuntime jsRuntime, i, Y, W, U) async {
   String md5 = await rootBundle.loadString('assets/mdhash.js');
-  final result = jsRuntime.evaluate(md5 + """MD5($i, $Y, $W, $U)""");
+  final result = jsRuntime.evaluate(md5 + """mdhash($i, $Y, $W, $U)""");
   return result.stringResult.toString();
 }
 

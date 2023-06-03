@@ -1,4 +1,4 @@
-function MD5(i, Y, W, U) {
+function mdhash(i, Y, W, U) {
     function K(b, a) {
         return (b << a) | (b >>> (32 - a))
     }

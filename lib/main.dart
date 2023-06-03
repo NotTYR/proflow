@@ -1,7 +1,6 @@
 import 'package:ProFlow/navigation/my%20project/data/services/storage/services.dart';
 import 'package:ProFlow/navigation/my%20project/modules/home/binding.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_js/flutter_js.dart';
 import 'package:get/get.dart';
 import 'guest_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
