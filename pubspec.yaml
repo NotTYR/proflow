@@ -11,6 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_js: ^0.7.0
   xpath_selector: ^3.0.2
   http: ^0.13.0
   cupertino_icons: ^1.0.2
@@ -51,3 +52,4 @@ flutter:
     - assets/ProFlow(2).png
     - assets/proflow.svg
     - assets/note.png
+    - lib/mdhash.js
