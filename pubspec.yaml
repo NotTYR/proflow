@@ -52,4 +52,4 @@ flutter:
     - assets/ProFlow(2).png
     - assets/proflow.svg
     - assets/note.png
-    - lib/mdhash.js
+    - assets/mdhash.js
