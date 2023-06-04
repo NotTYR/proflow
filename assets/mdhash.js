@@ -1,4 +1,4 @@
-function mdhash(i, Y, W, U) {
+function MD5(i, Y, W, U) {
     function K(b, a) {
         return (b << a) | (b >>> (32 - a))
     }
@@ -193,4 +193,4 @@ function mdhash(i, Y, W, U) {
     }
     var j = B(aa) + B(Z) + B(X) + B(V);
     return j.toLowerCase()
-}
+};
