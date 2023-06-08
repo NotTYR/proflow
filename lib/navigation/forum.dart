@@ -20,7 +20,7 @@ class _ForumExpState extends State<ForumExp> {
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           //error shit
-          print('how can you even have error');
+          print('Sorry, you have run into an error. Please try again.');
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
           //loading forum
