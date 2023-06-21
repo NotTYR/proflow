@@ -1,5 +1,5 @@
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'navigation/proposal_page.dart';
 import 'navigation/find_mentor.dart';
 import 'navigation/forum.dart';
 import 'navigation/my project/modules/home/view.dart';
@@ -69,6 +69,13 @@ class _HomePageState extends State<HomePage> {
                       buttonName: 'Forum',
                       buttonIcon: Icons.chat_outlined,
                       buttonRoute: ForumExp()),
+                ),
+                SizedBox(
+                  height: 90.0,
+                  child: FeatureButton(
+                      buttonName: 'Propose',
+                      buttonIcon: Icons.handshake_outlined,
+                      buttonRoute: ProposalPage()),
                 ),
               ],
             )

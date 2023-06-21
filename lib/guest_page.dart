@@ -97,17 +97,22 @@ class _GuestPageState extends State<GuestPage> {
                                   await SharedPreferences.getInstance();
                               final uid =
                                   await FirebaseAuth.instance.currentUser!.uid;
+                              await prefs.setString('uid', uid);
                               await prefs.setString('username', username!);
                               await prefs.setString('email', email);
                               bool containsuid = false;
-                              final identity = await FirebaseFirestore.instance
+                              await FirebaseFirestore.instance
                                   .collection('identity')
                                   .get()
                                   .then((identityValue) => {
                                         for (final doc in identityValue.docs)
                                           {
                                             if (doc.data().values.contains(uid))
-                                              {containsuid = true}
+                                              {
+                                                containsuid = true,
+                                                prefs.setString('identity',
+                                                    doc.data()['identity'])
+                                              }
                                           },
                                         if (containsuid == false)
                                           {
@@ -117,6 +122,8 @@ class _GuestPageState extends State<GuestPage> {
                                               {
                                                 print('student'),
                                                 //student(contains digits)
+                                                prefs.setString(
+                                                    'identity', 'student'),
                                                 FirebaseFirestore.instance
                                                     .collection('identity')
                                                     .add({
@@ -128,6 +135,8 @@ class _GuestPageState extends State<GuestPage> {
                                               {
                                                 //teacher
                                                 print('not student'),
+                                                prefs.setString(
+                                                    'identity', 'teacher'),
                                                 FirebaseFirestore.instance
                                                     .collection('identity')
                                                     .add({
