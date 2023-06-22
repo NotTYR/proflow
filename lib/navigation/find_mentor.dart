@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'sheets_api.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_js/flutter_js.dart';
 
 dynamic path = rootBundle.loadString("assets/mdhash.js");
 
 class IspMentorListRequest {
   static VisitIsp() async {
-    final JavascriptRuntime jsRuntime = getJavascriptRuntime();
     dynamic getcookie = await http.get(Uri.https('isphs.hci.edu.sg'));
     dynamic rngcode = RegExp('z" value="(.*?)"').firstMatch(getcookie.body)![1];
     while (RegExp('.*[E].*').hasMatch(rngcode!)) {
@@ -19,10 +17,10 @@ class IspMentorListRequest {
     final cookie = getcookie.headers["set-cookie"]?.split("; ")[0];
     if (cookie != null) {
       print(cookie);
-      final mdhash1 = await mdhash(jsRuntime, "Password6969", 7, 5, 271733878);
+      final mdhash1 = await mdhash("Password6969", 7, 5, 271733878);
       print(mdhash1);
-      final mdhash2 = await mdhash(
-          jsRuntime, rngcode + "221496r" + mdhash1, 7, 30 * 13, 439075796);
+      final mdhash2 =
+          await mdhash(rngcode + "221496r" + mdhash1, 7, 30 * 13, 439075796);
       print(mdhash2);
       final code = 'code';
       final isp = await http.post(Uri.https('isphs.hci.edu.sg', 'pwd_auth.asp'),
@@ -35,11 +33,10 @@ class IspMentorListRequest {
   }
 }
 
-dynamic mdhash(JavascriptRuntime runtime, i, Y, W, U) async {
+dynamic mdhash(i, Y, W, U) async {
   final jsfile = await path;
-  JsEvalResult jsEvalResult =
-      runtime.evaluate("""${jsfile}MD5($i, $Y, $W, $U)""");
-  return jsEvalResult.stringResult;
+  i = i.evaluate("""${jsfile}MD5($i, $Y, $W, $U)""");
+  return i;
 }
 
 class FindMentor extends StatelessWidget {
