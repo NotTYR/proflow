@@ -9,6 +9,7 @@ class ProposalPage extends StatefulWidget {
   State<ProposalPage> createState() => _ProposalPageState();
 }
 
+//TODO: Change FutureBuilder to StreamBuilder so that it can continuously listen to changes
 class _ProposalPageState extends State<ProposalPage> {
   @override
   Widget build(BuildContext context) {

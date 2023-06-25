@@ -37,7 +37,7 @@ void main() async {
                     return HomePage();
                   } else {
                     // not logged in
-                    return Scene();
+                    return GuestPage();
                   }
                 }),
             initialBinding: HomeBinding(),
