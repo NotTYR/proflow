@@ -29,16 +29,13 @@ dependencies:
   step_progress_indicator: ^1.0.2
   intl: ^0.17.0
   flutter_launcher_icons: ^0.11.0
+  video_player: ^2.6.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_native_splash: "2.2.16"
-
-flutter_native_splash:
-  image: assets/Icon.png
-  color: "#ffffff"
-
+  
 flutter_icons:
   android: true
   ios: true
@@ -52,3 +49,4 @@ flutter:
     - assets/proflow.svg
     - assets/note.png
     - assets/mdhash.js
+    - assets/splash_video.mp4
