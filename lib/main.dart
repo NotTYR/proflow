@@ -10,6 +10,8 @@ import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'navigation/sheets_api.dart';
+import 'package:ProFlow/utils.dart';
+import 'package:ProFlow/figma/login-screen.dart';
 
 void main() async {
   //widgets??
@@ -26,6 +28,7 @@ void main() async {
           [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
       .then((value) => runApp(GetMaterialApp(
             title: 'ProFlow',
+            scrollBehavior: MyCustomScrollBehavior(),
             home: StreamBuilder(
                 stream: FirebaseAuth.instance.authStateChanges(),
                 builder: (BuildContext context, snapshot) {
@@ -34,7 +37,7 @@ void main() async {
                     return HomePage();
                   } else {
                     // not logged in
-                    return GuestPage();
+                    return Scene();
                   }
                 }),
             initialBinding: HomeBinding(),

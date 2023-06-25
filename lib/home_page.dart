@@ -1,3 +1,5 @@
+import 'package:ProFlow/figma/newhomepage.dart';
+import 'package:ProFlow/figma/login-screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'navigation/proposal_page.dart';
 import 'navigation/find_mentor.dart';
@@ -87,7 +89,7 @@ class _HomePageState extends State<HomePage> {
               await FirebaseAuth.instance.signOut();
               await GoogleSignIn().signOut();
               Navigator.pop(context,
-                  MaterialPageRoute(builder: ((context) => GuestPage())));
+                  MaterialPageRoute(builder: ((context) => Scene())));
             } catch (e) {
               print(e.toString());
             }
