@@ -14,14 +14,14 @@ import 'package:ProFlow/navigation/student/homepage.dart';
 
 import '../../utils.dart';
 
-class StudentPage extends StatefulWidget {
-  const StudentPage({super.key});
+class TeacherPage extends StatefulWidget {
+  const TeacherPage({super.key});
 
   @override
-  State<StudentPage> createState() => _StudentPageState();
+  State<TeacherPage> createState() => _TeacherPageState();
 }
 
-class _StudentPageState extends State<StudentPage> {
+class _TeacherPageState extends State<TeacherPage> {
   @override
   Widget build(BuildContext context) {
     double baseWidth = 430;
