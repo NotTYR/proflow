@@ -1,5 +1,5 @@
-import 'package:ProFlow/navigation/my%20project/data/services/storage/services.dart';
-import 'package:ProFlow/navigation/my%20project/modules/home/binding.dart';
+import 'package:ProFlow/navigation/student/my%20project/data/services/storage/services.dart';
+import 'package:ProFlow/navigation/student/my%20project/modules/home/binding.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'guest_page.dart';
@@ -9,7 +9,7 @@ import 'home_page.dart';
 import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'navigation/sheets_api.dart';
+import 'navigation/student/mentor finding platform/sheets_api.dart';
 import 'package:ProFlow/utils.dart';
 import 'package:ProFlow/figma/login-screen.dart';
 

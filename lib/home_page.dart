@@ -1,17 +1,17 @@
 import 'package:ProFlow/figma/newhomepage.dart';
 import 'package:ProFlow/figma/login-screen.dart';
-import 'package:ProFlow/teacher/teacher.dart';
+import 'package:ProFlow/navigation/teacher/homepage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'navigation/proposal_page.dart';
-import 'navigation/find_mentor.dart';
-import 'navigation/forum.dart';
-import 'navigation/my project/modules/home/view.dart';
+import 'navigation/student/mentor finding platform/proposal_page.dart';
+import 'navigation/student/mentor finding platform/find_mentor.dart';
+import 'navigation/student/forum/forum.dart';
+import 'navigation/student/my project/modules/home/view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'guest_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ProFlow/student/student.dart';
+import 'package:ProFlow/navigation/student/homepage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
