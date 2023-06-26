@@ -1,5 +1,6 @@
 import 'package:ProFlow/figma/newhomepage.dart';
 import 'package:ProFlow/figma/login-screen.dart';
+import 'package:ProFlow/utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ProFlow/navigation/proposal_page.dart';
 import 'package:ProFlow/navigation/find_mentor.dart';
@@ -11,6 +12,7 @@ import 'package:ProFlow/guest_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ProFlow/student/student.dart';
+import 'package:ProFlow/utils.dart';
 
 class StudentPage extends StatefulWidget {
   const StudentPage({super.key});
@@ -22,6 +24,9 @@ class StudentPage extends StatefulWidget {
 class _StudentPageState extends State<StudentPage> {
   @override
   Widget build(BuildContext context) {
+    double baseWidth = 430;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    double ffem = fem * 0.97;
     return Scaffold(
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -55,12 +60,20 @@ class _StudentPageState extends State<StudentPage> {
               width: MediaQuery.of(context).size.width * 0.8,
               margin: const EdgeInsets.only(
                 top: 0.0,
-                bottom: 50.0,
+                bottom: 10.0,
               ),
-              child: FittedBox(
-                child: Text(
-                  'Student',
-                  style: TextStyle(color: Colors.black),
+              child: Container(
+                margin:
+                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 1 * fem, 56 * fem),
+                child: FittedBox(
+                  child: Text('Student',
+                      style: SafeGoogleFont(
+                        'Inter',
+                        fontSize: 24 * ffem,
+                        fontWeight: FontWeight.w400,
+                        height: 1.2125 * ffem / fem,
+                        color: Color(0xff000000),
+                      )),
                 ),
               ),
             ),
