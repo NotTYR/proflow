@@ -32,7 +32,7 @@ class _ForumExpState extends State<ForumExp> {
         snapshot.data!.docs.map((DocumentSnapshot document) {
           Map catchdata = document.data() as Map<String, dynamic>;
           ForumData.add(catchdata);
-          catchdata['id'] = 'posts';
+          catchdata['id'] = document.id;
         }).toList();
         return Scaffold(
           appBar: ProFlowAppBar(),
@@ -76,22 +76,73 @@ class _ForumExpState extends State<ForumExp> {
                                   children: [
                                     GestureDetector(
                                       onTap: () async {
-                                        final prefs =
+                                        final firestore =
                                             await FirebaseFirestore.instance;
-                                        //TODO: ADD LIKES TRY TO FIND PATH TO LIKES
+                                        bool liked = false;
+                                        final prefs = await SharedPreferences
+                                            .getInstance();
+                                        final uid =
+                                            await prefs.getString('uid');
+                                        for (String like in ForumData[index]
+                                            ['liked']) {
+                                          if (like == uid) {
+                                            liked = true;
+                                          }
+                                        }
+                                        if (liked == false) {
+                                          final id = ForumData[index]['id'];
+                                          Map<String, dynamic> tempmap =
+                                              ForumData[index];
+                                          tempmap.remove('id');
+                                          tempmap['liked'].add(uid);
+                                          firestore
+                                              .collection('posts')
+                                              .doc(id)
+                                              .delete();
+                                          firestore
+                                              .collection('posts')
+                                              .add(tempmap);
+                                        } else {
+                                          final id = ForumData[index]['id'];
+                                          Map<String, dynamic> tempmap =
+                                              ForumData[index];
+                                          tempmap.remove('id');
+                                          tempmap['liked'].removeAt(
+                                              tempmap['liked'].indexOf(uid));
+                                          firestore
+                                              .collection('posts')
+                                              .doc(id)
+                                              .delete();
+                                          firestore
+                                              .collection('posts')
+                                              .add(tempmap);
+                                        }
                                       },
-                                      child: Icon(
-                                        Icons.favorite,
-                                        color: Colors.pink,
+                                      child: FutureBuilder(
+                                        future: Like(ForumData, index),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return Icon(Icons.favorite,
+                                                color: Colors.grey);
+                                          }
+                                          if (snapshot.data == true) {
+                                            return Icon(Icons.favorite,
+                                                color: Colors.red);
+                                          } else {
+                                            return Icon(Icons.favorite,
+                                                color: Colors.grey);
+                                          }
+                                        },
                                       ),
                                     ),
                                     SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.01),
-                                    Text(
-                                      ForumData[index]['likes'].toString(),
-                                    ),
+                                    Text(ForumData[index]['liked']
+                                        .length
+                                        .toString()),
                                   ],
                                 )
                               ],
@@ -112,6 +163,18 @@ class _ForumExpState extends State<ForumExp> {
       },
     );
   }
+}
+
+Future<bool> Like(ForumData, index) async {
+  bool liked = false;
+  final prefs = await SharedPreferences.getInstance();
+  final uid = await prefs.getString('uid');
+  for (String like in ForumData[index]['liked']) {
+    if (like == uid) {
+      liked = true;
+    }
+  }
+  return liked;
 }
 
 class Post extends StatefulWidget {
@@ -163,14 +226,15 @@ class _PostState extends State<Post> {
             ElevatedButton(
                 onPressed: () async {
                   final prefs = await SharedPreferences.getInstance();
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => ForumExp()));
+                  Navigator.of(context).pop();
                   final author = await prefs.getString('username');
+                  final uid = await prefs.getString('uid');
                   await FirebaseFirestore.instance.collection('posts').add({
                     'title': title,
                     'author': author,
                     'content': content,
-                    'likes': 0,
+                    'uid': uid,
+                    'liked': [],
                     'comments': []
                   });
                 },
