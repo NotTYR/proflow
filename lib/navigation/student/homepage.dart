@@ -1,9 +1,6 @@
-import 'package:ProFlow/home_page.dart';
+import 'package:ProFlow/extensions.dart';
 import 'package:ProFlow/navigation/student/text%20and%20voice/textvoice.dart';
-import 'package:ProFlow/navigation/teacher/homepage.dart';
-import 'package:ProFlow/utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:ProFlow/navigation/student/mentor%20finding%20platform/proposal_page.dart';
 import 'package:ProFlow/navigation/student/mentor%20finding%20platform/find_mentor.dart';
 import 'package:ProFlow/navigation/student/forum/forum.dart';
 import 'package:ProFlow/navigation/student/my%20project/modules/home/view.dart';
@@ -11,9 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ProFlow/guest_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ProFlow/navigation/student/homepage.dart';
-import 'package:ProFlow/utils.dart';
 
 class StudentPage extends StatefulWidget {
   const StudentPage({super.key});
@@ -25,9 +19,6 @@ class StudentPage extends StatefulWidget {
 class _StudentPageState extends State<StudentPage> {
   @override
   Widget build(BuildContext context) {
-    double baseWidth = 430;
-    double fem = MediaQuery.of(context).size.width / baseWidth;
-    double ffem = fem * 0.97;
     return Scaffold(
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -37,9 +28,9 @@ class _StudentPageState extends State<StudentPage> {
             ),
             Container(
               width: MediaQuery.of(context).size.width * 0.5,
-              margin: const EdgeInsets.only(
-                top: 40.0,
-                bottom: 25.0,
+              margin: EdgeInsets.only(
+                top: 4.0.hp,
+                bottom: 3.0.hp,
               ),
               child: FittedBox(
                 child: Text(
@@ -54,8 +45,8 @@ class _StudentPageState extends State<StudentPage> {
             ),
             Container(
                 width: MediaQuery.of(context).size.width * 0.6,
-                margin: const EdgeInsets.only(
-                  bottom: 35.0,
+                margin: EdgeInsets.only(
+                  bottom: 6.0.hp,
                 ),
                 child: const FittedBox(
                     child: Text(
@@ -65,37 +56,20 @@ class _StudentPageState extends State<StudentPage> {
                     fontStyle: FontStyle.italic,
                   ),
                 ))),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.3,
-              margin: const EdgeInsets.only(
-                top: 0.0,
-                bottom: 40.0,
-              ),
-              child: FittedBox(
-                child: Text('Student',
-                    style: SafeGoogleFont(
-                      'Inter',
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.w400,
-                      height: 1.2125 * ffem / fem,
-                      color: Color(0xff000000),
-                    )),
-              ),
-            ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 20.0),
+              padding: EdgeInsets.only(bottom: 3.0.hp),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: 90.0,
+                    height: 9.0.hp,
                     child: FeatureButton(
                         buttonName: 'Mentor',
                         buttonIcon: Icons.search_rounded,
                         buttonRoute: FindMentor()),
                   ),
                   SizedBox(
-                    height: 90.0,
+                    height: 9.0.hp,
                     child: FeatureButton(
                         buttonName: 'Projects',
                         buttonIcon: Icons.list_alt_rounded,
@@ -108,14 +82,14 @@ class _StudentPageState extends State<StudentPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: 90.0,
+                  height: 9.0.hp,
                   child: FeatureButton(
                       buttonName: 'Forum',
                       buttonIcon: Icons.question_answer,
                       buttonRoute: ForumExp()),
                 ),
                 SizedBox(
-                  height: 90.0,
+                  height: 9.0.hp,
                   child: FeatureButton(
                       buttonName: 'Text/Voice',
                       buttonIcon: Icons.voice_chat,
