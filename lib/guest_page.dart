@@ -37,40 +37,40 @@ class _GuestPageState extends State<GuestPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                          Container(
-                            child: SvgPicture.asset('assets/proflow.svg'),
+                        Container(
+                          child: SvgPicture.asset('assets/proflow.svg'),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          margin: EdgeInsets.only(
+                            top: 4.0.hp,
+                            bottom: 3.0.hp,
                           ),
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.5,
-                            margin: EdgeInsets.only(
-                              top: 4.0.hp,
-                              bottom: 3.0.hp,
-                            ),
-                            child: FittedBox(
-                              child: Text(
-                                'ProFlow',
-                                style: TextStyle(
-                                  color: Color(0xFF3874CB),
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic,
-                                ),
+                          child: FittedBox(
+                            child: Text(
+                              'ProFlow',
+                              style: TextStyle(
+                                color: Color(0xFF3874CB),
+                                fontWeight: FontWeight.bold,
+                                fontStyle: FontStyle.italic,
                               ),
                             ),
                           ),
-                          Container(
-                                width: MediaQuery.of(context).size.width * 0.6,
-                                margin: EdgeInsets.only(
-                                  bottom: 8.0.hp,
-                                ),
-                                child: const FittedBox(
-                                    child: Text(
-                                  'Experience Redefined',
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 187, 187, 187),
-                                    fontStyle: FontStyle.italic,
-                                  ),
-                                ))),
-                          Container(
+                        ),
+                        Container(
+                            width: MediaQuery.of(context).size.width * 0.6,
+                            margin: EdgeInsets.only(
+                              bottom: 8.0.hp,
+                            ),
+                            child: const FittedBox(
+                                child: Text(
+                              'Experience Redefined',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 187, 187, 187),
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ))),
+                        Container(
                           width: MediaQuery.of(context).size.width * 0.4,
                           child: FittedBox(
                             child: ElevatedButton(
@@ -108,7 +108,8 @@ class _GuestPageState extends State<GuestPage> {
                                       .collection('identity')
                                       .get()
                                       .then((identityValue) => {
-                                            for (final doc in identityValue.docs)
+                                            for (final doc
+                                                in identityValue.docs)
                                               {
                                                 if (doc
                                                     .data()
