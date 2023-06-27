@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'home_page.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ProFlow/extensions.dart';
 
 class GuestPage extends StatefulWidget {
   const GuestPage({super.key});
@@ -41,9 +42,9 @@ class _GuestPageState extends State<GuestPage> {
                           ),
                           Container(
                             width: MediaQuery.of(context).size.width * 0.5,
-                            margin: const EdgeInsets.only(
-                              top: 40.0,
-                              bottom: 25.0,
+                            margin: EdgeInsets.only(
+                              top: 4.0.hp,
+                              bottom: 3.0.hp,
                             ),
                             child: FittedBox(
                               child: Text(
@@ -58,8 +59,8 @@ class _GuestPageState extends State<GuestPage> {
                           ),
                           Container(
                                 width: MediaQuery.of(context).size.width * 0.6,
-                                margin: const EdgeInsets.only(
-                                  bottom: 60.0,
+                                margin: EdgeInsets.only(
+                                  bottom: 8.0.hp,
                                 ),
                                 child: const FittedBox(
                                     child: Text(
