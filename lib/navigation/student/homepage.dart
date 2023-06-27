@@ -34,16 +34,12 @@ class _StudentPageState extends State<StudentPage> {
           children: <Widget>[
             Container(
               child: SvgPicture.asset('assets/proflow.svg'),
-              height: MediaQuery.of(context).size.height * 0.15,
-              width: MediaQuery.of(context).size.height * 0.15,
-              margin: const EdgeInsets.only(bottom: 40.0),
             ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.1,
-              width: MediaQuery.of(context).size.width * 0.8,
+              width: MediaQuery.of(context).size.width * 0.5,
               margin: const EdgeInsets.only(
-                top: 0.0,
-                bottom: 50.0,
+                top: 40.0,
+                bottom: 25.0,
               ),
               child: FittedBox(
                 child: Text(
@@ -57,44 +53,60 @@ class _StudentPageState extends State<StudentPage> {
               ),
             ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.1,
-              width: MediaQuery.of(context).size.width * 0.8,
+                width: MediaQuery.of(context).size.width * 0.6,
+                margin: const EdgeInsets.only(
+                  bottom: 35.0,
+                ),
+                child: const FittedBox(
+                    child: Text(
+                  'Experience Redefined',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 187, 187, 187),
+                    fontStyle: FontStyle.italic,
+                  ),
+                ))),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.3,
               margin: const EdgeInsets.only(
                 top: 0.0,
-                bottom: 10.0,
+                bottom: 40.0,
               ),
-              child: Container(
-                margin:
-                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 1 * fem, 56 * fem),
-                child: FittedBox(
-                  child: Text('Student',
-                      style: SafeGoogleFont(
-                        'Inter',
-                        fontSize: 24 * ffem,
-                        fontWeight: FontWeight.w400,
-                        height: 1.2125 * ffem / fem,
-                        color: Color(0xff000000),
-                      )),
-                ),
+              child: FittedBox(
+                child: Text('Student',
+                    style: SafeGoogleFont(
+                      'Inter',
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w400,
+                      height: 1.2125 * ffem / fem,
+                      color: Color(0xff000000),
+                    )),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 90.0,
+                    child: FeatureButton(
+                        buttonName: 'Mentor',
+                        buttonIcon: Icons.search_rounded,
+                        buttonRoute: FindMentor()),
+                  ),
+                  SizedBox(
+                    height: 90.0,
+                    child: FeatureButton(
+                        buttonName: 'Projects',
+                        buttonIcon: Icons.list_alt_rounded,
+                        buttonRoute: MyProjects()),
+                  ),
+                ],
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: 90.0,
-                  child: FeatureButton(
-                      buttonName: 'Mentor',
-                      buttonIcon: Icons.search_rounded,
-                      buttonRoute: FindMentor()),
-                ),
-                SizedBox(
-                  height: 90.0,
-                  child: FeatureButton(
-                      buttonName: 'Projects',
-                      buttonIcon: Icons.list_alt_rounded,
-                      buttonRoute: MyProjects()),
-                ),
                 SizedBox(
                   height: 90.0,
                   child: FeatureButton(
