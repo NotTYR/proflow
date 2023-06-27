@@ -1,5 +1,6 @@
 import 'package:ProFlow/figma/newhomepage.dart';
 import 'package:ProFlow/figma/login-screen.dart';
+import 'package:ProFlow/navigation/student/text%20and%20voice/textvoice.dart';
 import 'package:ProFlow/utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ProFlow/navigation/student/mentor%20finding%20platform/proposal_page.dart';
@@ -106,7 +107,7 @@ class _StudentPageState extends State<StudentPage> {
                   child: FeatureButton(
                       buttonName: 'Text/Voice',
                       buttonIcon: Icons.voice_chat,
-                      buttonRoute: ProposalPage()),
+                      buttonRoute: TextChannel()),
                 ),
               ],
             )
