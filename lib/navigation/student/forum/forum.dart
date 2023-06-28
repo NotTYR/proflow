@@ -160,6 +160,32 @@ class _ForumExpState extends State<ForumExp> {
                                         .length
                                         .toString()),
                                   ],
+                                ),
+                                Row(
+                                  children: [
+                                    FutureBuilder(
+                                      future: isAuthor(ForumData[index]['uid']),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.data == true) {
+                                          return GestureDetector(
+                                            child: (Icon(
+                                              Icons.delete,
+                                              color: Colors.grey,
+                                            )),
+                                            onTap: () async {
+                                              final id = ForumData[index]['id'];
+                                              await FirebaseFirestore.instance
+                                                  .collection('posts')
+                                                  .doc(id)
+                                                  .delete();
+                                            },
+                                          );
+                                        } else {
+                                          return Placeholder();
+                                        }
+                                      },
+                                    ),
+                                  ],
                                 )
                               ],
                             ),
@@ -191,6 +217,16 @@ Future<bool> Like(ForumData, index) async {
     }
   }
   return liked;
+}
+
+Future<bool> isAuthor(uidAuthor) async {
+  final prefs = await SharedPreferences.getInstance();
+  final uid = await prefs.getString('uid');
+  if (uid == uidAuthor) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 class Post extends StatefulWidget {
