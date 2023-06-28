@@ -97,11 +97,11 @@ class _ForumExpState extends State<ForumExp> {
                                           tempmap['liked'].add(uid);
                                           firestore
                                               .collection('posts')
-                                              .doc(id)
-                                              .delete();
+                                              .add(tempmap);
                                           firestore
                                               .collection('posts')
-                                              .add(tempmap);
+                                              .doc(id)
+                                              .delete();
                                         } else {
                                           final id = ForumData[index]['id'];
                                           Map<String, dynamic> tempmap =
@@ -111,11 +111,12 @@ class _ForumExpState extends State<ForumExp> {
                                               tempmap['liked'].indexOf(uid));
                                           firestore
                                               .collection('posts')
-                                              .doc(id)
-                                              .delete();
+                                              .add(tempmap);
                                           firestore
                                               .collection('posts')
-                                              .add(tempmap);
+                                              .doc(id)
+                                              .delete();
+                                          
                                         }
                                       },
                                       child: FutureBuilder(
