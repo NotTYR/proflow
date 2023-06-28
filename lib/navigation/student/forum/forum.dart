@@ -121,7 +121,6 @@ class _ForumExpState extends State<ForumExp> {
                                             List liked = map['liked'];
                                             liked.removeAt(
                                                 map['liked'].indexOf(uid));
-                                            print(liked);
                                             final doc = firestore
                                                 .collection('posts')
                                                 .doc(id);
