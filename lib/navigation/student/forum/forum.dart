@@ -75,68 +75,84 @@ class _ForumExpState extends State<ForumExp> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     GestureDetector(
-                                      onTap: () async {
-                                        final firestore =
-                                            await FirebaseFirestore.instance;
-                                        bool liked = false;
-                                        final prefs = await SharedPreferences
-                                            .getInstance();
-                                        final uid =
-                                            await prefs.getString('uid');
-                                        for (String like in ForumData[index]
-                                            ['liked']) {
-                                          if (like == uid) {
-                                            liked = true;
+                                        onTap: () async {
+                                          final firestore =
+                                              await FirebaseFirestore.instance;
+                                          bool liked = false;
+                                          final prefs = await SharedPreferences
+                                              .getInstance();
+                                          final uid =
+                                              await prefs.getString('uid');
+                                          for (String like in ForumData[index]
+                                              ['liked']) {
+                                            if (like == uid) {
+                                              liked = true;
+                                            }
                                           }
-                                        }
-                                        if (liked == false) {
-                                          final id = ForumData[index]['id'];
-                                          Map<String, dynamic> tempmap =
-                                              ForumData[index];
-                                          tempmap.remove('id');
-                                          tempmap['liked'].add(uid);
-                                          firestore
-                                              .collection('posts')
-                                              .add(tempmap);
-                                          firestore
-                                              .collection('posts')
-                                              .doc(id)
-                                              .delete();
-                                        } else {
-                                          final id = ForumData[index]['id'];
-                                          Map<String, dynamic> tempmap =
-                                              ForumData[index];
-                                          tempmap.remove('id');
-                                          tempmap['liked'].removeAt(
-                                              tempmap['liked'].indexOf(uid));
-                                          firestore
-                                              .collection('posts')
-                                              .add(tempmap);
-                                          firestore
-                                              .collection('posts')
-                                              .doc(id)
-                                              .delete();
-                                          
-                                        }
-                                      },
-                                      child: FutureBuilder(
-                                        future: Like(ForumData, index),
-                                        builder: (context, snapshot) {
-                                          if (snapshot.connectionState ==
-                                              ConnectionState.waiting) {
-                                            return Icon(Icons.favorite,
-                                                color: Colors.grey);
-                                          }
-                                          if (snapshot.data == true) {
-                                            return Icon(Icons.favorite,
-                                                color: Colors.red);
+                                          if (liked == false) {
+                                            print('like');
+                                            final id = ForumData[index]['id'];
+                                            final map = ForumData[index];
+                                            final comments = map['comments'];
+                                            final author = map['author'];
+                                            final title = map['title'];
+                                            final content = map['content'];
+                                            List liked = map['liked'];
+                                            liked.add(uid);
+                                            final doc = firestore
+                                                .collection('posts')
+                                                .doc(id);
+                                            doc.update({
+                                              'uid': uid,
+                                              'liked': liked,
+                                              'comments': comments,
+                                              'author': author,
+                                              'title': title,
+                                              'content': content
+                                            });
                                           } else {
-                                            return Icon(Icons.favorite,
-                                                color: Colors.grey);
+                                            print('unlike');
+                                            final id = ForumData[index]['id'];
+                                            final map = ForumData[index];
+                                            final comments = map['comments'];
+                                            final author = map['author'];
+                                            final title = map['title'];
+                                            final content = map['content'];
+                                            List liked = map['liked'];
+                                            liked.removeAt(
+                                                map['liked'].indexOf(uid));
+                                            print(liked);
+                                            final doc = firestore
+                                                .collection('posts')
+                                                .doc(id);
+                                            doc.update({
+                                              'uid': uid,
+                                              'liked': liked,
+                                              'comments': comments,
+                                              'author': author,
+                                              'title': title,
+                                              'content': content
+                                            });
                                           }
+                                          ;
                                         },
-                                      ),
-                                    ),
+                                        child: FutureBuilder(
+                                          future: Like(ForumData, index),
+                                          builder: (context, snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
+                                              return Icon(Icons.favorite,
+                                                  color: Colors.grey);
+                                            }
+                                            if (snapshot.data == true) {
+                                              return Icon(Icons.favorite,
+                                                  color: Colors.red);
+                                            } else {
+                                              return Icon(Icons.favorite,
+                                                  color: Colors.grey);
+                                            }
+                                          },
+                                        )),
                                     SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width *
