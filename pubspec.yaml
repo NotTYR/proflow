@@ -33,6 +33,7 @@ dependencies:
   google_fonts: ^4.0.4
   image: ^3.3.0
   flutter_chat_ui: ^1.6.6
+  grouped_list: ^5.1.2
 
 dev_dependencies:
   flutter_test:
