@@ -16,7 +16,7 @@ class _TextChannelState extends State<TextChannel> {
   List<Message> messages = [
     Message(
       text: 'Message something cool!',
-      date: DateTime.now().subtract(Duration(minutes: 1)),
+      date: DateTime.now(),
       isSentByMe: false,
     )
   ];
@@ -60,6 +60,15 @@ class _TextChannelState extends State<TextChannel> {
                     decoration: InputDecoration(
                       hintText: 'Enter message...',
                     ),
+                    onSubmitted: (text) {
+                      final message = Message(
+                        text: text,
+                        date: DateTime.now(),
+                        isSentByMe: true,
+                      );
+
+                      setState(() => messages.add(message));
+                    },
                   ),
                 ),
                 IconButton(
