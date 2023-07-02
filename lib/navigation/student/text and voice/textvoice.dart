@@ -36,6 +36,7 @@ class _TextChannelState extends State<TextChannel> {
                     child: CircularProgressIndicator(),
                   );
                 }
+
                 final messages = snapshot.data!.docs;
                 return ListView.builder(
                   itemCount: messages.length,
