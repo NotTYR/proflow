@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:grouped_list/grouped_list.dart';
 import '../../../appbar.dart';
 
@@ -12,6 +13,13 @@ class _TextChannelState extends State<TextChannel> {
   TextEditingController _textController = TextEditingController();
   CollectionReference _messagesCollection =
       FirebaseFirestore.instance.collection('messages');
+  List<Message> messages = [
+    Message(
+      text: 'Message something cool!',
+      date: DateTime.now().subtract(Duration(minutes: 1)),
+      isSentByMe: false,
+    )
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -78,4 +86,13 @@ class _TextChannelState extends State<TextChannel> {
       _textController.clear();
     }
   }
+}
+
+class Message {
+  final String text;
+  final DateTime date;
+  final bool isSentByMe;
+
+  const Message(
+      {required this.text, required this.date, required this.isSentByMe});
 }
