@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:grouped_list/grouped_list.dart';
+import 'package:intl/intl.dart';
 import '../../../appbar.dart';
 
 class TextChannel extends StatefulWidget {
   @override
   _TextChannelState createState() => _TextChannelState();
+}
+
+class Message {
+  final String text;
+  final DateTime date;
+  final bool isSentByMe;
+
+  const Message({
+    required this.text,
+    required this.date,
+    required this.isSentByMe,
+  });
 }
 
 class _TextChannelState extends State<TextChannel> {
@@ -15,7 +27,7 @@ class _TextChannelState extends State<TextChannel> {
       FirebaseFirestore.instance.collection('messages');
   List<Message> messages = [
     Message(
-      text: 'Message something cool!',
+      text: 'Your Message...',
       date: DateTime.now(),
       isSentByMe: false,
     )
@@ -25,84 +37,70 @@ class _TextChannelState extends State<TextChannel> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: ProFlowAppBar(),
-      body: Column(
-        children: [
-          Expanded(
-            child: StreamBuilder<QuerySnapshot>(
-              stream: _messagesCollection.orderBy('timestamp').snapshots(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-
-                final messages = snapshot.data!.docs;
-                return ListView.builder(
-                  itemCount: messages.length,
-                  itemBuilder: (context, index) {
-                    final message =
-                        messages[index].data() as Map<String, dynamic>;
-                    return ListTile(
-                      title: Text(message['text']),
-                    );
-                  },
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _textController,
-                    decoration: InputDecoration(
-                      hintText: 'Enter message...',
+      body: Column(children: [
+        Expanded(
+          child: Container(
+            child: GroupedListView<Message, DateTime>(
+              padding: const EdgeInsets.all(8),
+              reverse: true,
+              order: GroupedListOrder.DESC,
+              useStickyGroupSeparators: true,
+              floatingHeader: true,
+              elements: messages,
+              groupBy: (message) => DateTime(
+                message.date.year,
+                message.date.month,
+                message.date.day,
+              ),
+              groupHeaderBuilder: (Message message) => SizedBox(
+                height: 40,
+                child: Center(
+                  child: Card(
+                    color: Theme.of(context).primaryColor,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Text(
+                        DateFormat.yMMMd().format(message.date),
+                        style: const TextStyle(color: Colors.white),
+                      ),
                     ),
-                    onSubmitted: (text) {
-                      final message = Message(
-                        text: text,
-                        date: DateTime.now(),
-                        isSentByMe: true,
-                      );
-
-                      setState(() => messages.add(message));
-                    },
                   ),
                 ),
-                IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: () {
-                    _sendMessage();
-                  },
+              ),
+              itemBuilder: (context, Message message) => Align(
+                alignment: message.isSentByMe
+                    ? Alignment.centerRight
+                    : Alignment.centerLeft,
+                child: Card(
+                  elevation: 8,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Text(message.text),
+                  ),
                 ),
-              ],
+              ),
             ),
           ),
-        ],
-      ),
+        ),
+        Container(
+          color: Colors.grey.shade200,
+          child: TextField(
+            decoration: const InputDecoration(
+              contentPadding: EdgeInsets.all(12),
+              hintText: 'Your message...',
+            ),
+            onSubmitted: (text) {
+              final message = Message(
+                text: text,
+                date: DateTime.now(),
+                isSentByMe: true,
+              );
+
+              setState(() => messages.add(message));
+            },
+          ),
+        ),
+      ]),
     );
   }
-
-  void _sendMessage() {
-    String text = _textController.text.trim();
-    if (text.isNotEmpty) {
-      _messagesCollection.add({
-        'text': text,
-        'timestamp': DateTime.now().millisecondsSinceEpoch,
-      });
-      _textController.clear();
-    }
-  }
-}
-
-class Message {
-  final String text;
-  final DateTime date;
-  final bool isSentByMe;
-
-  const Message(
-      {required this.text, required this.date, required this.isSentByMe});
 }
