@@ -1,5 +1,5 @@
 import 'package:ProFlow/home_page.dart';
-import 'package:ProFlow/navigation/student/text%20and%20voice/textvoice.dart';
+import 'package:ProFlow/navigation/student/text%20and%20voice/chat_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ProFlow/navigation/student/mentor%20finding%20platform/proposal_page.dart';
 import 'package:ProFlow/navigation/student/mentor%20finding%20platform/find_mentor.dart';
@@ -106,7 +106,7 @@ class _TeacherPageState extends State<TeacherPage> {
                   child: FeatureButton(
                       buttonName: 'Text/Voice',
                       buttonIcon: Icons.voice_chat,
-                      buttonRoute: TextChannel()),
+                      buttonRoute: chat_page()),
                 ),
               ],
             )
@@ -117,8 +117,8 @@ class _TeacherPageState extends State<TeacherPage> {
             try {
               await FirebaseAuth.instance.signOut();
               await GoogleSignIn().signOut();
-              Navigator.pop(
-                  context, MaterialPageRoute(builder: ((context) => GuestPage())));
+              Navigator.pop(context,
+                  MaterialPageRoute(builder: ((context) => GuestPage())));
             } catch (e) {
               print(e.toString());
             }
