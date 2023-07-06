@@ -36,7 +36,7 @@ class _ChatPageState extends State<ChatPage> {
                   ),
                   child: MessagesWidget(
                     idUser: widget.user.idUser,
-                    key: Null,
+                    key: null,
                   ),
                 ),
               ),

@@ -1,5 +1,4 @@
 import 'package:ProFlow/navigation/student/text%20and%20voice/utils.dart';
-import 'package:meta/meta.dart';
 
 class UserField {
   static final String lastMessageTime = 'lastMessageTime';
@@ -35,7 +34,7 @@ class User {
         idUser: json['idUser'],
         name: json['name'],
         urlAvatar: json['urlAvatar'],
-        lastMessageTime: Utils.toDateTime(json['lastMessageTime']),
+        lastMessageTime: Utils.toDateTime(json[lastMessageTime]),
       );
 
   Map<String, dynamic> toJson() => {

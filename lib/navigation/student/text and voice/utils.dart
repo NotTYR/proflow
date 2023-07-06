@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,7 +11,6 @@ class Utils {
         handleData: (QuerySnapshot data, EventSink<List<T>> sink) {
           final snaps = data.docs.map((doc) => doc.data()).toList();
           final users = snaps.map((json) => fromJson(json)).toList();
-
           sink.add(users);
         },
       );
@@ -25,4 +26,6 @@ class Utils {
 
     return date.toUtc();
   }
+
+  static toDateTimeToJson(DateTime lastMessageTime) {}
 }
