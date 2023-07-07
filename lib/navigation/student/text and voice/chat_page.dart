@@ -1,11 +1,9 @@
 import 'package:ProFlow/navigation/student/text%20and%20voice/messages_widget.dart';
 import 'package:ProFlow/navigation/student/text%20and%20voice/new_message_widget.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ProFlow/navigation/student/text%20and%20voice/user.dart';
 
 class ChatPage extends StatefulWidget {
-  final User user;
+  final user;
 
   const ChatPage({
     required this.user,
@@ -36,13 +34,13 @@ class _ChatPageState extends State<ChatPage> {
                   ),
                   child: MessagesWidget(
                     idUser: widget.user.idUser,
-                    key: null,
+                    key: UniqueKey(),
                   ),
                 ),
               ),
               NewMessageWidget(
                 idUser: widget.user,
-                key: null,
+                key: UniqueKey(),
               )
             ],
           ),

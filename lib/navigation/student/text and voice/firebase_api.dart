@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ProFlow/navigation/student/text%20and%20voice/data.dart';
 import 'package:ProFlow/navigation/student/text%20and%20voice/message.dart';
 import 'package:ProFlow/navigation/student/text%20and%20voice/user.dart';
@@ -9,9 +11,11 @@ class FirebaseApi {
       .collection('users')
       .orderBy(UserField.lastMessageTime, descending: true)
       .snapshots()
-      .transform(Utils.transformer(User.fromJson));
+      .transform(User.fromJson as StreamTransformer<
+          QuerySnapshot<Map<String, dynamic>>, List<User>>);
 
-  static Future uploadMessage(String idUser, String message) async {
+  static Future<void> uploadMessage(String idUser, String message) async {
+    // Fix: Added void return type
     final refMessages =
         FirebaseFirestore.instance.collection('chats/$idUser/messages');
 
@@ -35,19 +39,25 @@ class FirebaseApi {
           .collection('chats/$idUser/messages')
           .orderBy(MessageField.createdAt, descending: true)
           .snapshots()
-          .transform(Utils.transformer(Message.fromJson));
+          .transform(Message.fromJson as StreamTransformer<
+              QuerySnapshot<Map<String, dynamic>>, List<Message>>);
 
-  static Future addRandomUsers(List<User> users) async {
+  static Future<void> addRandomUsers(List<User> users) async {
+    // Fix: Added void return type
     final refUsers = FirebaseFirestore.instance.collection('users');
 
     final allUsers = await refUsers.get();
     if (allUsers.size != 0) {
-      return;
+      throw Exception(
+          'Random users already added.'); // Fix: Throwing an exception instead of returning a QuerySnapshot
     } else {
       for (final user in users) {
         final userDoc = refUsers.doc();
         final newUser = user.copyWith(
-            idUser: userDoc.id, lastMessageTime: '', name: '', urlAvatar: '');
+            idUser: userDoc.id,
+            lastMessageTime: DateTime.now(),
+            name: '',
+            urlAvatar: ''); // Fix: Set lastMessageTime to a non-empty string
 
         await userDoc.set(newUser.toJson());
       }

@@ -1,5 +1,4 @@
 import 'package:ProFlow/navigation/student/text%20and%20voice/utils.dart';
-import 'package:flutter/material.dart';
 
 class MessageField {
   static final String createdAt = 'createdAt';
@@ -25,7 +24,7 @@ class Message {
         urlAvatar: json['urlAvatar'],
         username: json['username'],
         message: json['message'],
-        createdAt: Utils.toDateTime(json['createdAt']),
+        createdAt: json['createdAt'],
       );
 
   Map<String, dynamic> toJson() => {

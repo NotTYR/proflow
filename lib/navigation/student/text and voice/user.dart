@@ -1,4 +1,5 @@
 import 'package:ProFlow/navigation/student/text%20and%20voice/utils.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserField {
   static final String lastMessageTime = 'lastMessageTime';
@@ -21,7 +22,8 @@ class User {
     required String idUser,
     required String name,
     required String urlAvatar,
-    required String lastMessageTime,
+    required DateTime
+        lastMessageTime, // Fix: Changed type from String to DateTime
   }) =>
       User(
         idUser: idUser,
@@ -31,16 +33,17 @@ class User {
       );
 
   static User fromJson(Map<String, dynamic> json) => User(
-        idUser: json['idUser'],
-        name: json['name'],
-        urlAvatar: json['urlAvatar'],
-        lastMessageTime: Utils.toDateTime(json[lastMessageTime]),
-      );
+      idUser: json['idUser'],
+      name: json['name'],
+      urlAvatar: json['urlAvatar'],
+      lastMessageTime:
+          json[UserField.lastMessageTime]); // Fix: Added UserField prefix
 
   Map<String, dynamic> toJson() => {
         'idUser': idUser,
         'name': name,
         'urlAvatar': urlAvatar,
-        'lastMessageTime': Utils.fromDateTimeToJson(lastMessageTime),
+        UserField.lastMessageTime: Utils.fromDateTimeToJson(
+            lastMessageTime), // Fix: Added UserField prefix
       };
 }
