@@ -108,7 +108,7 @@ class _TeacherPageState extends State<TeacherPage> {
                       buttonIcon: Icons.voice_chat,
                       buttonRoute: ChatPage(
                         key: UniqueKey(),
-                        user: null,
+                        user: LocalKey,
                       )),
                 ),
               ],
