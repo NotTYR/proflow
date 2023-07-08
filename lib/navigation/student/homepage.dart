@@ -94,7 +94,7 @@ class _StudentPageState extends State<StudentPage> {
                       buttonName: 'Text/Voice',
                       buttonIcon: Icons.voice_chat,
                       buttonRoute: ChatPage(
-                        user: LocalKey,
+                        user: GlobalKey,
                         key: UniqueKey(),
                       )),
                 ),
