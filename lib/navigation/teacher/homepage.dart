@@ -106,7 +106,10 @@ class _TeacherPageState extends State<TeacherPage> {
                   child: FeatureButton(
                       buttonName: 'Text/Voice',
                       buttonIcon: Icons.voice_chat,
-                      buttonRoute: chat_page()),
+                      buttonRoute: ChatPage(
+                        key: UniqueKey(),
+                        user: null,
+                      )),
                 ),
               ],
             )
