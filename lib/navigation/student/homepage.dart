@@ -7,6 +7,7 @@ import 'package:ProFlow/navigation/student/my%20project/modules/home/view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ProFlow/guest_page.dart';
+import 'package:ProFlow/navigation/student/chat/chat_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class StudentPage extends StatefulWidget {
@@ -64,9 +65,9 @@ class _StudentPageState extends State<StudentPage> {
                   SizedBox(
                     height: 9.0.hp,
                     child: FeatureButton(
-                        buttonName: 'Mentor',
-                        buttonIcon: Icons.search_rounded,
-                        buttonRoute: FindMentor()),
+                        buttonName: 'Chat',
+                        buttonIcon: Icons.chat,
+                        buttonRoute: Chat()),
                   ),
                   SizedBox(
                     height: 9.0.hp,

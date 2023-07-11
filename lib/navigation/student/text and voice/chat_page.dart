@@ -1,10 +1,10 @@
 import 'package:ProFlow/navigation/student/text%20and%20voice/messages_widget.dart';
 import 'package:ProFlow/navigation/student/text%20and%20voice/new_message_widget.dart';
 import 'package:flutter/material.dart';
+import 'user.dart';
 
 class ChatPage extends StatefulWidget {
   final user;
-
   const ChatPage({
     required this.user,
     required Key key,
@@ -39,7 +39,7 @@ class _ChatPageState extends State<ChatPage> {
                 ),
               ),
               NewMessageWidget(
-                idUser: widget.user,
+                idUser: widget.user.idUser,
                 key: UniqueKey(),
               )
             ],
