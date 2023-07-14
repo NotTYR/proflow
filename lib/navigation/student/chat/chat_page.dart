@@ -26,7 +26,6 @@ class _ChatState extends State<Chat> {
           catchdata['id'] = document.id;
           return catchdata;
         }).toList();
-        print(Chats);
         return FutureBuilder(
             future: GetUid(),
             builder: (context, snapshot) {
@@ -61,11 +60,25 @@ class _ChatState extends State<Chat> {
                             .collection('messages')
                             .snapshots(),
                         builder: (context, snapshot) {
-                          List Messages = snapshot.data!.docs
-                              .map((DocumentSnapshot document) {
-                            return document.data() as Map<String, dynamic>;
-                          }).toList();
-                          return ListView();
+                          print('messages');
+                          print(snapshot.data);
+                          List Messages = [];
+                          if (snapshot.hasData) {
+                            Messages = snapshot.data!.docs
+                                .map((DocumentSnapshot document) {
+                              Map catchdata =
+                                  document.data() as Map<String, dynamic>;
+                              Messages.add(catchdata);
+                            }).toList();
+                          }
+                          return Scaffold(
+                            body: ListView(
+                                children: List.generate(
+                                    Messages.length,
+                                    (index) => Column(
+                                          children: [],
+                                        ))),
+                          );
                         },
                       );
                     }
