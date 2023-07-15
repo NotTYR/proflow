@@ -1,4 +1,5 @@
 import 'package:ProFlow/appbar.dart';
+import 'package:ProFlow/extensions.dart';
 import 'package:ProFlow/home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -97,7 +98,11 @@ class _ForumExpState extends State<ForumExp> {
                                               },
                                             );
                                           } else {
-                                            return Placeholder();
+                                            return Placeholder(
+                                              strokeWidth: 0,
+                                              fallbackHeight: 0,
+                                              fallbackWidth: 0,
+                                            );
                                           }
                                         },
                                       ),
@@ -106,18 +111,24 @@ class _ForumExpState extends State<ForumExp> {
                                 ]),
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
-                                        0.05),
+                                        0.03),
                                 Text(
                                   ForumData[index]['author'],
                                   style: TextStyle(
                                       fontSize:
                                           MediaQuery.of(context).size.height *
-                                              0.025),
+                                              0.015),
                                 ),
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
-                                        0.08),
-                                Text(ForumData[index]['content']),
+                                        0.04),
+                                Text(
+                                  ForumData[index]['content'],
+                                  style: TextStyle(
+                                      fontSize:
+                                          MediaQuery.of(context).size.height *
+                                              0.017),
+                                ),
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.05),
@@ -237,13 +248,16 @@ class _ForumExpState extends State<ForumExp> {
                                 ),
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
-                                        0.03),
+                                        0.02),
                                 Divider(
                                   color: Colors.black54,
                                   thickness:
                                       MediaQuery.of(context).size.height *
                                           0.003,
                                 ),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.02),
                                 Column(),
                                 TextFormField(
                                     keyboardType: TextInputType.multiline,
@@ -302,29 +316,24 @@ class _PostState extends State<Post> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Create a post"),
+      ),
       body: ListView(
-          padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.1),
+          padding: EdgeInsets.only(
+            left: 10.0.wp,
+            right: 10.0.wp,
+            bottom: 10.0.hp,
+          ),
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.1,
-                ),
-                Text(
-                  'Create a post',
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: MediaQuery.sizeOf(context).shortestSide * 0.1),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.1,
-                ),
+                SizedBox(height: 10.0.wp),
                 TextFormField(
                   decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black, width: 2),
+                    borderSide: BorderSide(color: Colors.black, width: 1),
                     borderRadius: BorderRadius.circular(10.0),
                   )),
                   initialValue: 'My Amazing Title',
@@ -333,13 +342,13 @@ class _PostState extends State<Post> {
                   },
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.1,
+                  height: 3.0.hp,
                 ),
                 TextFormField(
                   decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black, width: 2),
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: BorderSide(color: Colors.black, width: 1),
+                    borderRadius: BorderRadius.circular(8.0),
                   )),
                   initialValue: 'Write Something Special!',
                   keyboardType: TextInputType.multiline,
@@ -366,7 +375,15 @@ class _PostState extends State<Post> {
                         'comments': []
                       });
                     },
-                    child: Text('Post'))
+                    child: Padding(
+                      padding: EdgeInsets.all(2.0.wp),
+                      child: Text(
+                        'Post',
+                        style: TextStyle(
+                          fontSize: 15.0.sp,
+                        ),
+                      ),
+                    ))
               ],
             ),
           ]),
