@@ -58,16 +58,14 @@ class _ForumExpState extends State<ForumExp> {
                                   Row(
                                     children: [
                                       Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.55,
+                                        width: 55.0.wp,
                                         child: Text(
                                           ForumData[index]['title'],
                                           style: TextStyle(
                                             fontSize: MediaQuery.of(context)
                                                     .size
                                                     .height *
-                                                0.03,
+                                                0.025,
                                             overflow: TextOverflow.ellipsis,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -86,16 +84,42 @@ class _ForumExpState extends State<ForumExp> {
                                             return GestureDetector(
                                               child: (Icon(
                                                 Icons.delete,
-                                                color: Colors.green,
+                                                color: Colors.red,
                                               )),
-                                              onTap: () async {
-                                                final id =
-                                                    ForumData[index]['id'];
-                                                await FirebaseFirestore.instance
-                                                    .collection('posts')
-                                                    .doc(id)
-                                                    .delete();
-                                              },
+                                              onTap: () => showDialog<String>(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        AlertDialog(
+                                                  title: const Text('Warning'),
+                                                  content: const Text(
+                                                      'Are you sure you want to delete? This action cannot be undone.'),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(context,
+                                                              'Cancel'),
+                                                      child:
+                                                          const Text('Cancel'),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () async {
+                                                        final id =
+                                                            ForumData[index]
+                                                                ['id'];
+                                                        await FirebaseFirestore
+                                                            .instance
+                                                            .collection('posts')
+                                                            .doc(id)
+                                                            .delete();
+                                                        Navigator.pop(
+                                                            context, 'Ok');
+                                                      },
+                                                      child: const Text('OK'),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                             );
                                           } else {
                                             return Placeholder(
@@ -122,12 +146,16 @@ class _ForumExpState extends State<ForumExp> {
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.04),
-                                Text(
-                                  ForumData[index]['content'],
-                                  style: TextStyle(
-                                      fontSize:
-                                          MediaQuery.of(context).size.height *
-                                              0.017),
+                                Container(
+                                  child: Text(
+                                    ForumData[index]['content'],
+                                    style: TextStyle(
+                                        fontSize:
+                                            MediaQuery.of(context).size.height *
+                                                0.017),
+                                    maxLines: 8,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
