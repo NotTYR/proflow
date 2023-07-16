@@ -324,6 +324,7 @@ Future<bool> Like(ForumData, index) async {
 Future<bool> isAuthor(uidAuthor) async {
   final prefs = await SharedPreferences.getInstance();
   final uid = await prefs.getString('uid');
+  print('uid: ' + uid! + " author's uid: " + uidAuthor);
   if (uid == uidAuthor) {
     return true;
   } else {
