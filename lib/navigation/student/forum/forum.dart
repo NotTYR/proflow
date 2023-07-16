@@ -42,273 +42,305 @@ class _ForumExpState extends State<ForumExp> {
                 ForumData.length,
                 (index) => Column(
                       children: [
-                        Card(
-                          margin: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.025,
-                            bottom: MediaQuery.of(context).size.height * 0.025,
-                          ),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            padding: EdgeInsets.all(
-                                MediaQuery.of(context).size.width * 0.1),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Row(children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                        width: 55.0.wp,
-                                        child: Text(
-                                          ForumData[index]['title'],
-                                          style: TextStyle(
-                                            fontSize: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.025,
-                                            overflow: TextOverflow.ellipsis,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.05,
-                                      ),
-                                      FutureBuilder(
-                                        future:
-                                            isAuthor(ForumData[index]['uid']),
-                                        builder: (context, snapshot) {
-                                          if (snapshot.data == true) {
-                                            return GestureDetector(
-                                              child: (Icon(
-                                                Icons.delete,
-                                                color: Colors.red,
-                                              )),
-                                              onTap: () => showDialog<String>(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) =>
-                                                        AlertDialog(
-                                                  title: const Text('Warning'),
-                                                  content: const Text(
-                                                      'Are you sure you want to delete? This action cannot be undone.'),
-                                                  actions: <Widget>[
-                                                    TextButton(
-                                                      onPressed: () =>
-                                                          Navigator.pop(context,
-                                                              'Cancel'),
-                                                      child:
-                                                          const Text('Cancel'),
-                                                    ),
-                                                    TextButton(
-                                                      onPressed: () async {
-                                                        final id =
-                                                            ForumData[index]
-                                                                ['id'];
-                                                        await FirebaseFirestore
-                                                            .instance
-                                                            .collection('posts')
-                                                            .doc(id)
-                                                            .delete();
-                                                        Navigator.pop(
-                                                            context, 'Ok');
-                                                      },
-                                                      child: const Text('OK'),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                          } else {
-                                            return Placeholder(
-                                              strokeWidth: 0,
-                                              fallbackHeight: 0,
-                                              fallbackWidth: 0,
-                                            );
-                                          }
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ]),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.03),
-                                Text(
-                                  ForumData[index]['author'],
-                                  style: TextStyle(
-                                      fontSize:
-                                          MediaQuery.of(context).size.height *
-                                              0.015),
-                                ),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.04),
-                                Container(
-                                  child: Text(
-                                    ForumData[index]['content'],
-                                    style: TextStyle(
-                                        fontSize:
-                                            MediaQuery.of(context).size.height *
-                                                0.017),
-                                    maxLines: 8,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.05),
-                                Divider(
-                                  color: Colors.black54,
-                                  thickness:
-                                      MediaQuery.of(context).size.height *
-                                          0.003,
-                                ),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.02),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    GestureDetector(
-                                        onTap: () async {
-                                          final firestore =
-                                              await FirebaseFirestore.instance;
-                                          bool liked = false;
-                                          final prefs = await SharedPreferences
-                                              .getInstance();
-                                          final uid =
-                                              await prefs.getString('uid');
-                                          for (String like in ForumData[index]
-                                              ['liked']) {
-                                            if (like == uid) {
-                                              liked = true;
-                                            }
-                                          }
-                                          if (liked == false) {
-                                            print('like');
-                                            final uniqueid =
-                                                ForumData[index]['uid'];
-                                            final id = ForumData[index]['id'];
-                                            final map = ForumData[index];
-                                            final comments = map['comments'];
-                                            final author = map['author'];
-                                            final title = map['title'];
-                                            final content = map['content'];
-                                            List liked = map['liked'];
-                                            liked.add(uid);
-                                            final doc = firestore
-                                                .collection('posts')
-                                                .doc(id);
-                                            doc.update({
-                                              'uid': uniqueid,
-                                              'liked': liked,
-                                              'comments': comments,
-                                              'author': author,
-                                              'title': title,
-                                              'content': content
-                                            });
-                                          } else {
-                                            print('unlike');
-                                            final uniqueid =
-                                                ForumData[index]['uid'];
-                                            final id = ForumData[index]['id'];
-                                            final map = ForumData[index];
-                                            final comments = map['comments'];
-                                            final author = map['author'];
-                                            final title = map['title'];
-                                            final content = map['content'];
-                                            List liked = map['liked'];
-                                            liked.removeAt(
-                                                map['liked'].indexOf(uid));
-                                            final doc = firestore
-                                                .collection('posts')
-                                                .doc(id);
-                                            doc.update({
-                                              'uid': uniqueid,
-                                              'liked': liked,
-                                              'comments': comments,
-                                              'author': author,
-                                              'title': title,
-                                              'content': content
-                                            });
-                                          }
-                                          ;
-                                        },
-                                        child: FutureBuilder(
-                                          future: Like(ForumData, index),
-                                          builder: (context, snapshot) {
-                                            if (snapshot.connectionState ==
-                                                ConnectionState.waiting) {
-                                              return Icon(Icons.favorite,
-                                                  color: Colors.grey);
-                                            }
-                                            if (snapshot.data == true) {
-                                              return Icon(Icons.favorite,
-                                                  color: Colors.red);
-                                            } else {
-                                              return Icon(Icons.favorite,
-                                                  color: Colors.grey);
-                                            }
-                                          },
-                                        )),
-                                    SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.01),
-                                    Text(ForumData[index]['liked']
-                                        .length
-                                        .toString()),
-                                    SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.05),
-                                    Icon(
-                                      Icons.comment_rounded,
-                                      color: Colors.lightBlue,
-                                    ),
-                                    SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.01),
-                                    Text(ForumData[index]['comments']
-                                        .length
-                                        .toString()),
-                                  ],
-                                ),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.02),
-                                Divider(
-                                  color: Colors.black54,
-                                  thickness:
-                                      MediaQuery.of(context).size.height *
-                                          0.003,
-                                ),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.02),
-                                Column(),
-                                TextFormField(
-                                    keyboardType: TextInputType.multiline,
-                                    maxLines: null,
-                                    decoration: InputDecoration(
-                                        enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.black, width: 1.5),
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    )))
-                              ],
-                            ),
-                          ),
-                        )
+                        MsgCard(
+                            ForumData: ForumData,
+                            MsgController: TextEditingController(),
+                            index: index)
                       ],
                     )),
           ),
         );
       },
+    );
+  }
+}
+
+class MsgCard extends StatefulWidget {
+  final List ForumData;
+  final dynamic index;
+  final dynamic MsgController;
+  const MsgCard(
+      {required this.ForumData,
+      required this.MsgController,
+      required this.index});
+
+  @override
+  State<MsgCard> createState() => _MsgCardState(
+      ForumData: this.ForumData,
+      MsgController: this.MsgController,
+      index: this.index);
+}
+
+class _MsgCardState extends State<MsgCard> {
+  List ForumData;
+  dynamic index;
+  dynamic MsgController;
+
+  _MsgCardState(
+      {required this.ForumData,
+      required this.MsgController,
+      required this.index});
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.only(
+        top: MediaQuery.of(context).size.height * 0.025,
+        bottom: MediaQuery.of(context).size.height * 0.025,
+      ),
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.9,
+        padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.1),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(children: [
+              Row(
+                children: [
+                  Container(
+                    width: 55.0.wp,
+                    child: Text(
+                      ForumData[index]['title'],
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.height * 0.025,
+                        overflow: TextOverflow.ellipsis,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.05,
+                  ),
+                  FutureBuilder(
+                    future: isAuthor(ForumData[index]['uid']),
+                    builder: (context, snapshot) {
+                      if (snapshot.data == true) {
+                        return GestureDetector(
+                          child: (Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                          )),
+                          onTap: () => showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text('Warning'),
+                              content: const Text(
+                                  'Are you sure you want to delete? This action cannot be undone.'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, 'Cancel'),
+                                  child: const Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () async {
+                                    final id = ForumData[index]['id'];
+                                    await FirebaseFirestore.instance
+                                        .collection('posts')
+                                        .doc(id)
+                                        .delete();
+                                    Navigator.pop(context, 'Ok');
+                                  },
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      } else {
+                        return Placeholder(
+                          strokeWidth: 0,
+                          fallbackHeight: 0,
+                          fallbackWidth: 0,
+                        );
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ]),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+            Text(
+              ForumData[index]['author'],
+              style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.height * 0.015),
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+            Container(
+              child: Text(
+                ForumData[index]['content'],
+                style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.height * 0.017),
+                maxLines: 8,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+            Divider(
+              color: Colors.black54,
+              thickness: MediaQuery.of(context).size.height * 0.003,
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                GestureDetector(
+                    onTap: () async {
+                      final firestore = await FirebaseFirestore.instance;
+                      bool liked = false;
+                      final prefs = await SharedPreferences.getInstance();
+                      final uid = await prefs.getString('uid');
+                      for (String like in ForumData[index]['liked']) {
+                        if (like == uid) {
+                          liked = true;
+                        }
+                      }
+                      if (liked == false) {
+                        print('like');
+                        final uniqueid = ForumData[index]['uid'];
+                        final id = ForumData[index]['id'];
+                        final map = ForumData[index];
+                        final comments = map['comments'];
+                        final author = map['author'];
+                        final title = map['title'];
+                        final content = map['content'];
+                        List liked = map['liked'];
+                        liked.add(uid);
+                        final doc = firestore.collection('posts').doc(id);
+                        doc.update({
+                          'uid': uniqueid,
+                          'liked': liked,
+                          'comments': comments,
+                          'author': author,
+                          'title': title,
+                          'content': content
+                        });
+                      } else {
+                        print('unlike');
+                        final uniqueid = ForumData[index]['uid'];
+                        final id = ForumData[index]['id'];
+                        final map = ForumData[index];
+                        final comments = map['comments'];
+                        final author = map['author'];
+                        final title = map['title'];
+                        final content = map['content'];
+                        List liked = map['liked'];
+                        liked.removeAt(map['liked'].indexOf(uid));
+                        final doc = firestore.collection('posts').doc(id);
+                        doc.update({
+                          'uid': uniqueid,
+                          'liked': liked,
+                          'comments': comments,
+                          'author': author,
+                          'title': title,
+                          'content': content
+                        });
+                      }
+                      ;
+                    },
+                    child: FutureBuilder(
+                      future: Like(ForumData, index),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Icon(Icons.favorite, color: Colors.grey);
+                        }
+                        if (snapshot.data == true) {
+                          return Icon(Icons.favorite, color: Colors.red);
+                        } else {
+                          return Icon(Icons.favorite, color: Colors.grey);
+                        }
+                      },
+                    )),
+                SizedBox(width: MediaQuery.of(context).size.width * 0.01),
+                Text(ForumData[index]['liked'].length.toString()),
+                SizedBox(width: MediaQuery.of(context).size.width * 0.05),
+                Icon(
+                  Icons.comment_rounded,
+                  color: Colors.lightBlue,
+                ),
+                SizedBox(width: MediaQuery.of(context).size.width * 0.01),
+                Text(ForumData[index]['comments'].length.toString()),
+              ],
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+            Divider(
+              color: Colors.black54,
+              thickness: MediaQuery.of(context).size.height * 0.003,
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+            //comments column
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.2,
+              width: MediaQuery.of(context).size.height * 0.2,
+              child: ListView(
+                children: List.generate(
+                    ForumData[index]['comments'].length,
+                    (commentindex) => Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Column(
+                              children: [
+                                Text(
+                                  ForumData[index]['comments'][commentindex]
+                                      ['author'],
+                                  style: TextStyle(fontSize: 13),
+                                ),
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.02,
+                                ),
+                                Text(ForumData[index]['comments'][commentindex]
+                                    ['comment'])
+                              ],
+                            )
+                          ],
+                        )),
+              ),
+            ),
+            TextField(
+                controller: MsgController,
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+                decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black, width: 1.5),
+                  borderRadius: BorderRadius.circular(20.0),
+                ))),
+            IconButton(
+                onPressed: () async {
+                  //update comments
+                  final prefs = await SharedPreferences.getInstance();
+                  final username = await prefs.getString('username');
+                  final firestore = await FirebaseFirestore.instance;
+                  final uid = await prefs.getString('uid');
+                  final uniqueid = ForumData[index]['uid'];
+                  final id = ForumData[index]['id'];
+                  final map = ForumData[index];
+                  List comments = map['comments'];
+                  comments.add({
+                    "comment": MsgController.text,
+                    "author": username,
+                    "uid": uid
+                  });
+                  final author = map['author'];
+                  final title = map['title'];
+                  final content = map['content'];
+                  List liked = map['liked'];
+                  final doc = firestore.collection('posts').doc(id);
+                  doc.update({
+                    'uid': uniqueid,
+                    'liked': liked,
+                    'comments': comments,
+                    'author': author,
+                    'title': title,
+                    'content': content
+                  });
+                  MsgController.clear();
+                },
+                icon: Icon(Icons.send))
+          ],
+        ),
+      ),
     );
   }
 }
