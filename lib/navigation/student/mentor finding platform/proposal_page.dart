@@ -9,7 +9,6 @@ import '../my project/core/values/colors.dart';
 import '../my project/data/models/task.dart';
 import '../my project/modules/home/controller.dart';
 import '../my project/modules/widgets/icons.dart';
-import 'retrieve_proposals.dart';
 
 class ProposalPage extends StatefulWidget {
   ProposalPage({super.key});
@@ -24,34 +23,6 @@ class _ProposalPageState extends State<ProposalPage> {
   Widget build(BuildContext context) {
     var squareWidth = Get.width - 12.0.wp;
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Proposal Page'),
-        ),
-        body: Container(
-          
-          child: FutureBuilder(
-              future: CheckForProjects(),
-              builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                if (snapshot.data == 'true') {
-                  return Center(
-                    child: Text('Pending approval'),
-                  );
-                } else {
-                  return Center(
-                      child: ElevatedButton(
-                          //link this to a page to input project details
-                          onPressed: () {
-                            Propose();
-                          },
-                          child: Text('Propose A Project')));
-                }
-              }),
-        ));
+        appBar: ProFlowAppBar(title: 'Create Group'), body: Container());
   }
-
 }
