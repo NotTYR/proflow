@@ -461,7 +461,7 @@ class ForumAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text('ProFlow'),
+      title: Text('Forum'),
       actions: [
         IconButton(
           onPressed: () {

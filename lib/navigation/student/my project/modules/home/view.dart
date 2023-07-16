@@ -22,7 +22,9 @@ class MyProjects extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ProFlowAppBar(),
+      appBar: ProFlowAppBar(
+        title: 'My Project',
+      ),
       body: Obx(
         () => IndexedStack(
           index: controller.tabIndex.value,

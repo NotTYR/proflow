@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'home_page.dart';
 
 class ProFlowAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const ProFlowAppBar({super.key});
+  final String title;
+  const ProFlowAppBar({super.key, required this.title});
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text('ProFlow'),
+      title: Text(title),
       automaticallyImplyLeading: true,
       leading: IconButton(
         onPressed: () {

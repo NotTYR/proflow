@@ -1,7 +1,7 @@
 import 'package:ProFlow/extensions.dart';
 import 'package:ProFlow/navigation/student/text%20and%20voice/chat_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:ProFlow/navigation/student/mentor%20finding%20platform/find_mentor.dart';
+import 'package:ProFlow/navigation/student/mentor%20finding%20platform/proposal_page.dart';
 import 'package:ProFlow/navigation/student/forum/forum.dart';
 import 'package:ProFlow/navigation/student/my%20project/modules/home/view.dart';
 import 'package:flutter/material.dart';
@@ -63,14 +63,12 @@ class _StudentPageState extends State<StudentPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: 9.0.hp,
                     child: FeatureButton(
                         buttonName: 'Chat',
                         buttonIcon: Icons.chat,
                         buttonRoute: Chat()),
                   ),
                   SizedBox(
-                    height: 9.0.hp,
                     child: FeatureButton(
                         buttonName: 'Projects',
                         buttonIcon: Icons.list_alt_rounded,
@@ -83,21 +81,17 @@ class _StudentPageState extends State<StudentPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: 9.0.hp,
                   child: FeatureButton(
                       buttonName: 'Forum',
                       buttonIcon: Icons.question_answer,
                       buttonRoute: ForumExp()),
                 ),
                 SizedBox(
-                  height: 9.0.hp,
                   child: FeatureButton(
-                      buttonName: 'Text/Voice',
-                      buttonIcon: Icons.voice_chat,
-                      buttonRoute: ChatPage(
-                        user: GlobalKey,
-                        key: UniqueKey(),
-                      )),
+                    buttonName: 'Create Group',
+                    buttonIcon: Icons.group,
+                    buttonRoute: ProposalPage(),
+                  ),
                 ),
               ],
             )
@@ -130,28 +124,32 @@ class FeatureButton extends StatelessWidget {
   final Widget buttonRoute;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        RawMaterialButton(
-          onPressed: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => buttonRoute));
-          },
-          fillColor: Color(0xFF3874CB),
-          child: Icon(
-            buttonIcon,
-            color: Colors.white,
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          RawMaterialButton(
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => buttonRoute));
+            },
+            fillColor: Color(0xFF3874CB),
+            child: Icon(
+              buttonIcon,
+              color: Colors.white,
+            ),
+            padding: EdgeInsets.all(15.0),
+            shape: CircleBorder(),
           ),
-          padding: EdgeInsets.all(15.0),
-          shape: CircleBorder(),
-        ),
-        SizedBox(height: 10),
-        Text(
-          buttonName,
-          style: TextStyle(fontWeight: FontWeight.w600),
-        )
-      ],
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.01,
+          ),
+          Text(
+            buttonName,
+            style: TextStyle(fontWeight: FontWeight.w600),
+          )
+        ],
+      ),
     );
   }
 }

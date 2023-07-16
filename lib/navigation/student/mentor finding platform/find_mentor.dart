@@ -47,7 +47,9 @@ class FindMentor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ProFlowAppBar(),
+      appBar: ProFlowAppBar(
+        title: 'Find Mentor',
+      ),
       body: Column(
         children: [
           ElevatedButton(
