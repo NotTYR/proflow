@@ -189,6 +189,8 @@ class _ForumExpState extends State<ForumExp> {
                                           }
                                           if (liked == false) {
                                             print('like');
+                                            final uniqueid =
+                                                ForumData[index]['uid'];
                                             final id = ForumData[index]['id'];
                                             final map = ForumData[index];
                                             final comments = map['comments'];
@@ -201,7 +203,7 @@ class _ForumExpState extends State<ForumExp> {
                                                 .collection('posts')
                                                 .doc(id);
                                             doc.update({
-                                              'uid': uid,
+                                              'uid': uniqueid,
                                               'liked': liked,
                                               'comments': comments,
                                               'author': author,
@@ -210,6 +212,8 @@ class _ForumExpState extends State<ForumExp> {
                                             });
                                           } else {
                                             print('unlike');
+                                            final uniqueid =
+                                                ForumData[index]['uid'];
                                             final id = ForumData[index]['id'];
                                             final map = ForumData[index];
                                             final comments = map['comments'];
@@ -223,7 +227,7 @@ class _ForumExpState extends State<ForumExp> {
                                                 .collection('posts')
                                                 .doc(id);
                                             doc.update({
-                                              'uid': uid,
+                                              'uid': uniqueid,
                                               'liked': liked,
                                               'comments': comments,
                                               'author': author,
