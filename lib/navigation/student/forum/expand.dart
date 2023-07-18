@@ -5,20 +5,27 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'forum.dart';
 
 class ExpandedPost extends StatefulWidget {
-  const ExpandedPost({super.key});
+  final dynamic forumdata;
+  const ExpandedPost({super.key, required this.forumdata});
 
   @override
-  State<ExpandedPost> createState() => _ExpandedPostState();
+  State<ExpandedPost> createState() => _ExpandedPostState(forumdata: forumdata);
 }
 
 class _ExpandedPostState extends State<ExpandedPost> {
+  dynamic forumdata;
+  _ExpandedPostState({required this.forumdata});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(''),
+        title: Text(forumdata['title']),
       ),
-      body: Scaffold(),
+      body: Scaffold(
+        body: Container(
+          child: Text(forumdata['content']),
+        ),
+      ),
     );
   }
 }

@@ -90,7 +90,8 @@ class _MsgCardState extends State<MsgCard> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ExpandedPost()),
+          MaterialPageRoute(
+              builder: (context) => ExpandedPost(forumdata: ForumData[index])),
         );
       },
       child: Card(

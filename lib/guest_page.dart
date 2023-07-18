@@ -83,81 +83,92 @@ class _GuestPageState extends State<GuestPage> {
                                   //hi
                                   final GoogleUser =
                                       await GoogleSignIn().signIn();
-                                  final GoogleAuth =
-                                      await GoogleUser!.authentication;
-                                  final credential =
-                                      GoogleAuthProvider.credential(
-                                    accessToken: GoogleAuth.accessToken,
-                                    idToken: GoogleAuth.idToken,
-                                  );
-                                  final user = await FirebaseAuth.instance
-                                      .signInWithCredential(credential);
-                                  //student teacher
-                                  final email = await GoogleUser.email;
-                                  final username = await FirebaseAuth
-                                      .instance.currentUser!.displayName;
-                                  final prefs =
-                                      await SharedPreferences.getInstance();
-                                  final uid = await FirebaseAuth
-                                      .instance.currentUser!.uid;
-                                  await prefs.setString('uid', uid);
-                                  await prefs.setString('username', username!);
-                                  await prefs.setString('email', email);
-                                  bool containsuid = false;
-                                  await FirebaseFirestore.instance
-                                      .collection('identity')
-                                      .get()
-                                      .then((identityValue) => {
-                                            for (final doc
-                                                in identityValue.docs)
-                                              {
-                                                if (doc
-                                                    .data()
-                                                    .values
-                                                    .contains(uid))
-                                                  {
-                                                    containsuid = true,
-                                                    prefs.setString('identity',
-                                                        doc.data()['identity'])
-                                                  }
-                                              },
-                                            if (containsuid == false)
-                                              {
-                                                print('registering'),
-                                                //dont hv the guy in database
-                                                if (RegExp(r'(\d)')
-                                                    .hasMatch(email))
-                                                  {
-                                                    print('student'),
-                                                    //student(contains digits)
-                                                    prefs.setString(
-                                                        'identity', 'student'),
-                                                    FirebaseFirestore.instance
-                                                        .collection('identity')
-                                                        .add({
-                                                      'uid': uid,
-                                                      'identity': 'student'
-                                                    })
-                                                  }
-                                                else
-                                                  {
-                                                    //teacher
-                                                    print('not student'),
-                                                    prefs.setString(
-                                                        'identity', 'teacher'),
-                                                    FirebaseFirestore.instance
-                                                        .collection('identity')
-                                                        .add({
-                                                      'uid': uid,
-                                                      'identity': 'teacher'
-                                                    })
-                                                  }
-                                              },
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        HomePage()))
-                                          });
+                                  final gglemail = GoogleUser?.email;
+                                  if (RegExp(r"/student.hci.edu.sg")
+                                      .hasMatch(gglemail.toString())) {
+                                    final GoogleAuth =
+                                        await GoogleUser!.authentication;
+                                    final credential =
+                                        GoogleAuthProvider.credential(
+                                      accessToken: GoogleAuth.accessToken,
+                                      idToken: GoogleAuth.idToken,
+                                    );
+                                    final user = await FirebaseAuth.instance
+                                        .signInWithCredential(credential);
+                                    //student teacher
+                                    final email = await GoogleUser.email;
+                                    final username = await FirebaseAuth
+                                        .instance.currentUser!.displayName;
+                                    final prefs =
+                                        await SharedPreferences.getInstance();
+                                    final uid = await FirebaseAuth
+                                        .instance.currentUser!.uid;
+                                    await prefs.setString('uid', uid);
+                                    await prefs.setString(
+                                        'username', username!);
+                                    await prefs.setString('email', email);
+                                    bool containsuid = false;
+                                    await FirebaseFirestore.instance
+                                        .collection('identity')
+                                        .get()
+                                        .then((identityValue) => {
+                                              for (final doc
+                                                  in identityValue.docs)
+                                                {
+                                                  if (doc
+                                                      .data()
+                                                      .values
+                                                      .contains(uid))
+                                                    {
+                                                      containsuid = true,
+                                                      prefs.setString(
+                                                          'identity',
+                                                          doc.data()[
+                                                              'identity'])
+                                                    }
+                                                },
+                                              if (containsuid == false)
+                                                {
+                                                  print('registering'),
+                                                  //dont hv the guy in database
+                                                  if (RegExp(r'(\d)')
+                                                      .hasMatch(email))
+                                                    {
+                                                      print('student'),
+                                                      //student(contains digits)
+                                                      prefs.setString(
+                                                          'identity',
+                                                          'student'),
+                                                      FirebaseFirestore.instance
+                                                          .collection(
+                                                              'identity')
+                                                          .add({
+                                                        'uid': uid,
+                                                        'identity': 'student'
+                                                      })
+                                                    }
+                                                  else
+                                                    {
+                                                      //teacher
+                                                      print('not student'),
+                                                      prefs.setString(
+                                                          'identity',
+                                                          'teacher'),
+                                                      FirebaseFirestore.instance
+                                                          .collection(
+                                                              'identity')
+                                                          .add({
+                                                        'uid': uid,
+                                                        'identity': 'teacher'
+                                                      })
+                                                    }
+                                                },
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          HomePage()))
+                                            });
+                                  }
                                 } on FirebaseAuthException catch (e) {
                                   print(e.toString());
                                   loading = false;

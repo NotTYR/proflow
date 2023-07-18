@@ -1,7 +1,9 @@
 import 'package:ProFlow/extensions.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:ProFlow/appbar.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -23,6 +25,21 @@ class _ProposalPageState extends State<ProposalPage> {
   Widget build(BuildContext context) {
     var squareWidth = Get.width - 12.0.wp;
     return Scaffold(
-        appBar: ProFlowAppBar(title: 'Create Group'), body: Container());
+        appBar: ProFlowAppBar(title: 'Create Group'),
+        body: Column(
+          children: [
+            ElevatedButton(
+                onPressed: () {
+                  final firebase = FirebaseFirestore.instance;
+                  firebase.collection('groups').add({'name': 'hi'});
+                },
+                child: Text('create group')),
+            ElevatedButton(
+                onPressed: () {
+                  //go to another page, input textfield, button to confirm, check if collection.doc(input) exist
+                },
+                child: Text('join group'))
+          ],
+        ));
   }
 }
