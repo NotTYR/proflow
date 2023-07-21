@@ -170,13 +170,13 @@ class _MsgCardState extends State<MsgCard> {
                   ],
                 ),
               ]),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+              SizedBox(height: 2.0.hp),
               Text(
                 ForumData[index]['author'],
                 style: TextStyle(
                     fontSize: MediaQuery.of(context).size.height * 0.015),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+              SizedBox(height: 3.0.hp),
               Container(
                 child: Text(
                   ForumData[index]['content'],
