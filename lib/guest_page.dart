@@ -83,22 +83,22 @@ class _GuestPageState extends State<GuestPage> {
                                   //hi
                                   final GoogleUser =
                                       await GoogleSignIn().signIn();
-                                  final gglemail = GoogleUser?.email;
+                                  final GoogleAuth =
+                                      await GoogleUser!.authentication;
+                                  final credential =
+                                      GoogleAuthProvider.credential(
+                                    accessToken: GoogleAuth.accessToken,
+                                    idToken: GoogleAuth.idToken,
+                                  );
+                                  final user = await FirebaseAuth.instance
+                                      .signInWithCredential(credential);
+                                  //student teacher
+                                  final email = await GoogleUser.email;
+                                  final username = await FirebaseAuth
+                                      .instance.currentUser!.displayName;
+
                                   if (RegExp(r"/student.hci.edu.sg")
-                                      .hasMatch(gglemail.toString())) {
-                                    final GoogleAuth =
-                                        await GoogleUser!.authentication;
-                                    final credential =
-                                        GoogleAuthProvider.credential(
-                                      accessToken: GoogleAuth.accessToken,
-                                      idToken: GoogleAuth.idToken,
-                                    );
-                                    final user = await FirebaseAuth.instance
-                                        .signInWithCredential(credential);
-                                    //student teacher
-                                    final email = await GoogleUser.email;
-                                    final username = await FirebaseAuth
-                                        .instance.currentUser!.displayName;
+                                      .hasMatch(email.toString())) {
                                     final prefs =
                                         await SharedPreferences.getInstance();
                                     final uid = await FirebaseAuth
@@ -168,6 +168,8 @@ class _GuestPageState extends State<GuestPage> {
                                                       builder: (context) =>
                                                           HomePage()))
                                             });
+                                  } else {
+                                    GoogleSignIn().signOut();
                                   }
                                 } on FirebaseAuthException catch (e) {
                                   print(e.toString());

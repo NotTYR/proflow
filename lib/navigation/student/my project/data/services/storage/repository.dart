@@ -5,6 +5,9 @@ class TaskRepository {
   TaskProvider taskProvider;
   TaskRepository({required this.taskProvider});
 
-  List<Task> readTasks() => taskProvider.readTasks();
+  Future<List<Task>> readTasks() async {
+    return taskProvider.readTasks();
+  }
+
   void writeTasks(List<Task> tasks) => taskProvider.writeTasks(tasks);
 }

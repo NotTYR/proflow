@@ -88,7 +88,7 @@ class _StudentPageState extends State<StudentPage> {
                 ),
                 SizedBox(
                   child: FeatureButton(
-                    buttonName: 'Create Group',
+                    buttonName: 'Groups',
                     buttonIcon: Icons.group,
                     buttonRoute: ProposalPage(),
                   ),

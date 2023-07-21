@@ -20,9 +20,10 @@ class HomeController extends GetxController {
   final doneTodos = <dynamic>[].obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    tasks.assignAll(taskRepository.readTasks());
+    var readtasks = await taskRepository.readTasks();
+    tasks.assignAll(readtasks);
     ever(tasks, (_) => taskRepository.writeTasks(tasks));
   }
 
