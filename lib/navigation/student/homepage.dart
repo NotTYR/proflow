@@ -1,7 +1,7 @@
 import 'package:ProFlow/extensions.dart';
 import 'package:ProFlow/navigation/student/text%20and%20voice/chat_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:ProFlow/navigation/student/mentor%20finding%20platform/proposal_page.dart';
+import 'package:ProFlow/navigation/student/create%20group/proposal_page.dart';
 import 'package:ProFlow/navigation/student/forum/forum.dart';
 import 'package:ProFlow/navigation/student/my%20project/modules/home/view.dart';
 import 'package:flutter/material.dart';

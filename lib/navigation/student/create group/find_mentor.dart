@@ -1,4 +1,4 @@
-import 'package:ProFlow/navigation/student/mentor%20finding%20platform/proposal_page.dart';
+import 'package:ProFlow/navigation/student/create%20group/proposal_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../appbar.dart';

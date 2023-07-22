@@ -20,7 +20,7 @@ dependencies:
   flutter_svg: ^1.1.6
   cloud_firestore: ^4.8.1
   google_sign_in: ^5.4.4
-  shared_preferences: ^2.0.17
+  shared_preferences: ^2.2.0
   get: ^4.6.5
   get_storage: ^2.1.1
   equatable: ^2.0.5
