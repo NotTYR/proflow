@@ -35,6 +35,10 @@ class _ProposalPageState extends State<ProposalPage> {
                 onPressed: () async {
                   final doc = await GetDocUid();
                   if (doc == 'placeholder') {
+                    SharedPreferences data =
+                        await SharedPreferences.getInstance();
+                    data.setInt("checkGroup", 1);
+
                     final prefs = await SharedPreferences.getInstance();
                     final uid = prefs.getString('uid');
                     final firebase = FirebaseFirestore.instance;
@@ -107,6 +111,10 @@ class _JoinGroupState extends State<JoinGroup> {
                     .get()
                     .then((doc) async {
                   if (doc.exists) {
+                    SharedPreferences data =
+                        await SharedPreferences.getInstance();
+                    data.setInt("checkGroup", 1);
+
                     success = true;
                     print('join');
                     final docs =
