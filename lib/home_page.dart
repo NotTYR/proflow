@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ProFlow/navigation/student/homepage.dart';
 import 'package:ProFlow/guest_page.dart';
 
+import 'navigation/student/create group/proposal_page.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -22,9 +24,24 @@ class _HomePageState extends State<HomePage> {
               child: CircularProgressIndicator(),
             );
           } else if (snapshot.data == 'student') {
-            return StudentPage();
+            return FutureBuilder(
+              future: GetDocUid(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                final doc = GetDocUid();
+                if (doc == 'placeholder') {
+                  return ProposalPage();
+                } else {
+                  return StudentPage();
+                }
+              },
+            );
           } else if (snapshot.data == 'teacher') {
-            return TeacherPage();
+            final doc = GetDocUid();
+            if (doc == 'placeholder') {
+              return ProposalPage();
+            } else {
+              return TeacherPage();
+            }
           } else {
             return Center(
               child: CircularProgressIndicator(),

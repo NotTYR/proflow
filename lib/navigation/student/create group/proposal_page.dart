@@ -1,6 +1,7 @@
 import 'package:ProFlow/extensions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ProFlow/appbar.dart';
 import 'package:flutter/rendering.dart';
@@ -9,7 +10,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../guest_page.dart';
 import '../my project/core/values/colors.dart';
 import '../my project/data/models/task.dart';
 import '../my project/modules/home/controller.dart';
@@ -29,15 +32,15 @@ class _ProposalPageState extends State<ProposalPage> {
   Widget build(BuildContext context) {
     var squareWidth = Get.width - 12.0.wp;
     return Scaffold(
-        appBar: ProFlowAppBar(title: 'Groups'),
         body: Container(
           padding: EdgeInsets.only(
             top: 4.0.hp,
             bottom: 4.0.hp,
-            left: 4.0.wp,
-            right: 4.0.wp,
+            left: 6.0.wp,
+            right: 6.0.wp,
           ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 child: SvgPicture.asset('assets/proflow.svg'),
@@ -88,10 +91,6 @@ class _ProposalPageState extends State<ProposalPage> {
                   onPressed: () async {
                     final doc = await GetDocUid();
                     if (doc == 'placeholder') {
-                      SharedPreferences data =
-                          await SharedPreferences.getInstance();
-                      data.setInt("checkGroup", 1);
-
                       final prefs = await SharedPreferences.getInstance();
                       final uid = prefs.getString('uid');
                       final firebase = FirebaseFirestore.instance;
@@ -111,7 +110,7 @@ class _ProposalPageState extends State<ProposalPage> {
                       });
                     }
                   },
-                  child: Text('create group')),
+                  child: Text('Create group')),
               ElevatedButton(
                   onPressed: () {
                     Navigator.push(
@@ -122,10 +121,23 @@ class _ProposalPageState extends State<ProposalPage> {
                                 )));
                     //go to another page, input textfield, button to confirm, check if collection.doc(input) exist
                   },
-                  child: Text('join group')),
-              Text(controlled)
+                  child: Text('Join group')),
+              Text(controlled),
             ],
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            try {
+              await FirebaseAuth.instance.signOut();
+              await GoogleSignIn().signOut();
+              Navigator.pop(context,
+                  MaterialPageRoute(builder: ((context) => GuestPage())));
+            } catch (e) {
+              print(e.toString());
+            }
+          },
+          child: Icon(Icons.logout_outlined),
         ));
   }
 }
@@ -165,10 +177,6 @@ class _JoinGroupState extends State<JoinGroup> {
                     .get()
                     .then((doc) async {
                   if (doc.exists) {
-                    SharedPreferences data =
-                        await SharedPreferences.getInstance();
-                    data.setInt("checkGroup", 1);
-
                     success = true;
                     print('join');
                     final docs =
