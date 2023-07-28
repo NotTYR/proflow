@@ -1,5 +1,6 @@
 import 'package:ProFlow/navigation/teacher/homepage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ProFlow/navigation/student/homepage.dart';
 import 'package:ProFlow/guest_page.dart';
@@ -27,20 +28,28 @@ class _HomePageState extends State<HomePage> {
             return FutureBuilder(
               future: GetDocUid(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
-                final doc = GetDocUid();
-                if (doc == 'placeholder') {
-                  return ProposalPage();
+                if (snapshot.hasData) {
+                  final doc = GetDocUid();
+                  if (doc == 'placeholder') {
+                    return ProposalPage();
+                  } else {
+                    return StudentPage();
+                  }
                 } else {
-                  return StudentPage();
+                  return CircularProgressIndicator();
                 }
               },
             );
           } else if (snapshot.data == 'teacher') {
-            final doc = GetDocUid();
-            if (doc == 'placeholder') {
-              return ProposalPage();
+            if (snapshot.hasData) {
+              final doc = GetDocUid();
+              if (doc == 'placeholder') {
+                return ProposalPage();
+              } else {
+                return StudentPage();
+              }
             } else {
-              return TeacherPage();
+              return CircularProgressIndicator();
             }
           } else {
             return Center(
