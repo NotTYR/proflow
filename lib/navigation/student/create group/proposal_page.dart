@@ -95,7 +95,7 @@ class _ProposalPageState extends State<ProposalPage> {
                       final prefs = await SharedPreferences.getInstance();
                       final uid = prefs.getString('uid');
                       final firebase = FirebaseFirestore.instance;
-                      firebase.collection('groups').add({
+                      await firebase.collection('groups').add({
                         'task': [],
                         'members': [uid]
                       });
@@ -216,31 +216,34 @@ class _JoinGroupState extends State<JoinGroup> {
                   var success = null;
                   final prefs = await SharedPreferences.getInstance();
                   final uid = await prefs.getString('uid');
-                  await firestore
-                      .collection('groups')
-                      .doc(controller)
-                      .get()
-                      .then((doc) async {
-                    print('hi');
-                    if (doc.exists) {
-                      success = true;
-                      print('join');
-                      final docs = await firestore
-                          .collection('groups')
-                          .doc(controller)
-                          .get();
-                      final members = docs.data()?['members'];
-                      members.add(uid);
-                      await firestore
-                          .collection('groups')
-                          .doc(controller)
-                          .update({"members": members});
-                      controlled = 'Joined';
-                    } else {
-                      success = false;
-                      controlled = 'Invalid';
+                  print(controller.text);
+                  bool groupexists = false;
+                  final groups = await firestore.collection('groups').get();
+                  for (var group in groups.docs) {
+                    print(group.id);
+                    if (group.id == controller.text) {
+                      groupexists = true;
                     }
-                  });
+                  }
+                  print('hi');
+                  if (groupexists) {
+                    success = true;
+                    print('join');
+                    final docs = await firestore
+                        .collection('groups')
+                        .doc(controller.text)
+                        .get();
+                    final members = docs.data()?['members'];
+                    members.add(uid);
+                    await firestore
+                        .collection('groups')
+                        .doc(controller.text)
+                        .update({"members": members});
+                    controlled = 'Joined';
+                  } else {
+                    success = false;
+                    controlled = 'Invalid ID.';
+                  }
                 },
                 child: Text('Join')),
             Text(controlled),
