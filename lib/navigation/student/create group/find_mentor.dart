@@ -1,4 +1,4 @@
-import 'package:ProFlow/navigation/student/create%20group/proposal_page.dart';
+import 'package:ProFlow/navigation/student/create%20group/create_group.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../appbar.dart';

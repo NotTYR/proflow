@@ -1,5 +1,6 @@
 import 'package:ProFlow/extensions.dart';
 import 'package:ProFlow/navigation/student/homepage.dart';
+import 'package:ProFlow/navigation/student/onboarding.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:onboarding/onboarding.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../guest_page.dart';
 import '../my project/core/values/colors.dart';
@@ -66,7 +68,7 @@ class _ProposalPageState extends State<ProposalPage> {
               Container(
                   width: MediaQuery.of(context).size.width * 0.6,
                   margin: EdgeInsets.only(
-                    bottom: 4.0.hp,
+                    bottom: 3.0.hp,
                   ),
                   child: const FittedBox(
                       child: Text(
@@ -128,7 +130,7 @@ class _ProposalPageState extends State<ProposalPage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => StudentPage()),
+                                        builder: (context) => OnboardingPage()),
                                   );
                                 },
                               ),
@@ -225,8 +227,7 @@ class _JoinGroupState extends State<JoinGroup> {
                       groupexists = true;
                     }
                   }
-                  print('hi');
-                  if (groupexists) {
+                  if (groupexists == true) {
                     success = true;
                     print('join');
                     final docs = await firestore
@@ -239,15 +240,48 @@ class _JoinGroupState extends State<JoinGroup> {
                         .collection('groups')
                         .doc(controller.text)
                         .update({"members": members});
-                    controlled = 'Joined';
+                    setState(() {
+                      controlled = '';
+                    });
+                    showDialog<void>(
+                      context: context,
+                      barrierDismissible: false, // user must tap button
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Join Success'),
+                          content: SingleChildScrollView(
+                            child: ListBody(
+                              children: <Widget>[
+                                Text('Group ID: ' + controller.text),
+                              ],
+                            ),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text('Proceed'),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => OnboardingPage()),
+                                );
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   } else {
                     success = false;
-                    controlled = 'Invalid ID.';
+                    setState(() {
+                      controlled = 'Invalid ID.';
+                    });
                   }
                 },
                 child: Text('Join')),
-            Text(controlled),
             SizedBox(height: 3.0.hp),
+            Text(controlled),
+            SizedBox(height: 6.0.hp),
           ],
         ),
       ),
