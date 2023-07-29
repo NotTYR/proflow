@@ -90,8 +90,7 @@ class _MsgCardState extends State<MsgCard> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-              builder: (context) => ExpandedPost(forumdata: ForumData[index])),
+          MaterialPageRoute(builder: (context) => SinglePost(index: index)),
         );
       },
       child: Card(
@@ -195,74 +194,7 @@ class _MsgCardState extends State<MsgCard> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  GestureDetector(
-                      onTap: () async {
-                        final firestore = await FirebaseFirestore.instance;
-                        bool liked = false;
-                        final prefs = await SharedPreferences.getInstance();
-                        final uid = await prefs.getString('uid');
-                        for (String like in ForumData[index]['liked']) {
-                          if (like == uid) {
-                            liked = true;
-                          }
-                        }
-                        if (liked == false) {
-                          print('like');
-                          final uniqueid = ForumData[index]['uid'];
-                          final id = ForumData[index]['id'];
-                          final map = ForumData[index];
-                          final comments = map['comments'];
-                          final author = map['author'];
-                          final title = map['title'];
-                          final content = map['content'];
-                          List liked = map['liked'];
-                          liked.add(uid);
-                          final doc = firestore.collection('posts').doc(id);
-                          doc.update({
-                            'uid': uniqueid,
-                            'liked': liked,
-                            'comments': comments,
-                            'author': author,
-                            'title': title,
-                            'content': content
-                          });
-                        } else {
-                          print('unlike');
-                          final uniqueid = ForumData[index]['uid'];
-                          final id = ForumData[index]['id'];
-                          final map = ForumData[index];
-                          final comments = map['comments'];
-                          final author = map['author'];
-                          final title = map['title'];
-                          final content = map['content'];
-                          List liked = map['liked'];
-                          liked.removeAt(map['liked'].indexOf(uid));
-                          final doc = firestore.collection('posts').doc(id);
-                          doc.update({
-                            'uid': uniqueid,
-                            'liked': liked,
-                            'comments': comments,
-                            'author': author,
-                            'title': title,
-                            'content': content
-                          });
-                        }
-                        ;
-                      },
-                      child: FutureBuilder(
-                        future: Like(ForumData, index),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return Icon(Icons.favorite, color: Colors.grey);
-                          }
-                          if (snapshot.data == true) {
-                            return Icon(Icons.favorite, color: Colors.red);
-                          } else {
-                            return Icon(Icons.favorite, color: Colors.grey);
-                          }
-                        },
-                      )),
+                  LikePost(ForumData: ForumData, index: index),
                   SizedBox(width: MediaQuery.of(context).size.width * 0.01),
                   Text(ForumData[index]['liked'].length.toString()),
                   SizedBox(width: MediaQuery.of(context).size.width * 0.05),
@@ -372,6 +304,83 @@ Future<bool> Like(ForumData, index) async {
     }
   }
   return liked;
+}
+
+class LikePost extends StatelessWidget {
+  final ForumData;
+  final index;
+  const LikePost({super.key, required this.ForumData, required this.index});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        onTap: () async {
+          final firestore = await FirebaseFirestore.instance;
+          bool liked = false;
+          final prefs = await SharedPreferences.getInstance();
+          final uid = await prefs.getString('uid');
+          for (String like in ForumData[index]['liked']) {
+            if (like == uid) {
+              liked = true;
+            }
+          }
+          if (liked == false) {
+            print('like');
+            final uniqueid = ForumData[index]['uid'];
+            final id = ForumData[index]['id'];
+            final map = ForumData[index];
+            final comments = map['comments'];
+            final author = map['author'];
+            final title = map['title'];
+            final content = map['content'];
+            List liked = map['liked'];
+            liked.add(uid);
+            final doc = firestore.collection('posts').doc(id);
+            doc.update({
+              'uid': uniqueid,
+              'liked': liked,
+              'comments': comments,
+              'author': author,
+              'title': title,
+              'content': content
+            });
+          } else {
+            print('unlike');
+            final uniqueid = ForumData[index]['uid'];
+            final id = ForumData[index]['id'];
+            final map = ForumData[index];
+            final comments = map['comments'];
+            final author = map['author'];
+            final title = map['title'];
+            final content = map['content'];
+            List liked = map['liked'];
+            liked.removeAt(map['liked'].indexOf(uid));
+            final doc = firestore.collection('posts').doc(id);
+            doc.update({
+              'uid': uniqueid,
+              'liked': liked,
+              'comments': comments,
+              'author': author,
+              'title': title,
+              'content': content
+            });
+          }
+          ;
+        },
+        child: FutureBuilder(
+          future: Like(ForumData, index),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Icon(Icons.favorite, color: Colors.grey);
+            }
+            if (snapshot.data == true) {
+              return Icon(Icons.favorite, color: Colors.red);
+            } else {
+              return Icon(Icons.favorite, color: Colors.grey);
+            }
+          },
+        ));
+  }
 }
 
 Future<bool> isAuthor(uidAuthor) async {
