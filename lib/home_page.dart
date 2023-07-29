@@ -29,21 +29,21 @@ class _HomePageState extends State<HomePage> {
               future: GetDocUid(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
-                  final doc = GetDocUid();
-                  if (doc == 'placeholder') {
+                  if (snapshot.data == 'placeholder') {
                     return ProposalPage();
                   } else {
                     return StudentPage();
                   }
                 } else {
-                  return CircularProgressIndicator();
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
                 }
               },
             );
           } else if (snapshot.data == 'teacher') {
             if (snapshot.hasData) {
-              final doc = GetDocUid();
-              if (doc == 'placeholder') {
+              if (snapshot.data == 'placeholder') {
                 return ProposalPage();
               } else {
                 return StudentPage();

@@ -1,4 +1,5 @@
 import 'package:ProFlow/extensions.dart';
+import 'package:ProFlow/navigation/student/homepage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -99,14 +100,48 @@ class _ProposalPageState extends State<ProposalPage> {
                         'members': [uid]
                       });
                       String newdocid = await GetDocUid();
-                      setState(() {
-                        controlled = ('Group created. ID: ' + newdocid);
-                      });
+                      // setState(() {
+                      //   controlled = ('Group created. ID: ' + newdocid);
+                      // });
+                      showDialog<void>(
+                        context: context,
+                        barrierDismissible: false, // user must tap button
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Create Success'),
+                            content: SingleChildScrollView(
+                              child: ListBody(
+                                children: <Widget>[
+                                  Text(
+                                      'Share the following code with your members: ' +
+                                          newdocid),
+                                ],
+                              ),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                child:
+                                    const Text('Copy to clipboard and proceed'),
+                                onPressed: () {
+                                  Clipboard.setData(
+                                      ClipboardData(text: newdocid));
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => StudentPage()),
+                                  );
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     } else {
                       String newdocid = await GetDocUid();
                       setState(() {
                         controlled =
-                            ('You are already in a group. ID: ' + newdocid);
+                            ("This should not be possible LMAO but you're already in a group: " +
+                                newdocid);
                       });
                     }
                   },
@@ -122,6 +157,7 @@ class _ProposalPageState extends State<ProposalPage> {
                     //go to another page, input textfield, button to confirm, check if collection.doc(input) exist
                   },
                   child: Text('Join group')),
+              SizedBox(height: 2.0.hp),
               Text(controlled),
             ],
           ),
@@ -159,44 +195,58 @@ class _JoinGroupState extends State<JoinGroup> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: ProFlowAppBar(title: 'Join Group'),
-      body: Column(
-        children: [
-          TextFormField(
-            controller: controller,
-          ),
-          ElevatedButton(
-              onPressed: () async {
-                final firestore = await FirebaseFirestore.instance;
-                var success = null;
-                String control = 'LK1MIg5fpwD3u9s0gS4I';
-                final prefs = await SharedPreferences.getInstance();
-                final uid = await prefs.getString('uid');
-                await firestore
-                    .collection('groups')
-                    .doc(control)
-                    .get()
-                    .then((doc) async {
-                  if (doc.exists) {
-                    success = true;
-                    print('join');
-                    final docs =
-                        await firestore.collection('groups').doc(control).get();
-                    final members = docs.data()?['members'];
-                    members.add(uid);
-                    await firestore
-                        .collection('groups')
-                        .doc(control)
-                        .update({"members": members});
-                    controlled = 'Joined';
-                  } else {
-                    success = false;
-                    controlled = 'Invalid';
-                  }
-                });
-              },
-              child: Text('Join')),
-          Text(controlled)
-        ],
+      body: Padding(
+        padding: EdgeInsets.only(
+          left: 6.0.wp,
+          right: 6.0.wp,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Enter the code provided by your group leader.'),
+            SizedBox(height: 2.0.hp),
+            TextFormField(
+              controller: controller,
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 3.0.hp),
+            ElevatedButton(
+                onPressed: () async {
+                  final firestore = await FirebaseFirestore.instance;
+                  var success = null;
+                  final prefs = await SharedPreferences.getInstance();
+                  final uid = await prefs.getString('uid');
+                  await firestore
+                      .collection('groups')
+                      .doc(controller)
+                      .get()
+                      .then((doc) async {
+                    print('hi');
+                    if (doc.exists) {
+                      success = true;
+                      print('join');
+                      final docs = await firestore
+                          .collection('groups')
+                          .doc(controller)
+                          .get();
+                      final members = docs.data()?['members'];
+                      members.add(uid);
+                      await firestore
+                          .collection('groups')
+                          .doc(controller)
+                          .update({"members": members});
+                      controlled = 'Joined';
+                    } else {
+                      success = false;
+                      controlled = 'Invalid';
+                    }
+                  });
+                },
+                child: Text('Join')),
+            Text(controlled),
+            SizedBox(height: 3.0.hp),
+          ],
+        ),
       ),
     );
   }

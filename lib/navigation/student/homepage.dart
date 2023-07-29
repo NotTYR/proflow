@@ -64,37 +64,25 @@ class _StudentPageState extends State<StudentPage> {
                 children: [
                   SizedBox(
                     child: FeatureButton(
+                        buttonName: 'Forum',
+                        buttonIcon: Icons.question_answer,
+                        buttonRoute: ForumExp()),
+                  ),
+                  SizedBox(
+                    child: FeatureButton(
+                        buttonName: 'My Project',
+                        buttonIcon: Icons.list_alt_rounded,
+                        buttonRoute: MyProjects()),
+                  ),
+                  SizedBox(
+                    child: FeatureButton(
                         buttonName: 'Chat',
                         buttonIcon: Icons.chat,
                         buttonRoute: Chat()),
                   ),
-                  SizedBox(
-                    child: FeatureButton(
-                        buttonName: 'Projects',
-                        buttonIcon: Icons.list_alt_rounded,
-                        buttonRoute: MyProjects()),
-                  ),
                 ],
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  child: FeatureButton(
-                      buttonName: 'Forum',
-                      buttonIcon: Icons.question_answer,
-                      buttonRoute: ForumExp()),
-                ),
-                SizedBox(
-                  child: FeatureButton(
-                    buttonName: 'Groups',
-                    buttonIcon: Icons.group,
-                    buttonRoute: ProposalPage(),
-                  ),
-                ),
-              ],
-            )
           ],
         ),
         floatingActionButton: FloatingActionButton(
