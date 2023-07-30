@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ProFlow/navigation/student/homepage.dart';
 import 'package:ProFlow/guest_page.dart';
 
-import 'navigation/student/create group/proposal_page.dart';
+import 'navigation/student/create group/create_group.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
