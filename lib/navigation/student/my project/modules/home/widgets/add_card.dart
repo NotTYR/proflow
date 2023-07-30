@@ -7,11 +7,25 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 
-class AddCard extends StatelessWidget {
+class AddCard extends StatefulWidget {
+  const AddCard({super.key});
+  @override
+  State<AddCard> createState() => _AddCardState();
+}
+
+class _AddCardState extends State<AddCard> {
+  dynamic _icon;
+
+  _openIconPicker() async {
+    IconData? icon = await FlutterIconPicker.showIconPicker(context,
+        iconPackModes: [IconPack.material]);
+    _icon = icon;
+    setState(() {});
+  }
+
   final homeCtrl = Get.find<HomeController>();
-  AddCard({super.key});
-
   @override
   Widget build(BuildContext context) {
     final icons = getIcons();
@@ -48,24 +62,23 @@ class AddCard extends StatelessWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 5.0.wp),
-                      child: Wrap(
-                        spacing: 2.0.wp,
-                        children: icons
-                            .map((e) => Obx(() {
-                                  final index = icons.indexOf(e);
-                                  return ChoiceChip(
-                                    selectedColor: Colors.grey[200],
-                                    pressElevation: 0,
-                                    backgroundColor: Colors.white,
-                                    label: e,
-                                    selected: homeCtrl.chipIndex.value == index,
-                                    onSelected: (bool selected) {
-                                      homeCtrl.chipIndex.value =
-                                          selected ? index : 0;
-                                    },
-                                  );
-                                }))
-                            .toList(),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 300),
+                              child: _icon != null
+                                  ? Icon(_icon)
+                                  : Container(child: Icon(Icons.square))),
+                          ElevatedButton(
+                              onPressed: () {
+                                _openIconPicker();
+                              },
+                              child: Text('Change Icon')),
+                          ElevatedButton(
+                              onPressed: () async {},
+                              child: Text('Change Colour'))
+                        ],
                       ),
                     ),
                     ElevatedButton(
@@ -77,8 +90,7 @@ class AddCard extends StatelessWidget {
                       ),
                       onPressed: () {
                         if (homeCtrl.formKey.currentState!.validate()) {
-                          int icon =
-                              icons[homeCtrl.chipIndex.value].icon!.codePoint;
+                          int icon = _icon.codePoint;
                           String color =
                               icons[homeCtrl.chipIndex.value].color!.toHex();
                           var task = Task(
@@ -98,7 +110,8 @@ class AddCard extends StatelessWidget {
               ),
             );
             homeCtrl.editCtrl.clear();
-            homeCtrl.changeChipIndex(0); //automatically clear the dialogue if u dismiss it
+            homeCtrl.changeChipIndex(
+                0); //automatically clear the dialogue if u dismiss it
           },
           child: DottedBorder(
             color: Colors.grey[400]!,
