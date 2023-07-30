@@ -145,7 +145,7 @@ class _GuestPageState extends State<GuestPage> {
                                                               'identity')
                                                           .add({
                                                         'uid': uid,
-                                                        'identity': 'student'
+                                                        'username': username
                                                       })
                                                     }
                                                   else

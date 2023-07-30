@@ -7,6 +7,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 
 class AddCard extends StatelessWidget {
   final homeCtrl = Get.find<HomeController>();
@@ -98,7 +99,8 @@ class AddCard extends StatelessWidget {
               ),
             );
             homeCtrl.editCtrl.clear();
-            homeCtrl.changeChipIndex(0); //automatically clear the dialogue if u dismiss it
+            homeCtrl.changeChipIndex(
+                0); //automatically clear the dialogue if u dismiss it
           },
           child: DottedBorder(
             color: Colors.grey[400]!,
