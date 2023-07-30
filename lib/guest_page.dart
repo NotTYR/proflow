@@ -85,20 +85,21 @@ class _GuestPageState extends State<GuestPage> {
                                       await GoogleSignIn().signIn();
                                   final GoogleAuth =
                                       await GoogleUser!.authentication;
-                                  final credential =
-                                      GoogleAuthProvider.credential(
-                                    accessToken: GoogleAuth.accessToken,
-                                    idToken: GoogleAuth.idToken,
-                                  );
-                                  final user = await FirebaseAuth.instance
-                                      .signInWithCredential(credential);
-                                  //student teacher
                                   final email = await GoogleUser.email;
-                                  final username = await FirebaseAuth
-                                      .instance.currentUser!.displayName;
-
-                                  if (RegExp(r"/student.hci.edu.sg")
+                                  print(email);
+                                  if (RegExp(r'(\@student.hci.edu.sg)')
                                       .hasMatch(email.toString())) {
+                                    print('hci email');
+                                    final credential =
+                                        GoogleAuthProvider.credential(
+                                      accessToken: GoogleAuth.accessToken,
+                                      idToken: GoogleAuth.idToken,
+                                    );
+                                    await FirebaseAuth.instance
+                                        .signInWithCredential(credential);
+                                    //student teacher
+                                    final username = await FirebaseAuth
+                                        .instance.currentUser!.displayName;
                                     final prefs =
                                         await SharedPreferences.getInstance();
                                     final uid = await FirebaseAuth

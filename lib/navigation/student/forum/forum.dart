@@ -90,7 +90,9 @@ class _MsgCardState extends State<MsgCard> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => SinglePost(index: index)),
+          MaterialPageRoute(
+              builder: (context) =>
+                  SinglePost(index: index, MsgController: MsgController)),
         );
       },
       child: Card(
