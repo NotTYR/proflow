@@ -5,6 +5,7 @@ import 'package:ProFlow/navigation/student/my%20project/modules/home/controller.
 import 'package:ProFlow/navigation/student/my%20project/modules/widgets/icons.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
@@ -76,7 +77,7 @@ class _AddCardState extends State<AddCard> {
                               },
                               child: Text('Change Icon')),
                           ElevatedButton(
-                              onPressed: () async {},
+                              onPressed: () => pickColor(context),
                               child: Text('Change Colour'))
                         ],
                       ),
@@ -126,4 +127,23 @@ class _AddCardState extends State<AddCard> {
           ),
         ));
   }
+
+  void pickColor(BuildContext context) => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Pick your colour'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextButton(
+                child: Text(
+                  'Select',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
+          ),
+        ),
+      );
 }
