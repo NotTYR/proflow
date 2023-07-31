@@ -27,6 +27,7 @@ class _AddCardState extends State<AddCard> {
   }
 
   final homeCtrl = Get.find<HomeController>();
+  Color color = Colors.red;
   @override
   Widget build(BuildContext context) {
     final icons = getIcons();
@@ -92,8 +93,7 @@ class _AddCardState extends State<AddCard> {
                       onPressed: () {
                         if (homeCtrl.formKey.currentState!.validate()) {
                           int icon = _icon.codePoint;
-                          String color =
-                              icons[homeCtrl.chipIndex.value].color!.toHex();
+                          String color = this.color.toHex();
                           var task = Task(
                               title: homeCtrl.editCtrl.text,
                               icon: icon,
@@ -128,6 +128,13 @@ class _AddCardState extends State<AddCard> {
         ));
   }
 
+  Widget buildColorPicker() => ColorPicker(
+        pickerColor: color,
+        onColorChanged: (color) => setState(() {
+          this.color = color;
+        }),
+      );
+
   void pickColor(BuildContext context) => showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -135,6 +142,7 @@ class _AddCardState extends State<AddCard> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              buildColorPicker(),
               TextButton(
                 child: Text(
                   'Select',
