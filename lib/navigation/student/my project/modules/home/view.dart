@@ -82,7 +82,8 @@ class MyProjects extends GetView<HomeController> {
         builder: (_, __, ___) {
           return Obx(
             () => FloatingActionButton(
-              backgroundColor: controller.deleting.value ? Colors.red : blue,
+              backgroundColor:
+                  controller.deleting.value ? Colors.red : Colors.blue,
               onPressed: () {
                 if (controller.tasks.isNotEmpty) {
                   Get.to(() => AddDialog(), transition: Transition.downToUp);
