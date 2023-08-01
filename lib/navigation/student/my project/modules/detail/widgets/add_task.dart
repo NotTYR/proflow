@@ -125,6 +125,65 @@ class AddTask extends StatelessWidget {
                 ],
               ),
             ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 3.0.wp,
+                horizontal: 5.0.wp,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Due:',
+                        style: TextStyle(
+                          fontSize: 14.0.sp,
+                          color: Colors.grey[400],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 4.0.wp,
+                      ),
+                      Text(
+                        'Date',
+                        style: TextStyle(
+                          fontSize: 14.0.sp,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 4.0.wp,
+                      ),
+
+                      // REFER TO THIS FOR DATE PICKER: https://www.youtube.com/watch?v=JK3zztXnDxs
+                      // includes how to use the values selected from the calendar - not done yet
+
+                      ElevatedButton(
+                        onPressed: () {
+                          showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime.now(),
+                            lastDate: DateTime(2024),
+                          );
+                        },
+                        child: Text(
+                          'Change Date',
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white70,
+                          foregroundColor: Colors.black,
+                          elevation: 0,
+                          side: BorderSide(
+                            width: 0.5,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

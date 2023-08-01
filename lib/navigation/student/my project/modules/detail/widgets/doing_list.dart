@@ -3,6 +3,9 @@ import 'package:ProFlow/navigation/student/my%20project/modules/home/controller.
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'add_task.dart';
+import 'expanded_task.dart';
+
 class DoingList extends StatelessWidget {
   final homeCtrl = Get.find<HomeController>();
   DoingList({super.key});
@@ -63,6 +66,18 @@ class DoingList extends StatelessWidget {
                               child: Text(
                                 element['title'],
                                 overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Get.to(() => ExpandedTask(),
+                                    transition: Transition.rightToLeft);
+                              },
+                              child: Text('View details'),
+                              style: TextButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                alignment: Alignment.center,
                               ),
                             )
                           ],
