@@ -1,6 +1,7 @@
 import 'package:ProFlow/extensions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'forum.dart';
 
@@ -78,207 +79,238 @@ class _ExpandedPostState extends State<ExpandedPost> {
   Widget build(BuildContext context) {
     if (forumdata.isNotEmpty) {
       return Scaffold(
-        appBar: AppBar(
-          title: Text(forumdata['title']),
-        ),
+        // appBar: AppBar(
+        //   title: Text(forumdata['title']),
+        // ),
         body: Scaffold(
-          body: Padding(
-            padding: EdgeInsets.only(
-              left: 6.0.wp,
-              right: 6.0.wp,
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 3.0.hp,
-                  ),
-                  Row(
+          body: Column(
+            children: [
+              SizedBox(height: 7.0.hp),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 3.0.wp),
+                child: Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      icon: const Icon(Icons.arrow_back),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  left: 8.0.wp,
+                  right: 8.0.wp,
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Flexible(
-                        child: Text(
-                          forumdata['title'],
-                          style: TextStyle(
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.025,
-                            fontWeight: FontWeight.bold,
+                      SizedBox(
+                        height: 2.0.hp,
+                      ),
+                      Row(
+                        children: [
+                          Flexible(
+                            child: Text(
+                              forumdata['title'],
+                              style: TextStyle(
+                                fontSize:
+                                    MediaQuery.of(context).size.height * 0.025,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
-                        ),
+                          SizedBox(
+                            width: 10.0.wp,
+                          ),
+                          FutureBuilder(
+                            future: isAuthor(forumdata['uid']),
+                            builder: (context, snapshot) {
+                              if (snapshot.data == true) {
+                                return GestureDetector(
+                                  child: (Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  )),
+                                  onTap: () => showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        AlertDialog(
+                                      title: const Text('Warning'),
+                                      content: const Text(
+                                          'Are you sure you want to delete? This action cannot be undone.'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, 'Cancel'),
+                                          child: const Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () async {
+                                            final id = forumdata['id'];
+                                            await FirebaseFirestore.instance
+                                                .collection('posts')
+                                                .doc(id)
+                                                .delete();
+                                            Navigator.pop(context, 'Ok');
+                                          },
+                                          child: const Text('OK'),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                return Placeholder(
+                                  strokeWidth: 0,
+                                  fallbackHeight: 0,
+                                  fallbackWidth: 0,
+                                );
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 2.0.hp),
+                      Text(
+                        forumdata['author'],
+                        style: TextStyle(
+                            fontSize:
+                                MediaQuery.of(context).size.height * 0.015),
+                      ),
+                      SizedBox(height: 3.0.hp),
+                      Text(
+                        forumdata['content'],
                       ),
                       SizedBox(
-                        width: 10.0.wp,
+                        height: 3.0.hp,
                       ),
-                      FutureBuilder(
-                        future: isAuthor(forumdata['uid']),
-                        builder: (context, snapshot) {
-                          if (snapshot.data == true) {
-                            return GestureDetector(
-                              child: (Icon(
-                                Icons.delete,
-                                color: Colors.red,
-                              )),
-                              onTap: () => showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                  title: const Text('Warning'),
-                                  content: const Text(
-                                      'Are you sure you want to delete? This action cannot be undone.'),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.pop(context, 'Cancel'),
-                                      child: const Text('Cancel'),
-                                    ),
-                                    TextButton(
-                                      onPressed: () async {
-                                        final id = forumdata['id'];
-                                        await FirebaseFirestore.instance
-                                            .collection('posts')
-                                            .doc(id)
-                                            .delete();
-                                        Navigator.pop(context, 'Ok');
-                                      },
-                                      child: const Text('OK'),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          } else {
-                            return Placeholder(
-                              strokeWidth: 0,
-                              fallbackHeight: 0,
-                              fallbackWidth: 0,
-                            );
-                          }
-                        },
+                      Divider(
+                        color: Colors.black54,
+                        thickness: MediaQuery.of(context).size.height * 0.003,
                       ),
-                    ],
-                  ),
-                  SizedBox(height: 2.0.hp),
-                  Text(
-                    forumdata['author'],
-                    style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.height * 0.015),
-                  ),
-                  SizedBox(height: 3.0.hp),
-                  Text(
-                    forumdata['content'],
-                  ),
-                  SizedBox(
-                    height: 3.0.hp,
-                  ),
-                  Divider(
-                    color: Colors.black54,
-                    thickness: MediaQuery.of(context).size.height * 0.003,
-                  ),
-                  SizedBox(
-                    height: 2.0.hp,
-                  ),
-                  Row(
-                    children: [
-                      LikePost(ForumData: rawforumdata, index: index),
-                      SizedBox(width: MediaQuery.of(context).size.width * 0.01),
-                      Text(rawforumdata[index]['liked'].length.toString()),
-                      SizedBox(width: MediaQuery.of(context).size.width * 0.05),
-                      Icon(
-                        Icons.comment_rounded,
-                        color: Colors.lightBlue,
+                      SizedBox(
+                        height: 2.0.hp,
                       ),
-                      SizedBox(width: MediaQuery.of(context).size.width * 0.01),
-                      Text(rawforumdata[index]['comments'].length.toString()),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 2.0.hp,
-                  ),
-                  Divider(
-                    color: Colors.black54,
-                    thickness: MediaQuery.of(context).size.height * 0.003,
-                  ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                  SizedBox(height: 3.0.hp),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                  //comments column
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    width: MediaQuery.of(context).size.height * 3.0,
-                    child: ListView(
-                      children: List.generate(
-                          rawforumdata[index]['comments'].length,
-                          (commentindex) => Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Column(
+                      Row(
+                        children: [
+                          LikePost(ForumData: rawforumdata, index: index),
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.01),
+                          Text(rawforumdata[index]['liked'].length.toString()),
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.05),
+                          Icon(
+                            Icons.comment_rounded,
+                            color: Colors.lightBlue,
+                          ),
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.01),
+                          Text(rawforumdata[index]['comments']
+                              .length
+                              .toString()),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 2.0.hp,
+                      ),
+                      Divider(
+                        color: Colors.black54,
+                        thickness: MediaQuery.of(context).size.height * 0.003,
+                      ),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02),
+                      SizedBox(height: 3.0.hp),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02),
+                      //comments column
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.1,
+                        width: MediaQuery.of(context).size.height * 3.0,
+                        child: ListView(
+                          children: List.generate(
+                              rawforumdata[index]['comments'].length,
+                              (commentindex) => Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        rawforumdata[index]['comments']
-                                            [commentindex]['author'],
-                                        style: TextStyle(fontSize: 13),
-                                      ),
-                                      SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height *
+                                      Column(
+                                        children: [
+                                          Text(
+                                            rawforumdata[index]['comments']
+                                                [commentindex]['author'],
+                                            style: TextStyle(fontSize: 13),
+                                          ),
+                                          SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
                                                 0.01,
-                                      ),
-                                      Text(rawforumdata[index]['comments']
-                                          [commentindex]['comment']),
-                                      SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height *
+                                          ),
+                                          Text(rawforumdata[index]['comments']
+                                              [commentindex]['comment']),
+                                          SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
                                                 0.03,
-                                      ),
+                                          ),
+                                        ],
+                                      )
                                     ],
-                                  )
-                                ],
-                              )),
-                    ),
+                                  )),
+                        ),
+                      ),
+                      TextField(
+                          controller: MsgContoller,
+                          keyboardType: TextInputType.multiline,
+                          maxLines: null,
+                          decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.black, width: 1.5),
+                            borderRadius: BorderRadius.circular(20.0),
+                          ))),
+                      IconButton(
+                          onPressed: () async {
+                            //update comments
+                            final prefs = await SharedPreferences.getInstance();
+                            final username = await prefs.getString('username');
+                            final firestore = await FirebaseFirestore.instance;
+                            final uid = await prefs.getString('uid');
+                            final uniqueid = rawforumdata[index]['uid'];
+                            final id = rawforumdata[index]['id'];
+                            final map = rawforumdata[index];
+                            List comments = map['comments'];
+                            comments.add({
+                              "comment": MsgContoller.text,
+                              "author": username,
+                              "uid": uid
+                            });
+                            final author = map['author'];
+                            final title = map['title'];
+                            final content = map['content'];
+                            List liked = map['liked'];
+                            final doc = firestore.collection('posts').doc(id);
+                            doc.update({
+                              'uid': uniqueid,
+                              'liked': liked,
+                              'comments': comments,
+                              'author': author,
+                              'title': title,
+                              'content': content
+                            });
+                            MsgContoller.clear();
+                          },
+                          icon: Icon(Icons.send))
+                    ],
                   ),
-                  TextField(
-                      controller: MsgContoller,
-                      keyboardType: TextInputType.multiline,
-                      maxLines: null,
-                      decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black, width: 1.5),
-                        borderRadius: BorderRadius.circular(20.0),
-                      ))),
-                  IconButton(
-                      onPressed: () async {
-                        //update comments
-                        final prefs = await SharedPreferences.getInstance();
-                        final username = await prefs.getString('username');
-                        final firestore = await FirebaseFirestore.instance;
-                        final uid = await prefs.getString('uid');
-                        final uniqueid = rawforumdata[index]['uid'];
-                        final id = rawforumdata[index]['id'];
-                        final map = rawforumdata[index];
-                        List comments = map['comments'];
-                        comments.add({
-                          "comment": MsgContoller.text,
-                          "author": username,
-                          "uid": uid
-                        });
-                        final author = map['author'];
-                        final title = map['title'];
-                        final content = map['content'];
-                        List liked = map['liked'];
-                        final doc = firestore.collection('posts').doc(id);
-                        doc.update({
-                          'uid': uniqueid,
-                          'liked': liked,
-                          'comments': comments,
-                          'author': author,
-                          'title': title,
-                          'content': content
-                        });
-                        MsgContoller.clear();
-                      },
-                      icon: Icon(Icons.send))
-                ],
+                ),
               ),
-            ),
+            ],
           ),
         ),
       );
