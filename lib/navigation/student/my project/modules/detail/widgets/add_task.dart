@@ -148,7 +148,7 @@ class AddTask extends StatelessWidget {
                       Text(
                         'Date',
                         style: TextStyle(
-                          fontSize: 14.0.sp,
+                          fontSize: 12.0.sp,
                         ),
                       ),
                       SizedBox(
@@ -169,6 +169,9 @@ class AddTask extends StatelessWidget {
                         },
                         child: Text(
                           'Change Date',
+                          style: TextStyle(
+                            fontSize: 10.0.sp,
+                          ),
                         ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white70,

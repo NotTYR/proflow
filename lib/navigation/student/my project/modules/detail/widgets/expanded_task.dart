@@ -64,7 +64,7 @@ class ExpandedTask extends StatelessWidget {
                     child: Text(
                       'LIU YUAN HCI, TAN YOU REN HCI, YAP HAN YANG HCI, YE WENYANG HCI',
                       style: TextStyle(
-                        fontSize: 14.0.sp,
+                        fontSize: 12.0.sp,
                       ),
                       softWrap: true,
                     ),
@@ -95,7 +95,7 @@ class ExpandedTask extends StatelessWidget {
                       Text(
                         'Due Date',
                         style: TextStyle(
-                          fontSize: 14.0.sp,
+                          fontSize: 12.0.sp,
                         ),
                       ),
                     ],
