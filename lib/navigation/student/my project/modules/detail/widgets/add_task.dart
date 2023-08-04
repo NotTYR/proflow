@@ -100,9 +100,10 @@ class AddTask extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 3.0.wp,
-                horizontal: 5.0.wp,
+              padding: EdgeInsets.only(
+                top: 3.0.wp,
+                left: 5.0.wp,
+                right: 5.0.wp,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -114,7 +115,86 @@ class AddTask extends StatelessWidget {
                         width: 1.0.wp,
                       ),
                       Text(
-                        'Member Name',
+                        'LIU YUAN HCI',
+                        style: TextStyle(
+                          fontSize: 12.0.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: 5.0.wp,
+                right: 5.0.wp,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      CheckBox(),
+                      SizedBox(
+                        width: 1.0.wp,
+                      ),
+                      Text(
+                        'TAN YOU REN HCI',
+                        style: TextStyle(
+                          fontSize: 12.0.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: 5.0.wp,
+                right: 5.0.wp,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      CheckBox(),
+                      SizedBox(
+                        width: 1.0.wp,
+                      ),
+                      Text(
+                        'YAP HAN YANG HCI',
+                        style: TextStyle(
+                          fontSize: 12.0.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                bottom: 3.0.hp,
+                left: 5.0.wp,
+                right: 5.0.wp,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      CheckBox(),
+                      SizedBox(
+                        width: 1.0.wp,
+                      ),
+                      Text(
+                        'YE WENYANG HCI',
                         style: TextStyle(
                           fontSize: 12.0.sp,
                           fontWeight: FontWeight.bold,
@@ -142,15 +222,15 @@ class AddTask extends StatelessWidget {
                           color: Colors.grey[400],
                         ),
                       ),
-                      SizedBox(
-                        width: 4.0.wp,
-                      ),
-                      Text(
-                        'Date',
-                        style: TextStyle(
-                          fontSize: 12.0.sp,
-                        ),
-                      ),
+                      // SizedBox(
+                      //   width: 4.0.wp,
+                      // ),
+                      // Text(
+                      //   'Date',
+                      //   style: TextStyle(
+                      //     fontSize: 12.0.sp,
+                      //   ),
+                      // ),
                       SizedBox(
                         width: 4.0.wp,
                       ),
@@ -168,7 +248,7 @@ class AddTask extends StatelessWidget {
                           );
                         },
                         child: Text(
-                          'Change Date',
+                          'Select Date',
                           style: TextStyle(
                             fontSize: 10.0.sp,
                           ),
