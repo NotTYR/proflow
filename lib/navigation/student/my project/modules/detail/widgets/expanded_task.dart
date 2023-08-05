@@ -93,7 +93,7 @@ class ExpandedTask extends StatelessWidget {
                         width: 4.0.wp,
                       ),
                       Text(
-                        'Due Date',
+                        '29 Aug 2023',
                         style: TextStyle(
                           fontSize: 12.0.sp,
                         ),

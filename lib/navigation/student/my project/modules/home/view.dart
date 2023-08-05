@@ -5,6 +5,7 @@ import 'package:ProFlow/navigation/student/my%20project/modules/home/widgets/add
 import 'package:ProFlow/navigation/student/my%20project/modules/home/widgets/add_dialog.dart';
 import 'package:ProFlow/navigation/student/my%20project/modules/home/widgets/task_card.dart';
 import 'package:ProFlow/navigation/student/my%20project/modules/report/view.dart';
+import 'package:ProFlow/navigation/student/my%20project/modules/settings/view.dart';
 import 'package:ProFlow/navigation/student/my%20project/tasks.dart';
 import 'package:flutter/material.dart';
 import 'package:ProFlow/appbar.dart';
@@ -22,8 +23,21 @@ class MyProjects extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ProFlowAppBar(
-        title: 'My Project',
+      appBar: AppBar(
+        title: Text('My Project'),
+        leading: IconButton(
+          onPressed: Get.back,
+          icon: Icon(Icons.home),
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.settings),
+            tooltip: 'Show Snackbar',
+            onPressed: () {
+              Get.to(() => SettingsPage(), transition: Transition.noTransition);
+            },
+          ),
+        ],
       ),
       body: Obx(
         () => IndexedStack(

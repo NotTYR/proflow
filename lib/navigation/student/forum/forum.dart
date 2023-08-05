@@ -247,47 +247,56 @@ class _MsgCardState extends State<MsgCard> {
                           )),
                 ),
               ),
-              TextField(
-                  controller: MsgController,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                  decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black, width: 1.5),
-                    borderRadius: BorderRadius.circular(20.0),
-                  ))),
-              IconButton(
-                  onPressed: () async {
-                    //update comments
-                    final prefs = await SharedPreferences.getInstance();
-                    final username = await prefs.getString('username');
-                    final firestore = await FirebaseFirestore.instance;
-                    final uid = await prefs.getString('uid');
-                    final uniqueid = ForumData[index]['uid'];
-                    final id = ForumData[index]['id'];
-                    final map = ForumData[index];
-                    List comments = map['comments'];
-                    comments.add({
-                      "comment": MsgController.text,
-                      "author": username,
-                      "uid": uid
-                    });
-                    final author = map['author'];
-                    final title = map['title'];
-                    final content = map['content'];
-                    List liked = map['liked'];
-                    final doc = firestore.collection('posts').doc(id);
-                    doc.update({
-                      'uid': uniqueid,
-                      'liked': liked,
-                      'comments': comments,
-                      'author': author,
-                      'title': title,
-                      'content': content
-                    });
-                    MsgController.clear();
-                  },
-                  icon: Icon(Icons.send))
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: MsgController,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                      decoration: InputDecoration(
+                        labelText: 'Add a comment',
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 2.0.wp),
+                  IconButton(
+                      onPressed: () async {
+                        //update comments
+                        final prefs = await SharedPreferences.getInstance();
+                        final username = await prefs.getString('username');
+                        final firestore = await FirebaseFirestore.instance;
+                        final uid = await prefs.getString('uid');
+                        final uniqueid = ForumData[index]['uid'];
+                        final id = ForumData[index]['id'];
+                        final map = ForumData[index];
+                        List comments = map['comments'];
+                        comments.add({
+                          "comment": MsgController.text,
+                          "author": username,
+                          "uid": uid
+                        });
+                        final author = map['author'];
+                        final title = map['title'];
+                        final content = map['content'];
+                        List liked = map['liked'];
+                        final doc = firestore.collection('posts').doc(id);
+                        doc.update({
+                          'uid': uniqueid,
+                          'liked': liked,
+                          'comments': comments,
+                          'author': author,
+                          'title': title,
+                          'content': content
+                        });
+                        MsgController.clear();
+                      },
+                      icon: Icon(
+                        Icons.send,
+                        color: Colors.blue,
+                      ))
+                ],
+              ),
             ],
           ),
         ),

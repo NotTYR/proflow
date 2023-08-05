@@ -155,6 +155,13 @@ class _ExpandedPostState extends State<ExpandedPost> {
                                                 .collection('posts')
                                                 .doc(id)
                                                 .delete();
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ForumExp(),
+                                              ),
+                                            );
                                             Navigator.pop(context, 'Ok');
                                           },
                                           child: const Text('OK'),
@@ -221,11 +228,6 @@ class _ExpandedPostState extends State<ExpandedPost> {
                         color: Colors.black54,
                         thickness: MediaQuery.of(context).size.height * 0.003,
                       ),
-                      SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02),
-                      SizedBox(height: 3.0.hp),
-                      SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02),
                       //comments column
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.1,
@@ -264,48 +266,65 @@ class _ExpandedPostState extends State<ExpandedPost> {
                                   )),
                         ),
                       ),
-                      TextField(
-                          controller: MsgContoller,
-                          keyboardType: TextInputType.multiline,
-                          maxLines: null,
-                          decoration: InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.black, width: 1.5),
-                            borderRadius: BorderRadius.circular(20.0),
-                          ))),
-                      IconButton(
-                          onPressed: () async {
-                            //update comments
-                            final prefs = await SharedPreferences.getInstance();
-                            final username = await prefs.getString('username');
-                            final firestore = await FirebaseFirestore.instance;
-                            final uid = await prefs.getString('uid');
-                            final uniqueid = rawforumdata[index]['uid'];
-                            final id = rawforumdata[index]['id'];
-                            final map = rawforumdata[index];
-                            List comments = map['comments'];
-                            comments.add({
-                              "comment": MsgContoller.text,
-                              "author": username,
-                              "uid": uid
-                            });
-                            final author = map['author'];
-                            final title = map['title'];
-                            final content = map['content'];
-                            List liked = map['liked'];
-                            final doc = firestore.collection('posts').doc(id);
-                            doc.update({
-                              'uid': uniqueid,
-                              'liked': liked,
-                              'comments': comments,
-                              'author': author,
-                              'title': title,
-                              'content': content
-                            });
-                            MsgContoller.clear();
-                          },
-                          icon: Icon(Icons.send))
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: MsgContoller,
+                              keyboardType: TextInputType.multiline,
+                              maxLines: null,
+                              decoration: InputDecoration(
+                                labelText: 'Add a comment',
+                                // enabledBorder: OutlineInputBorder(
+                                //   borderSide:
+                                //       BorderSide(color: Colors.black, width: 1.5),
+                                //   borderRadius: BorderRadius.circular(20.0),
+                                // ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 2.0.wp),
+                          IconButton(
+                              onPressed: () async {
+                                //update comments
+                                final prefs =
+                                    await SharedPreferences.getInstance();
+                                final username =
+                                    await prefs.getString('username');
+                                final firestore =
+                                    await FirebaseFirestore.instance;
+                                final uid = await prefs.getString('uid');
+                                final uniqueid = rawforumdata[index]['uid'];
+                                final id = rawforumdata[index]['id'];
+                                final map = rawforumdata[index];
+                                List comments = map['comments'];
+                                comments.add({
+                                  "comment": MsgContoller.text,
+                                  "author": username,
+                                  "uid": uid
+                                });
+                                final author = map['author'];
+                                final title = map['title'];
+                                final content = map['content'];
+                                List liked = map['liked'];
+                                final doc =
+                                    firestore.collection('posts').doc(id);
+                                doc.update({
+                                  'uid': uniqueid,
+                                  'liked': liked,
+                                  'comments': comments,
+                                  'author': author,
+                                  'title': title,
+                                  'content': content
+                                });
+                                MsgContoller.clear();
+                              },
+                              icon: Icon(
+                                Icons.send,
+                                color: Colors.blue,
+                              ))
+                        ],
+                      ),
                     ],
                   ),
                 ),

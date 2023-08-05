@@ -1,5 +1,4 @@
 import 'package:ProFlow/extensions.dart';
-import 'package:ProFlow/navigation/student/text%20and%20voice/chat_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ProFlow/navigation/student/create%20group/create_group.dart';
 import 'package:ProFlow/navigation/student/forum/forum.dart';

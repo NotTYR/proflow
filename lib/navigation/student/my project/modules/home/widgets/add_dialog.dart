@@ -152,11 +152,223 @@ class AddDialog extends StatelessWidget {
                           ),
                         ),
                       ))
-                  .toList()
+                  .toList(),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 5.0.wp,
+                  left: 5.0.wp,
+                  right: 5.0.wp,
+                  bottom: 2.0.wp,
+                ),
+                child: Text(
+                  'Assign To',
+                  style: TextStyle(
+                    fontSize: 14.0.sp,
+                    color: Colors.grey[400],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 1.0.hp,
+                  left: 5.0.wp,
+                  right: 5.0.wp,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        CheckBox(),
+                        SizedBox(
+                          width: 1.0.wp,
+                        ),
+                        Text(
+                          'LIU YUAN HCI',
+                          style: TextStyle(
+                            fontSize: 12.0.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  left: 5.0.wp,
+                  right: 5.0.wp,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        CheckBox(),
+                        SizedBox(
+                          width: 1.0.wp,
+                        ),
+                        Text(
+                          'TAN YOU REN HCI',
+                          style: TextStyle(
+                            fontSize: 12.0.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  left: 5.0.wp,
+                  right: 5.0.wp,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        CheckBox(),
+                        SizedBox(
+                          width: 1.0.wp,
+                        ),
+                        Text(
+                          'YAP HAN YANG HCI',
+                          style: TextStyle(
+                            fontSize: 12.0.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  bottom: 1.0.hp,
+                  left: 5.0.wp,
+                  right: 5.0.wp,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        CheckBox(),
+                        SizedBox(
+                          width: 1.0.wp,
+                        ),
+                        Text(
+                          'YE WENYANG HCI',
+                          style: TextStyle(
+                            fontSize: 12.0.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 2.0.hp,
+                  horizontal: 5.0.wp,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Due:',
+                          style: TextStyle(
+                            fontSize: 14.0.sp,
+                            color: Colors.grey[400],
+                          ),
+                        ),
+                        // SizedBox(
+                        //   width: 4.0.wp,
+                        // ),
+                        // Text(
+                        //   'Date',
+                        //   style: TextStyle(
+                        //     fontSize: 12.0.sp,
+                        //   ),
+                        // ),
+                        SizedBox(
+                          width: 4.0.wp,
+                        ),
+
+                        // REFER TO THIS FOR DATE PICKER: https://www.youtube.com/watch?v=JK3zztXnDxs
+                        // includes how to use the values selected from the calendar - not done yet
+
+                        ElevatedButton(
+                          onPressed: () {
+                            showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime(2024),
+                            );
+                          },
+                          child: Text(
+                            'Select Date',
+                            style: TextStyle(
+                              fontSize: 10.0.sp,
+                            ),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white70,
+                            foregroundColor: Colors.black,
+                            elevation: 0,
+                            side: BorderSide(
+                              width: 0.5,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class CheckBox extends StatefulWidget {
+  const CheckBox({super.key});
+
+  @override
+  State<CheckBox> createState() => _CheckBoxState();
+}
+
+class _CheckBoxState extends State<CheckBox> {
+  bool isChecked = false;
+
+  @override
+  Widget build(BuildContext context) {
+    Color getColor(Set<MaterialState> states) {
+      return Colors.grey;
+    }
+
+    return Checkbox(
+      checkColor: Colors.white,
+      fillColor: MaterialStateProperty.resolveWith(getColor),
+      value: isChecked,
+      onChanged: (bool? value) {
+        setState(() {
+          isChecked = value!;
+        });
+      },
     );
   }
 }

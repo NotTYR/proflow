@@ -1,5 +1,5 @@
 import 'package:ProFlow/home_page.dart';
-import 'package:ProFlow/navigation/student/text%20and%20voice/chat_page.dart';
+import 'package:ProFlow/navigation/student/chat/chat_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ProFlow/navigation/student/create%20group/create_group.dart';
 import 'package:ProFlow/navigation/student/create%20group/find_mentor.dart';
@@ -106,10 +106,7 @@ class _TeacherPageState extends State<TeacherPage> {
                   child: FeatureButton(
                       buttonName: 'Text/Voice',
                       buttonIcon: Icons.voice_chat,
-                      buttonRoute: ChatPage(
-                        key: UniqueKey(),
-                        user: LocalKey,
-                      )),
+                      buttonRoute: Chat()),
                 ),
               ],
             )
