@@ -321,7 +321,6 @@ class _ExpandedPostState extends State<ExpandedPost> {
                               },
                               icon: Icon(
                                 Icons.send,
-                                color: Colors.blue,
                               ))
                         ],
                       ),

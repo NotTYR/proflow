@@ -293,7 +293,6 @@ class _MsgCardState extends State<MsgCard> {
                       },
                       icon: Icon(
                         Icons.send,
-                        color: Colors.blue,
                       ))
                 ],
               ),

@@ -5,10 +5,17 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:ProFlow/navigation/student/my project/modules/detail/view.dart';
 import '../../../core/values/colors.dart';
+import 'comments.dart';
 
-class ExpandedTask extends StatelessWidget {
+class ExpandedTask extends StatefulWidget {
+  const ExpandedTask({super.key});
+
+  @override
+  State<ExpandedTask> createState() => _ExpandedTaskState();
+}
+
+class _ExpandedTaskState extends State<ExpandedTask> {
   final homeCtrl = Get.find<HomeController>();
-  ExpandedTask({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +123,16 @@ class ExpandedTask extends StatelessWidget {
                 ),
               ),
             ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 3.0.wp,
+                horizontal: 5.0.wp,
+              ),
+              child: SizedBox(
+                height: 50.0.hp,
+                child: TaskComments(),
+              ),
+            )
           ],
         ),
       ),
