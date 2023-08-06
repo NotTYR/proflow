@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1069070812702-og7vtcpsq8kc8mnp8p38vm5psmr2g5ru.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.proflow",
+            "certificate_hash": "9163491305fd87f694faa88416f7eccb917c3921"
+          }
+        },
+        {
           "client_id": "1069070812702-read5hqf2eklsrojgah9m1hn6r4b7ses.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
