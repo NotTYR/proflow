@@ -134,9 +134,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 45.0,
-                  vertical: 60.0,
+                  vertical: 50.0,
                 ),
-                child: Icon(Icons.chat),
+                child: Image.asset(
+                  'assets/chat.png',
+                ),
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 45.0),
