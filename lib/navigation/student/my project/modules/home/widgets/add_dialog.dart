@@ -63,9 +63,14 @@ class _AddDialogState extends State<AddDialog> {
                             EasyLoading.showError('Please select task type');
                           } else {
                             var success = homeCtrl.updateTask(
-                              homeCtrl.task.value!,
-                              homeCtrl.editCtrl.text,
-                            );
+                                homeCtrl.task.value!,
+                                homeCtrl.editCtrl.text,
+                                [],
+                                _dateTime.day.toString() +
+                                    '/' +
+                                    _dateTime.month.toString() +
+                                    '/' +
+                                    _dateTime.year.toString());
                             if (success) {
                               EasyLoading.showSuccess('Added');
                               Get.back();

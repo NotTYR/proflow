@@ -75,12 +75,17 @@ class HomeController extends GetxController {
     tasks.remove(task);
   }
 
-  updateTask(Task task, String title) {
+  updateTask(Task task, String title, List assigned, String duedate) {
     var todos = task.todos ?? [];
     if (containeTodo(todos, title)) {
       return false;
     }
-    var todo = {'title': title, 'done': false};
+    var todo = {
+      'title': title,
+      'done': false,
+      'assigned': assigned,
+      'duedate': duedate
+    };
     todos.add(todo);
     var newTask = task.copyWith(todos: todos);
     int oldIdx = tasks.indexOf(task);
@@ -140,7 +145,12 @@ class HomeController extends GetxController {
     int index = doingTodos.indexWhere(
         (element) => mapEquals<String, dynamic>(doingTodo, element));
     doingTodos.removeAt(index);
-    var doneTodo = {'title': title, 'done': true};
+    var doneTodo = {
+      'title': title,
+      'done': true,
+      'assigned': assigned,
+      'duedate': duedate
+    };
     doneTodos.add(doneTodo);
     doingTodos.refresh();
     doneTodos.refresh();
