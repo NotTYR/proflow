@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 import 'package:ProFlow/navigation/student/my project/modules/detail/view.dart';
 import '../../../core/values/colors.dart';
 
+List assignedmembers = [];
+
 class AddTask extends StatelessWidget {
   AddTask({super.key});
 
@@ -142,6 +144,9 @@ class _willpopscopeState extends State<willpopscope> {
                   if (memberlist.hasData) {
                     print(memberlist.data);
                     List members = memberlist.data;
+                    for (final member in members) {
+                      assignedmembers.add(null);
+                    }
                     return Container(
                       child: ListView(
                         scrollDirection: Axis.vertical,
