@@ -1,5 +1,7 @@
 import 'package:ProFlow/extensions.dart';
+import 'package:ProFlow/navigation/student/create%20group/create_group.dart';
 import 'package:ProFlow/navigation/student/my%20project/modules/home/controller.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -99,112 +101,29 @@ class AddTask extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: 3.0.wp,
-                left: 5.0.wp,
-                right: 5.0.wp,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      CheckBox(),
-                      SizedBox(
-                        width: 1.0.wp,
+            FutureBuilder(
+                future: GetMembers(),
+                builder: (BuildContext context, AsyncSnapshot memberlist) {
+                  if (memberlist.hasData) {
+                    print(memberlist.data);
+                    List members = memberlist.data;
+                    return Container(
+                      child: ListView(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        children: List.generate(
+                            members.length,
+                            (index) => Column(
+                                  children: [GroupMember(Name: members[index])],
+                                )),
                       ),
-                      Text(
-                        'LIU YUAN HCI',
-                        style: TextStyle(
-                          fontSize: 12.0.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                left: 5.0.wp,
-                right: 5.0.wp,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      CheckBox(),
-                      SizedBox(
-                        width: 1.0.wp,
-                      ),
-                      Text(
-                        'TAN YOU REN HCI',
-                        style: TextStyle(
-                          fontSize: 12.0.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                left: 5.0.wp,
-                right: 5.0.wp,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      CheckBox(),
-                      SizedBox(
-                        width: 1.0.wp,
-                      ),
-                      Text(
-                        'YAP HAN YANG HCI',
-                        style: TextStyle(
-                          fontSize: 12.0.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: 3.0.hp,
-                left: 5.0.wp,
-                right: 5.0.wp,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      CheckBox(),
-                      SizedBox(
-                        width: 1.0.wp,
-                      ),
-                      Text(
-                        'YE WENYANG HCI',
-                        style: TextStyle(
-                          fontSize: 12.0.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+                    );
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                }),
             Padding(
               padding: EdgeInsets.symmetric(
                 vertical: 3.0.wp,
@@ -274,6 +193,29 @@ class AddTask extends StatelessWidget {
   }
 }
 
+Future<List> GetMembers() async {
+  final docuid = await GetDocUid();
+  final identity =
+      await FirebaseFirestore.instance.collection('identity').get();
+  final group =
+      await FirebaseFirestore.instance.collection('groups').doc(docuid).get();
+  final memberuid = group['members'];
+  List members = [];
+  List identities = [];
+  for (final data in identity.docs) {
+    identities.add([data['username'], data['uid']]);
+  }
+  for (final member in memberuid) {
+    for (final data in identities) {
+      if (data[1] == member) {
+        members.add(data[0]);
+      }
+    }
+  }
+  print(members);
+  return members;
+}
+
 class CheckBox extends StatefulWidget {
   const CheckBox({super.key});
 
@@ -299,6 +241,49 @@ class _CheckBoxState extends State<CheckBox> {
           isChecked = value!;
         });
       },
+    );
+  }
+}
+
+class GroupMember extends StatefulWidget {
+  final String Name;
+  const GroupMember({super.key, required this.Name});
+
+  @override
+  State<GroupMember> createState() => _GroupMemberState(this.Name);
+}
+
+class _GroupMemberState extends State<GroupMember> {
+  final Name;
+  _GroupMemberState(this.Name);
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+        top: 3.0.wp,
+        left: 5.0.wp,
+        right: 5.0.wp,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              CheckBox(),
+              SizedBox(
+                width: 1.0.wp,
+              ),
+              Text(
+                Name,
+                style: TextStyle(
+                  fontSize: 12.0.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
