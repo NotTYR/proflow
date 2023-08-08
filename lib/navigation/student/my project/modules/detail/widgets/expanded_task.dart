@@ -6,16 +6,21 @@ import 'package:get/get.dart';
 import 'package:ProFlow/navigation/student/my project/modules/detail/view.dart';
 import '../../../core/values/colors.dart';
 import 'comments.dart';
+import 'package:ProFlow/navigation/student/my project/data/providers/task/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ExpandedTask extends StatefulWidget {
-  const ExpandedTask({super.key});
+  final TaskData;
+  const ExpandedTask({super.key, required this.TaskData});
 
   @override
-  State<ExpandedTask> createState() => _ExpandedTaskState();
+  State<ExpandedTask> createState() => _ExpandedTaskState(TaskData);
 }
 
 class _ExpandedTaskState extends State<ExpandedTask> {
+  final TaskData;
   final homeCtrl = Get.find<HomeController>();
+  _ExpandedTaskState(this.TaskData);
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +46,7 @@ class _ExpandedTaskState extends State<ExpandedTask> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 5.0.wp),
               child: Text(
-                'Task Title',
+                TaskData['title'],
                 style: TextStyle(
                   fontSize: 18.0.sp,
                   fontWeight: FontWeight.bold,
@@ -68,12 +73,17 @@ class _ExpandedTaskState extends State<ExpandedTask> {
                     width: 3.0.wp,
                   ),
                   Expanded(
-                    child: Text(
-                      'LIU YUAN HCI, TAN YOU REN HCI, YAP HAN YANG HCI, YE WENYANG HCI',
-                      style: TextStyle(
-                        fontSize: 12.0.sp,
-                      ),
-                      softWrap: true,
+                    child: FutureBuilder(
+                      future: GetMembers(),
+                      builder: (context, snapshot) {
+                        return Text(
+                          TaskData['assigned'].toString(),
+                          style: TextStyle(
+                            fontSize: 12.0.sp,
+                          ),
+                          softWrap: true,
+                        );
+                      },
                     ),
                   ),
                 ],
@@ -100,7 +110,7 @@ class _ExpandedTaskState extends State<ExpandedTask> {
                         width: 4.0.wp,
                       ),
                       Text(
-                        '29 Aug 2023',
+                        TaskData['duedate'],
                         style: TextStyle(
                           fontSize: 12.0.sp,
                         ),
@@ -110,34 +120,57 @@ class _ExpandedTaskState extends State<ExpandedTask> {
                 ],
               ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 3.0.wp,
-                horizontal: 5.0.wp,
-              ),
-              child: Text(
-                'Comments:',
-                style: TextStyle(
-                  fontSize: 14.0.sp,
-                  color: Colors.grey[400],
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 3.0.wp,
-                horizontal: 5.0.wp,
-              ),
-              child: SizedBox(
-                height: 50.0.hp,
-                child: TaskComments(),
-              ),
-            )
+            // Padding(
+            //   padding: EdgeInsets.symmetric(
+            //     vertical: 3.0.wp,
+            //     horizontal: 5.0.wp,
+            //   ),
+            //   child: Text(
+            //     'Comments:',
+            //     style: TextStyle(
+            //       fontSize: 14.0.sp,
+            //       color: Colors.grey[400],
+            //     ),
+            //   ),
+            // ),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(
+            //     vertical: 3.0.wp,
+            //     horizontal: 5.0.wp,
+            //   ),
+            //   child: SizedBox(
+            //     height: 50.0.hp,
+            //     child: TaskComments(),
+            //   ),
+            // )
           ],
         ),
       ),
     );
   }
+}
+
+Future<List> GetMembers() async {
+  final docuid = await GetDocUid();
+  final identity =
+      await FirebaseFirestore.instance.collection('identity').get();
+  final group =
+      await FirebaseFirestore.instance.collection('groups').doc(docuid).get();
+  final memberuid = group['members'];
+  List members = [];
+  List identities = [];
+  for (final data in identity.docs) {
+    identities.add([data['username'], data['uid']]);
+  }
+  for (final member in memberuid) {
+    for (final data in identities) {
+      if (data[1] == member) {
+        members.add(data[0]);
+      }
+    }
+  }
+  print(members);
+  return members;
 }
 
 class CheckBox extends StatefulWidget {

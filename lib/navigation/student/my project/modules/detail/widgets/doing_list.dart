@@ -73,7 +73,14 @@ class DoingList extends StatelessWidget {
                             ),
                             TextButton(
                               onPressed: () {
-                                Get.to(() => ExpandedTask(),
+                                Get.to(
+                                    () => ExpandedTask(
+                                          TaskData: {
+                                            'title': element['title'],
+                                            'assigned': element['assigned'],
+                                            'duedate': element['duedate']
+                                          },
+                                        ),
                                     transition: Transition.rightToLeft);
                               },
                               child: Text('View details'),
