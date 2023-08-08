@@ -67,11 +67,6 @@ class _AddCardState extends State<AddCard> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          AnimatedSwitcher(
-                              duration: const Duration(milliseconds: 300),
-                              child: _icon != null
-                                  ? Icon(_icon)
-                                  : Container(child: Icon(Icons.square))),
                           ElevatedButton(
                               onPressed: () {
                                 _openIconPicker();

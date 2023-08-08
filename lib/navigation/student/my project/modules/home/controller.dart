@@ -93,13 +93,23 @@ class HomeController extends GetxController {
     return todos.any((element) => element['title'] == title);
   }
 
-  addTodo(String title) {
-    var todo = {'title': title, 'done': false};
+  addTodo(String title, List assigned, String duedate) {
+    var todo = {
+      'title': title,
+      'done': false,
+      'assigned': assigned,
+      'duedate': duedate
+    };
     if (doingTodos
         .any((element) => mapEquals<String, dynamic>(todo, element))) {
       return false;
     }
-    var doneTodo = {'title': title, 'done': true};
+    var doneTodo = {
+      'title': title,
+      'done': true,
+      'assigned': assigned,
+      'duedate': duedate
+    };
     if (doneTodos
         .any((element) => mapEquals<String, dynamic>(doneTodo, element))) {
       return false;
@@ -120,8 +130,13 @@ class HomeController extends GetxController {
     tasks.refresh();
   }
 
-  void doneTodo(String title) {
-    var doingTodo = {'title': title, 'done': false};
+  void doneTodo(String title, List assigned, String duedate) {
+    var doingTodo = {
+      'title': title,
+      'done': false,
+      'assigned': assigned,
+      'duedate': duedate
+    };
     int index = doingTodos.indexWhere(
         (element) => mapEquals<String, dynamic>(doingTodo, element));
     doingTodos.removeAt(index);

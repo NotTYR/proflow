@@ -3,10 +3,33 @@ import 'package:ProFlow/navigation/student/my%20project/modules/home/controller.
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ProFlow/navigation/student/my project/data/providers/task/provider.dart';
 
-class AddDialog extends StatelessWidget {
+class AddDialog extends StatefulWidget {
+  const AddDialog({super.key});
+
+  @override
+  State<AddDialog> createState() => _AddDialogState();
+}
+
+class _AddDialogState extends State<AddDialog> {
   final homeCtrl = Get.find<HomeController>();
-  AddDialog({super.key});
+
+  void _showDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2024),
+    ).then((value) {
+      setState(() {
+        _dateTime = value!;
+      });
+    });
+  }
+
+  DateTime _dateTime = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -168,33 +191,31 @@ class AddDialog extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: 1.0.hp,
-                  left: 5.0.wp,
-                  right: 5.0.wp,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        CheckBox(),
-                        SizedBox(
-                          width: 1.0.wp,
+              FutureBuilder(
+                  future: GetMembers(),
+                  builder: (BuildContext context, AsyncSnapshot memberlist) {
+                    if (memberlist.hasData) {
+                      print(memberlist.data);
+                      List members = memberlist.data;
+                      return Container(
+                        child: ListView(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          children: List.generate(
+                              members.length,
+                              (index) => Column(
+                                    children: [
+                                      GroupMember(Name: members[index])
+                                    ],
+                                  )),
                         ),
-                        Text(
-                          'Username',
-                          style: TextStyle(
-                            fontSize: 12.0.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+                      );
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  }),
               Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: 2.0.hp,
@@ -203,39 +224,50 @@ class AddDialog extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
+                    Column(
                       children: [
-                        Text(
-                          'Due:',
-                          style: TextStyle(
-                            fontSize: 14.0.sp,
-                            color: Colors.grey[400],
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              'Due:',
+                              style: TextStyle(
+                                fontSize: 14.0.sp,
+                                color: Colors.grey[400],
+                              ),
+                            ),
+                            // SizedBox(
+                            //   width: 4.0.wp,
+                            // ),
+                            // Text(
+                            //   'Date',
+                            //   style: TextStyle(
+                            //     fontSize: 12.0.sp,
+                            //   ),
+                            // ),
+                            SizedBox(
+                              width: 4.0.wp,
+                            ),
+                            Text(
+                              (_dateTime.day.toString() +
+                                  '/' +
+                                  _dateTime.month.toString() +
+                                  '/' +
+                                  _dateTime.year.toString()),
+                              style: TextStyle(
+                                fontSize: 14.0.sp,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 4.0.wp,
+                            ),
+                            // REFER TO THIS FOR DATE PICKER: https://www.youtube.com/watch?v=JK3zztXnDxs
+                            // includes how to use the values selected from the calendar - not done yet
+                          ],
                         ),
-                        // SizedBox(
-                        //   width: 4.0.wp,
-                        // ),
-                        // Text(
-                        //   'Date',
-                        //   style: TextStyle(
-                        //     fontSize: 12.0.sp,
-                        //   ),
-                        // ),
-                        SizedBox(
-                          width: 4.0.wp,
-                        ),
-
-                        // REFER TO THIS FOR DATE PICKER: https://www.youtube.com/watch?v=JK3zztXnDxs
-                        // includes how to use the values selected from the calendar - not done yet
-
                         ElevatedButton(
                           onPressed: () {
-                            showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime.now(),
-                              lastDate: DateTime(2024),
-                            );
+                            _showDatePicker();
                           },
                           child: Text(
                             'Select Date',
@@ -290,6 +322,72 @@ class _CheckBoxState extends State<CheckBox> {
           isChecked = value!;
         });
       },
+    );
+  }
+}
+
+Future<List> GetMembers() async {
+  final docuid = await GetDocUid();
+  final identity =
+      await FirebaseFirestore.instance.collection('identity').get();
+  final group =
+      await FirebaseFirestore.instance.collection('groups').doc(docuid).get();
+  final memberuid = group['members'];
+  List members = [];
+  List identities = [];
+  for (final data in identity.docs) {
+    identities.add([data['username'], data['uid']]);
+  }
+  for (final member in memberuid) {
+    for (final data in identities) {
+      if (data[1] == member) {
+        members.add(data[0]);
+      }
+    }
+  }
+  print(members);
+  return members;
+}
+
+class GroupMember extends StatefulWidget {
+  final String Name;
+  const GroupMember({super.key, required this.Name});
+
+  @override
+  State<GroupMember> createState() => _GroupMemberState(this.Name);
+}
+
+class _GroupMemberState extends State<GroupMember> {
+  final Name;
+  _GroupMemberState(this.Name);
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+        top: 3.0.wp,
+        left: 5.0.wp,
+        right: 5.0.wp,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              CheckBox(),
+              SizedBox(
+                width: 1.0.wp,
+              ),
+              Text(
+                Name,
+                style: TextStyle(
+                  fontSize: 12.0.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

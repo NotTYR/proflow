@@ -164,6 +164,8 @@ class _GuestPageState extends State<GuestPage> {
                                                       })
                                                     }
                                                 },
+                                              loading = false,
+                                              notloading = true,
                                               Navigator.of(context).push(
                                                   MaterialPageRoute(
                                                       builder: (context) =>

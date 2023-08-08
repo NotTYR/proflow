@@ -9,9 +9,37 @@ import 'package:ProFlow/navigation/student/my project/modules/detail/view.dart';
 import '../../../core/values/colors.dart';
 
 class AddTask extends StatelessWidget {
-  final homeCtrl = Get.find<HomeController>();
   AddTask({super.key});
 
+  @override
+  Widget build(BuildContext context) {
+    return willpopscope();
+  }
+}
+
+class willpopscope extends StatefulWidget {
+  const willpopscope({super.key});
+
+  @override
+  State<willpopscope> createState() => _willpopscopeState();
+}
+
+class _willpopscopeState extends State<willpopscope> {
+  void _showDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2024),
+    ).then((value) {
+      setState(() {
+        _dateTime = value!;
+      });
+    });
+  }
+
+  final homeCtrl = Get.find<HomeController>();
+  DateTime _dateTime = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -36,7 +64,14 @@ class AddTask extends StatelessWidget {
                             MaterialStateProperty.all(Colors.transparent)),
                     onPressed: () {
                       if (homeCtrl.formKey.currentState!.validate()) {
-                        var success = homeCtrl.addTodo(homeCtrl.editCtrl.text);
+                        var success = homeCtrl.addTodo(
+                            homeCtrl.editCtrl.text,
+                            [],
+                            _dateTime.day.toString() +
+                                '/' +
+                                _dateTime.month.toString() +
+                                '/' +
+                                _dateTime.year.toString());
                         if (success) {
                           EasyLoading.showSuccess('Added');
                           Get.back();
@@ -132,39 +167,50 @@ class AddTask extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
+                  Column(
                     children: [
-                      Text(
-                        'Due:',
-                        style: TextStyle(
-                          fontSize: 14.0.sp,
-                          color: Colors.grey[400],
-                        ),
+                      Row(
+                        children: [
+                          Text(
+                            'Due:',
+                            style: TextStyle(
+                              fontSize: 14.0.sp,
+                              color: Colors.grey[400],
+                            ),
+                          ),
+                          // SizedBox(
+                          //   width: 4.0.wp,
+                          // ),
+                          // Text(
+                          //   'Date',
+                          //   style: TextStyle(
+                          //     fontSize: 12.0.sp,
+                          //   ),
+                          // ),
+                          SizedBox(
+                            width: 4.0.wp,
+                          ),
+                          Text(
+                            (_dateTime.day.toString() +
+                                '/' +
+                                _dateTime.month.toString() +
+                                '/' +
+                                _dateTime.year.toString()),
+                            style: TextStyle(
+                              fontSize: 14.0.sp,
+                              color: Colors.black,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 4.0.wp,
+                          ),
+                          // REFER TO THIS FOR DATE PICKER: https://www.youtube.com/watch?v=JK3zztXnDxs
+                          // includes how to use the values selected from the calendar - not done yet
+                        ],
                       ),
-                      // SizedBox(
-                      //   width: 4.0.wp,
-                      // ),
-                      // Text(
-                      //   'Date',
-                      //   style: TextStyle(
-                      //     fontSize: 12.0.sp,
-                      //   ),
-                      // ),
-                      SizedBox(
-                        width: 4.0.wp,
-                      ),
-
-                      // REFER TO THIS FOR DATE PICKER: https://www.youtube.com/watch?v=JK3zztXnDxs
-                      // includes how to use the values selected from the calendar - not done yet
-
                       ElevatedButton(
                         onPressed: () {
-                          showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime.now(),
-                            lastDate: DateTime(2024),
-                          );
+                          _showDatePicker();
                         },
                         child: Text(
                           'Select Date',
