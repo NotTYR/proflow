@@ -65,10 +65,11 @@ class _willpopscopeState extends State<willpopscope> {
                         overlayColor:
                             MaterialStateProperty.all(Colors.transparent)),
                     onPressed: () {
+                      print(assignedmembers);
                       if (homeCtrl.formKey.currentState!.validate()) {
                         var success = homeCtrl.addTodo(
                             homeCtrl.editCtrl.text,
-                            [],
+                            assignedmembers,
                             _dateTime.day.toString() +
                                 '/' +
                                 _dateTime.month.toString() +
@@ -144,8 +145,9 @@ class _willpopscopeState extends State<willpopscope> {
                   if (memberlist.hasData) {
                     print(memberlist.data);
                     List members = memberlist.data;
+                    assignedmembers = [];
                     for (final member in members) {
-                      assignedmembers.add(null);
+                      assignedmembers.add(false);
                     }
                     return Container(
                       child: ListView(
@@ -154,7 +156,10 @@ class _willpopscopeState extends State<willpopscope> {
                         children: List.generate(
                             members.length,
                             (index) => Column(
-                                  children: [GroupMember(Name: members[index])],
+                                  children: [
+                                    GroupMember(
+                                        Name: members[index], Index: index)
+                                  ],
                                 )),
                       ),
                     );
@@ -268,13 +273,16 @@ Future<List> GetMembers() async {
 }
 
 class CheckBox extends StatefulWidget {
-  const CheckBox({super.key});
+  final index;
+  const CheckBox({super.key, required this.index});
 
   @override
-  State<CheckBox> createState() => _CheckBoxState();
+  State<CheckBox> createState() => _CheckBoxState(index);
 }
 
 class _CheckBoxState extends State<CheckBox> {
+  final index;
+  _CheckBoxState(this.index);
   bool isChecked = false;
 
   @override
@@ -289,6 +297,7 @@ class _CheckBoxState extends State<CheckBox> {
       value: isChecked,
       onChanged: (bool? value) {
         setState(() {
+          assignedmembers[index] = value!;
           isChecked = value!;
         });
       },
@@ -298,15 +307,17 @@ class _CheckBoxState extends State<CheckBox> {
 
 class GroupMember extends StatefulWidget {
   final String Name;
-  const GroupMember({super.key, required this.Name});
+  final Index;
+  const GroupMember({super.key, required this.Name, required this.Index});
 
   @override
-  State<GroupMember> createState() => _GroupMemberState(this.Name);
+  State<GroupMember> createState() => _GroupMemberState(this.Name, this.Index);
 }
 
 class _GroupMemberState extends State<GroupMember> {
   final Name;
-  _GroupMemberState(this.Name);
+  final Index;
+  _GroupMemberState(this.Name, this.Index);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -320,7 +331,9 @@ class _GroupMemberState extends State<GroupMember> {
         children: [
           Row(
             children: [
-              CheckBox(),
+              CheckBox(
+                index: Index,
+              ),
               SizedBox(
                 width: 1.0.wp,
               ),

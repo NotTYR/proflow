@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ProFlow/navigation/student/my project/data/providers/task/provider.dart';
 
+List assignedmembers = [];
+
 class AddDialog extends StatefulWidget {
   const AddDialog({super.key});
 
@@ -65,7 +67,7 @@ class _AddDialogState extends State<AddDialog> {
                             var success = homeCtrl.updateTask(
                                 homeCtrl.task.value!,
                                 homeCtrl.editCtrl.text,
-                                [],
+                                assignedmembers,
                                 _dateTime.day.toString() +
                                     '/' +
                                     _dateTime.month.toString() +
@@ -202,6 +204,10 @@ class _AddDialogState extends State<AddDialog> {
                     if (memberlist.hasData) {
                       print(memberlist.data);
                       List members = memberlist.data;
+                      assignedmembers = [];
+                      for (final member in members) {
+                        assignedmembers.add(false);
+                      }
                       return Container(
                         child: ListView(
                           scrollDirection: Axis.vertical,
@@ -210,7 +216,8 @@ class _AddDialogState extends State<AddDialog> {
                               members.length,
                               (index) => Column(
                                     children: [
-                                      GroupMember(Name: members[index])
+                                      GroupMember(
+                                          Name: members[index], Index: index)
                                     ],
                                   )),
                         ),
@@ -303,13 +310,16 @@ class _AddDialogState extends State<AddDialog> {
 }
 
 class CheckBox extends StatefulWidget {
-  const CheckBox({super.key});
+  final index;
+  const CheckBox({super.key, required this.index});
 
   @override
-  State<CheckBox> createState() => _CheckBoxState();
+  State<CheckBox> createState() => _CheckBoxState(index);
 }
 
 class _CheckBoxState extends State<CheckBox> {
+  final index;
+  _CheckBoxState(this.index);
   bool isChecked = false;
 
   @override
@@ -324,6 +334,7 @@ class _CheckBoxState extends State<CheckBox> {
       value: isChecked,
       onChanged: (bool? value) {
         setState(() {
+          assignedmembers[index] = value!;
           isChecked = value!;
         });
       },
@@ -356,15 +367,17 @@ Future<List> GetMembers() async {
 
 class GroupMember extends StatefulWidget {
   final String Name;
-  const GroupMember({super.key, required this.Name});
+  final Index;
+  const GroupMember({super.key, required this.Name, required this.Index});
 
   @override
-  State<GroupMember> createState() => _GroupMemberState(this.Name);
+  State<GroupMember> createState() => _GroupMemberState(this.Name, this.Index);
 }
 
 class _GroupMemberState extends State<GroupMember> {
   final Name;
-  _GroupMemberState(this.Name);
+  final Index;
+  _GroupMemberState(this.Name, this.Index);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -378,7 +391,9 @@ class _GroupMemberState extends State<GroupMember> {
         children: [
           Row(
             children: [
-              CheckBox(),
+              CheckBox(
+                index: Index,
+              ),
               SizedBox(
                 width: 1.0.wp,
               ),

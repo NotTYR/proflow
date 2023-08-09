@@ -76,13 +76,30 @@ class _ExpandedTaskState extends State<ExpandedTask> {
                     child: FutureBuilder(
                       future: GetMembers(),
                       builder: (context, snapshot) {
-                        return Text(
-                          TaskData['assigned'].toString(),
-                          style: TextStyle(
-                            fontSize: 12.0.sp,
-                          ),
-                          softWrap: true,
-                        );
+                        if (snapshot.hasData) {
+                          String assigned = '';
+                          int i = 0;
+                          for (final assign in TaskData['assigned']) {
+                            if (assign == true) {
+                              if (assigned != '') {
+                                assigned =
+                                    (assigned + ",\n" + snapshot.data?[i]);
+                              } else {
+                                assigned = (snapshot.data?[i]);
+                              }
+                            }
+                            i++;
+                          }
+                          return Text(
+                            assigned,
+                            style: TextStyle(
+                              fontSize: 12.0.sp,
+                            ),
+                            softWrap: true,
+                          );
+                        } else {
+                          return Text('');
+                        }
                       },
                     ),
                   ),
