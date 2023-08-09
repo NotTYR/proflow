@@ -99,7 +99,8 @@ class _ProposalPageState extends State<ProposalPage> {
                       final firebase = FirebaseFirestore.instance;
                       await firebase.collection('groups').add({
                         'task': [],
-                        'members': [uid]
+                        'members': [uid],
+                        'chat': []
                       });
                       String newdocid = await GetDocUid();
                       // setState(() {
