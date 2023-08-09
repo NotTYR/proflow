@@ -3,7 +3,7 @@ import 'package:ProFlow/navigation/student/chat/chat_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ProFlow/navigation/student/create%20group/create_group.dart';
 import 'package:ProFlow/navigation/student/create%20group/find_mentor.dart';
-import 'package:ProFlow/navigation/student/forum/forum.dart';
+import 'package:ProFlow/navigation/student/forum/view.dart';
 import 'package:ProFlow/navigation/student/my%20project/modules/home/view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';

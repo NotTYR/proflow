@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'forum.dart';
+import 'view.dart';
 
 class SinglePost extends StatefulWidget {
   final index;
@@ -228,44 +228,40 @@ class _ExpandedPostState extends State<ExpandedPost> {
                         color: Colors.black54,
                         thickness: MediaQuery.of(context).size.height * 0.003,
                       ),
+
                       //comments column
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.1,
-                        width: MediaQuery.of(context).size.height * 3.0,
-                        child: ListView(
-                          children: List.generate(
-                              rawforumdata[index]['comments'].length,
-                              (commentindex) => Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Column(
-                                        children: [
-                                          Text(
-                                            rawforumdata[index]['comments']
-                                                [commentindex]['author'],
-                                            style: TextStyle(fontSize: 13),
-                                          ),
-                                          SizedBox(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.01,
-                                          ),
-                                          Text(rawforumdata[index]['comments']
-                                              [commentindex]['comment']),
-                                          SizedBox(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.03,
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  )),
+                      Container(
+                        constraints: BoxConstraints(
+                          maxWidth: MediaQuery.of(context).size.width * 0.9,
+                          maxHeight: MediaQuery.of(context).size.height * 0.3,
+                        ),
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          padding: EdgeInsets.only(top: 2.0.hp, bottom: 1.0.hp),
+                          itemCount: rawforumdata[index]['comments'].length,
+                          itemBuilder: (context, commentIndex) {
+                            final comment =
+                                rawforumdata[index]['comments'][commentIndex];
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  comment['author'],
+                                  style: TextStyle(
+                                      fontSize: 13, color: Colors.grey[500]),
+                                ),
+                                SizedBox(height: 0.5.hp),
+                                Text(
+                                  comment['comment'],
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                                SizedBox(height: 2.0.hp),
+                              ],
+                            );
+                          },
                         ),
                       ),
+
                       Row(
                         children: [
                           Expanded(

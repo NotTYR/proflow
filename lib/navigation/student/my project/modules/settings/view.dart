@@ -1,126 +1,17 @@
-import 'package:ProFlow/extensions.dart';
 import 'package:flutter/material.dart';
 
-// class SettingsPage extends StatefulWidget {
-//   const SettingsPage({super.key});
+void main() {
+  runApp(MyApp());
+}
 
-//   @override
-//   State<SettingsPage> createState() => _SettingsPageState();
-// }
-
-// class _SettingsPageState extends State<SettingsPage> {
-//   bool _isEnabled = false;
-//   bool _additionalSettingsEnabled = false;
-//   int _daysBeforeDue = 1; // Default value
-//   String _selectedUnit = 'days'; // Default value
-
-//   List<int> _numberOptions = [
-//     1,
-//     2,
-//     3,
-//     4,
-//     5,
-//     6,
-//     7
-//   ]; // Dropdown options for number
-//   List<String> _unitOptions = ['days', 'weeks']; // Dropdown options for unit
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Settings'),
-//       ),
-//       body: Padding(
-//         padding: EdgeInsets.only(
-//           top: 3.0.hp,
-//           left: 5.0.wp,
-//           right: 5.0.wp,
-//         ),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Row(
-//               children: [
-//                 Text(
-//                   'Enable Task Notifications',
-//                   style: TextStyle(fontSize: 13.0.sp),
-//                 ),
-//                 SizedBox(
-//                   width: 12.0.wp,
-//                 ),
-//                 Switch(
-//                   value: _isEnabled,
-//                   onChanged: (value) {
-//                     setState(() {
-//                       _isEnabled = value;
-//                     });
-//                   },
-//                 ),
-//               ],
-//             ),
-//             SizedBox(
-//               height: 1.0.hp,
-//             ),
-//             Padding(
-//               padding: EdgeInsets.symmetric(horizontal: 5.0.wp),
-//               child: Visibility(
-//                 visible: _isEnabled,
-//                 child: Row(
-//                   children: [
-//                     Text(
-//                       'Notify',
-//                       style: TextStyle(fontSize: 12.0.sp),
-//                     ),
-//                     SizedBox(
-//                       width: 4.0.wp,
-//                     ),
-//                     DropdownButton<int>(
-//                       value: _daysBeforeDue,
-//                       onChanged: (newValue) {
-//                         setState(() {
-//                           _daysBeforeDue = newValue!;
-//                         });
-//                       },
-//                       items: _numberOptions.map((int value) {
-//                         return DropdownMenuItem<int>(
-//                           value: value,
-//                           child: Text('$value'),
-//                         );
-//                       }).toList(),
-//                     ),
-//                     DropdownButton<String>(
-//                       value: _selectedUnit,
-//                       onChanged: (newValue) {
-//                         setState(() {
-//                           _selectedUnit = newValue!;
-//                         });
-//                       },
-//                       items: _unitOptions.map((String value) {
-//                         return DropdownMenuItem<String>(
-//                           value: value,
-//                           child: Text(value),
-//                         );
-//                       }).toList(),
-//                     ),
-//                     SizedBox(
-//                       width: 3.0.wp,
-//                     ),
-//                     Text(
-//                       'before task is due.',
-//                       style: TextStyle(fontSize: 12.0.sp),
-//                     )
-//                     // Add more additional settings here if needed
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: SettingsPage(),
+    );
+  }
+}
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -139,9 +30,9 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       body: Padding(
         padding: EdgeInsets.only(
-          top: 3.0.hp,
-          left: 5.0.wp,
-          right: 5.0.wp,
+          top: 32.0,
+          left: 16.0,
+          right: 16.0,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,7 +43,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   'Enable Task Notifications',
                   style: TextStyle(fontSize: 18),
                 ),
-                SizedBox(width: 10.0.wp),
+                SizedBox(width: 10.0),
                 Switch(
                   value: _isEnabled,
                   onChanged: (value) {
@@ -171,13 +62,13 @@ class _SettingsPageState extends State<SettingsPage> {
             SizedBox(height: 16),
             if (_isEnabled)
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0.wp),
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
                 child: ElevatedButton(
                   onPressed: () {
                     setState(() {
                       _notificationSettings.add(NotificationSetting(
                         daysBeforeDue: 1,
-                        unit: 'days',
+                        unit: 'day',
                       ));
                     });
                   },
@@ -218,19 +109,10 @@ class AdditionalSettings extends StatefulWidget {
 }
 
 class _AdditionalSettingsState extends State<AdditionalSettings> {
-  int _selectedNumber = 1; // Default value
-  String _selectedUnit = 'days'; // Default value
-
-  List<int> _numberOptions = [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7
-  ]; // Dropdown options for number
-  List<String> _unitOptions = ['days', 'week']; // Dropdown options for unit
+  int _selectedNumber = 1;
+  String _selectedUnit = 'day';
+  List<int> _numberOptions = [1, 2, 3, 4, 5, 6, 7];
+  List<String> _unitOptions = ['day', 'week'];
 
   @override
   void initState() {
@@ -239,10 +121,23 @@ class _AdditionalSettingsState extends State<AdditionalSettings> {
     _selectedUnit = widget.setting.unit;
   }
 
+  void _updateUnitOptions() {
+    setState(() {
+      if (_selectedNumber == 1) {
+        _unitOptions = ['day', 'week'];
+      } else {
+        _unitOptions = ['days', 'weeks'];
+      }
+      _selectedUnit = _unitOptions.contains(_selectedUnit)
+          ? _selectedUnit
+          : _unitOptions[0];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 5.0.wp),
+      padding: EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -250,15 +145,15 @@ class _AdditionalSettingsState extends State<AdditionalSettings> {
             'Notify',
             style: TextStyle(fontSize: 18),
           ),
-          SizedBox(height: 1.0.hp),
+          SizedBox(height: 8.0),
           Row(
             children: [
-              SizedBox(width: 5.0.wp),
               DropdownButton<int>(
                 value: _selectedNumber,
                 onChanged: (newValue) {
                   setState(() {
                     _selectedNumber = newValue!;
+                    _updateUnitOptions();
                   });
                 },
                 items: _numberOptions.map((int value) {
@@ -268,7 +163,7 @@ class _AdditionalSettingsState extends State<AdditionalSettings> {
                   );
                 }).toList(),
               ),
-              SizedBox(width: 2.0.wp),
+              SizedBox(width: 8.0),
               DropdownButton<String>(
                 value: _selectedUnit,
                 onChanged: (newValue) {
@@ -283,7 +178,7 @@ class _AdditionalSettingsState extends State<AdditionalSettings> {
                   );
                 }).toList(),
               ),
-              SizedBox(width: 1.0.wp),
+              SizedBox(width: 8.0),
               Text(
                 'before task is due',
                 style: TextStyle(fontSize: 18),
@@ -294,7 +189,7 @@ class _AdditionalSettingsState extends State<AdditionalSettings> {
               ),
             ],
           ),
-          SizedBox(height: 2.0.hp),
+          SizedBox(height: 16.0),
         ],
       ),
     );
