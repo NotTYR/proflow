@@ -35,7 +35,10 @@ class _willpopscopeState extends State<willpopscope> {
       lastDate: DateTime(2024),
     ).then((value) {
       setState(() {
-        _dateTime = value!;
+        if (value != null) {
+          _dateTime = value;
+        }
+        print(assignedmembers);
       });
     });
   }
@@ -65,7 +68,6 @@ class _willpopscopeState extends State<willpopscope> {
                         overlayColor:
                             MaterialStateProperty.all(Colors.transparent)),
                     onPressed: () {
-                      print(assignedmembers);
                       if (homeCtrl.formKey.currentState!.validate()) {
                         var success = homeCtrl.addTodo(
                             homeCtrl.editCtrl.text,
@@ -82,6 +84,7 @@ class _willpopscopeState extends State<willpopscope> {
                           EasyLoading.showError('Item already exists');
                         }
                         homeCtrl.editCtrl.clear();
+                        assignedmembers = [];
                       }
                     },
                     child: Text(
@@ -143,11 +146,11 @@ class _willpopscopeState extends State<willpopscope> {
                 future: GetMembers(),
                 builder: (BuildContext context, AsyncSnapshot memberlist) {
                   if (memberlist.hasData) {
-                    print(memberlist.data);
                     List members = memberlist.data;
-                    assignedmembers = [];
-                    for (final member in members) {
-                      assignedmembers.add(false);
+                    if (assignedmembers == []) {
+                      for (final member in members) {
+                        assignedmembers.add(false);
+                      }
                     }
                     return Container(
                       child: ListView(
@@ -268,7 +271,6 @@ Future<List> GetMembers() async {
       }
     }
   }
-  print(members);
   return members;
 }
 

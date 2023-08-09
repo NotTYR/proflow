@@ -26,7 +26,10 @@ class _AddDialogState extends State<AddDialog> {
       lastDate: DateTime(2024),
     ).then((value) {
       setState(() {
-        _dateTime = value!;
+        if (value != null) {
+          _dateTime = value;
+        }
+        print(assignedmembers);
       });
     });
   }
@@ -81,6 +84,7 @@ class _AddDialogState extends State<AddDialog> {
                               EasyLoading.showError('Item already exists');
                             }
                             homeCtrl.editCtrl.clear();
+                            assignedmembers = [];
                           }
                         }
                       },
@@ -202,12 +206,13 @@ class _AddDialogState extends State<AddDialog> {
                   future: GetMembers(),
                   builder: (BuildContext context, AsyncSnapshot memberlist) {
                     if (memberlist.hasData) {
-                      print(memberlist.data);
                       List members = memberlist.data;
-                      assignedmembers = [];
-                      for (final member in members) {
-                        assignedmembers.add(false);
+                      if (assignedmembers.length == 0) {
+                        for (dynamic i in members) {
+                          assignedmembers.add(false);
+                        }
                       }
+                      print(assignedmembers);
                       return Container(
                         child: ListView(
                           scrollDirection: Axis.vertical,
