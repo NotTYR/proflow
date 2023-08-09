@@ -13,12 +13,7 @@ class TaskComments extends StatefulWidget {
 }
 
 class _TaskCommentsState extends State<TaskComments> {
-  final List<Comment> _comments = [
-    Comment(author: 'YAP HAN YANG HCI', text: 'Testing comments section'),
-    Comment(author: 'YE WENYANG HCI', text: 'Nice'),
-    Comment(author: 'LIU YUAN HCI', text: 'Hi!'),
-    Comment(author: 'TAN YOU REN HCI', text: 'Comments are saved in firebase now'),
-  ];
+  final List<Comment> _comments = [];
 
   final TextEditingController _commentController = TextEditingController();
 

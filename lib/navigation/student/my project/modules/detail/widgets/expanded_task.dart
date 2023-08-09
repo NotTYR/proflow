@@ -22,6 +22,8 @@ class _ExpandedTaskState extends State<ExpandedTask> {
   final homeCtrl = Get.find<HomeController>();
   _ExpandedTaskState(this.TaskData);
 
+  double _currentSliderValue = 0;
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -135,6 +137,48 @@ class _ExpandedTaskState extends State<ExpandedTask> {
                     ],
                   ),
                 ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                top: 5.0.wp,
+                left: 5.0.wp,
+                right: 5.0.wp,
+                bottom: 2.0.wp,
+              ),
+              child: Text(
+                'Progress:',
+                style: TextStyle(
+                  fontSize: 14.0.sp,
+                  color: Colors.grey[400],
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                top: 1.0.hp,
+                left: 0.5.wp,
+                right: 0.5.wp,
+              ),
+              child: Slider(
+                value: _currentSliderValue,
+                max: 100,
+                divisions: 100,
+                label: _currentSliderValue.round().toString() + '%',
+                onChanged: (double value) {
+                  setState(() {
+                    _currentSliderValue = value;
+                  });
+                },
+                onChangeEnd: (double value) {
+                  setState(() {
+                    _currentSliderValue = value;
+                    if (value == 100) {
+                      homeCtrl.doneTodo(TaskData['title'], TaskData['assigned'],
+                          TaskData['duedate']);
+                    }
+                  });
+                },
               ),
             ),
             // Padding(

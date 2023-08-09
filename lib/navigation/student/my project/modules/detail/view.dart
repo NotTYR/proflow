@@ -120,57 +120,6 @@ class _DetailPageState extends State<DetailPage> {
               SizedBox(
                 height: 1.5.hp,
               ),
-              // OLD TEXT FORM FIELD:
-              // Padding(
-              //   padding: EdgeInsets.symmetric(
-              //     vertical: 2.0.wp,
-              //     horizontal: 5.0.wp,
-              //   ),
-              //   child: TextFormField(
-              //     controller: homeCtrl.editCtrl,
-              //     autofocus: true,
-              //     decoration: InputDecoration(
-              //       focusedBorder: UnderlineInputBorder(
-              //         borderSide: BorderSide(color: Colors.grey[400]!),
-              //       ),
-              //       prefixIcon: Icon(
-              //         Icons.check_box_outline_blank,
-              //         color: Colors.grey[400]!,
-              //       ),
-              //       suffixIcon: IconButton(
-              //         onPressed: () {
-              //           if (homeCtrl.formKey.currentState!.validate()) {
-              //             var success =
-              //                 homeCtrl.addTodo(homeCtrl.editCtrl.text);
-              //             if (success) {
-              //               EasyLoading.showSuccess('Added');
-              //             } else {
-              //               EasyLoading.showError('Item already exists');
-              //             }
-              //             homeCtrl.editCtrl.clear();
-              //           }
-              //         },
-              //         icon: const Icon(Icons.done),
-              //       ),
-              //     ),
-              //     validator: (value) {
-              //       if (value == null || value.trim().isEmpty) {
-              //         return 'Please enter your todo item';
-              //       }
-              //       return null;
-              //     },
-              //   ),
-              // ),
-              // Padding(
-              //   padding: EdgeInsets.symmetric(
-              //     horizontal: 5.0.wp,
-              //     vertical: 2.0.hp,
-              //   ),
-              //   child: Text(
-              //     'Assign to:',
-              //     style: TextStyle(fontSize: 11.0.sp),
-              //   ),
-              // ),
               DoingList(),
               DoneList(),
             ],

@@ -30,8 +30,7 @@ class DoneList extends StatelessWidget {
                   .map((element) => Dismissible(
                         key: ObjectKey(element),
                         direction: DismissDirection.endToStart,
-                        onDismissed: (_) =>
-                            homeCtrl.deleteDoneTodo(element),
+                        onDismissed: (_) => homeCtrl.deleteDoneTodo(element),
                         background: Container(
                           color: Colors.red.withOpacity(0.9),
                           alignment: Alignment.centerRight,
@@ -64,11 +63,15 @@ class DoneList extends StatelessWidget {
                                 padding: EdgeInsets.symmetric(
                                   horizontal: 4.0.wp,
                                 ),
-                                child: Text(
-                                  element['title'],
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                      decoration: TextDecoration.lineThrough),
+                                child: Container(
+                                  constraints:
+                                      BoxConstraints(maxWidth: 65.0.wp),
+                                  child: Text(
+                                    element['title'],
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                        decoration: TextDecoration.lineThrough),
+                                  ),
                                 ),
                               ),
                             ],

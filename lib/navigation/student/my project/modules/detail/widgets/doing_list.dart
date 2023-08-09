@@ -66,28 +66,35 @@ class DoingList extends StatelessWidget {
                               padding: EdgeInsets.symmetric(
                                 horizontal: 4.0.wp,
                               ),
-                              child: Text(
-                                element['title'],
-                                overflow: TextOverflow.ellipsis,
+                              child: Container(
+                                constraints: BoxConstraints(maxWidth: 50.0.wp),
+                                child: Text(
+                                  element['title'],
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
                             ),
-                            TextButton(
-                              onPressed: () {
-                                Get.to(
-                                    () => ExpandedTask(
-                                          TaskData: {
-                                            'title': element['title'],
-                                            'assigned': element['assigned'],
-                                            'duedate': element['duedate']
-                                          },
-                                        ),
-                                    transition: Transition.rightToLeft);
-                              },
-                              child: Text('View details'),
-                              style: TextButton.styleFrom(
-                                padding: EdgeInsets.zero,
-                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                alignment: Alignment.center,
+                            SizedBox(
+                              height: 20,
+                              child: TextButton(
+                                onPressed: () {
+                                  Get.to(
+                                      () => ExpandedTask(
+                                            TaskData: {
+                                              'title': element['title'],
+                                              'assigned': element['assigned'],
+                                              'duedate': element['duedate']
+                                            },
+                                          ),
+                                      transition: Transition.rightToLeft);
+                                },
+                                child: Text('View details'),
+                                style: TextButton.styleFrom(
+                                  padding: EdgeInsets.zero,
+                                  tapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
+                                  alignment: Alignment.center,
+                                ),
                               ),
                             )
                           ],
