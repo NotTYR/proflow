@@ -75,7 +75,8 @@ class HomeController extends GetxController {
     tasks.remove(task);
   }
 
-  updateTask(Task task, String title, List assigned, String duedate) {
+  updateTask(
+      Task task, String title, List assigned, String duedate, double progress) {
     var todos = task.todos ?? [];
     if (containeTodo(todos, title)) {
       return false;
@@ -84,7 +85,8 @@ class HomeController extends GetxController {
       'title': title,
       'done': false,
       'assigned': assigned,
-      'duedate': duedate
+      'duedate': duedate,
+      'progress': progress
     };
     todos.add(todo);
     var newTask = task.copyWith(todos: todos);
@@ -98,12 +100,13 @@ class HomeController extends GetxController {
     return todos.any((element) => element['title'] == title);
   }
 
-  addTodo(String title, List assigned, String duedate) {
+  addTodo(String title, List assigned, String duedate, double progress) {
     var todo = {
       'title': title,
       'done': false,
       'assigned': assigned,
-      'duedate': duedate
+      'duedate': duedate,
+      'progress': progress
     };
     if (doingTodos
         .any((element) => mapEquals<String, dynamic>(todo, element))) {
@@ -113,7 +116,8 @@ class HomeController extends GetxController {
       'title': title,
       'done': true,
       'assigned': assigned,
-      'duedate': duedate
+      'duedate': duedate,
+      'progress': progress
     };
     if (doneTodos
         .any((element) => mapEquals<String, dynamic>(doneTodo, element))) {
@@ -135,12 +139,34 @@ class HomeController extends GetxController {
     tasks.refresh();
   }
 
-  void doneTodo(String title, List assigned, String duedate) {
+  void updateTodoProgress(String title, List assigned, String duedate,
+      double progress, double newprogress) {
+    var todo = {
+      'title': title,
+      'done': false,
+      'assigned': assigned,
+      'duedate': duedate,
+      'progress': progress
+    };
+    var newtodo = {
+      'title': title,
+      'done': false,
+      'assigned': assigned,
+      'duedate': duedate,
+      'progress': newprogress
+    };
+    int index = doingTodos
+        .indexWhere((element) => mapEquals<String, dynamic>(todo, element));
+    doingTodos[index] = newtodo;
+  }
+
+  void doneTodo(String title, List assigned, String duedate, double progress) {
     var doingTodo = {
       'title': title,
       'done': false,
       'assigned': assigned,
-      'duedate': duedate
+      'duedate': duedate,
+      'progress': progress
     };
     int index = doingTodos.indexWhere(
         (element) => mapEquals<String, dynamic>(doingTodo, element));
@@ -149,7 +175,8 @@ class HomeController extends GetxController {
       'title': title,
       'done': true,
       'assigned': assigned,
-      'duedate': duedate
+      'duedate': duedate,
+      'progress': progress
     };
     doneTodos.add(doneTodo);
     doingTodos.refresh();

@@ -17,7 +17,7 @@ class AddCard extends StatefulWidget {
 }
 
 class _AddCardState extends State<AddCard> {
-  dynamic _icon;
+  dynamic _icon = IconData(59881);
 
   _openIconPicker() async {
     IconData? icon = await FlutterIconPicker.showIconPicker(context,

@@ -76,7 +76,8 @@ class _willpopscopeState extends State<willpopscope> {
                                 '/' +
                                 _dateTime.month.toString() +
                                 '/' +
-                                _dateTime.year.toString());
+                                _dateTime.year.toString(),
+                            0);
                         if (success) {
                           EasyLoading.showSuccess('Added');
                           Get.back();
@@ -147,7 +148,7 @@ class _willpopscopeState extends State<willpopscope> {
                 builder: (BuildContext context, AsyncSnapshot memberlist) {
                   if (memberlist.hasData) {
                     List members = memberlist.data;
-                    if (assignedmembers == []) {
+                    if (assignedmembers.length == 0) {
                       for (final member in members) {
                         assignedmembers.add(false);
                       }

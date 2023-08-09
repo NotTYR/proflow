@@ -59,7 +59,8 @@ class DoingList extends StatelessWidget {
                                     homeCtrl.doneTodo(
                                         element['title'],
                                         element['assigned'],
-                                        element['duedate']);
+                                        element['duedate'],
+                                        0);
                                   }),
                             ),
                             Padding(
@@ -83,7 +84,9 @@ class DoingList extends StatelessWidget {
                                             TaskData: {
                                               'title': element['title'],
                                               'assigned': element['assigned'],
-                                              'duedate': element['duedate']
+                                              'duedate': element['duedate'],
+                                              'progress': element['progress'],
+                                              'done': element['done']
                                             },
                                           ),
                                       transition: Transition.rightToLeft);

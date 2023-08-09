@@ -161,7 +161,7 @@ class _ExpandedTaskState extends State<ExpandedTask> {
                 right: 0.5.wp,
               ),
               child: Slider(
-                value: _currentSliderValue,
+                value: TaskData['progress'],
                 max: 100,
                 divisions: 100,
                 label: _currentSliderValue.round().toString() + '%',
@@ -175,7 +175,15 @@ class _ExpandedTaskState extends State<ExpandedTask> {
                     _currentSliderValue = value;
                     if (value == 100) {
                       homeCtrl.doneTodo(TaskData['title'], TaskData['assigned'],
-                          TaskData['duedate']);
+                          TaskData['duedate'], 100);
+                    } else {
+                      print('update');
+                      homeCtrl.updateTodoProgress(
+                          TaskData['title'],
+                          TaskData['assigned'],
+                          TaskData['duedate'],
+                          TaskData['progress'],
+                          value);
                     }
                   });
                 },

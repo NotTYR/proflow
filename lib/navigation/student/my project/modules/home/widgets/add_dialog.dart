@@ -75,7 +75,8 @@ class _AddDialogState extends State<AddDialog> {
                                     '/' +
                                     _dateTime.month.toString() +
                                     '/' +
-                                    _dateTime.year.toString());
+                                    _dateTime.year.toString(),
+                                0);
                             if (success) {
                               EasyLoading.showSuccess('Added');
                               Get.back();
