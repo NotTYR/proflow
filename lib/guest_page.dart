@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'home_page.dart';
+import 'invalid_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ProFlow/extensions.dart';
@@ -173,6 +174,10 @@ class _GuestPageState extends State<GuestPage> {
                                             });
                                   } else {
                                     GoogleSignIn().signOut();
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                InvalidLogin()));
                                   }
                                 } on FirebaseAuthException catch (e) {
                                   print(e.toString());
