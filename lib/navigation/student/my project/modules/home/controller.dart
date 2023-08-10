@@ -140,7 +140,7 @@ class HomeController extends GetxController {
   }
 
   void updateTodoProgress(String title, List assigned, String duedate,
-      double progress, double newprogress) {
+      int progress, int newprogress) {
     var todo = {
       'title': title,
       'done': false,
@@ -155,12 +155,17 @@ class HomeController extends GetxController {
       'duedate': duedate,
       'progress': newprogress
     };
+    print(todo);
+    for (final element in doingTodos) {
+      print(element);
+    }
     int index = doingTodos
         .indexWhere((element) => mapEquals<String, dynamic>(todo, element));
+    print(index);
     doingTodos[index] = newtodo;
   }
 
-  void doneTodo(String title, List assigned, String duedate, double progress) {
+  void doneTodo(String title, List assigned, String duedate, int progress) {
     var doingTodo = {
       'title': title,
       'done': false,

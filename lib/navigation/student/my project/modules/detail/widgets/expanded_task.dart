@@ -22,7 +22,7 @@ class _ExpandedTaskState extends State<ExpandedTask> {
   final homeCtrl = Get.find<HomeController>();
   _ExpandedTaskState(this.TaskData);
 
-  double _currentSliderValue = 0;
+  late int _currentSliderValue = TaskData['progress'].toInt();
 
   @override
   Widget build(BuildContext context) {
@@ -161,18 +161,12 @@ class _ExpandedTaskState extends State<ExpandedTask> {
                 right: 0.5.wp,
               ),
               child: Slider(
-                value: TaskData['progress'],
+                value: _currentSliderValue.toDouble(),
                 max: 100,
                 divisions: 100,
                 label: _currentSliderValue.round().toString() + '%',
-                onChanged: (double value) {
+                onChanged: (value) {
                   setState(() {
-                    _currentSliderValue = value;
-                  });
-                },
-                onChangeEnd: (double value) {
-                  setState(() {
-                    _currentSliderValue = value;
                     if (value == 100) {
                       homeCtrl.doneTodo(TaskData['title'], TaskData['assigned'],
                           TaskData['duedate'], 100);
@@ -182,9 +176,10 @@ class _ExpandedTaskState extends State<ExpandedTask> {
                           TaskData['title'],
                           TaskData['assigned'],
                           TaskData['duedate'],
-                          TaskData['progress'],
-                          value);
+                          _currentSliderValue,
+                          value.round());
                     }
+                    _currentSliderValue = value.round();
                   });
                 },
               ),
