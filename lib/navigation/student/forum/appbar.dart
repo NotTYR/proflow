@@ -22,8 +22,7 @@ class ForumAppBar extends StatelessWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: true,
       leading: IconButton(
         onPressed: () {
-          Navigator.pop(
-              context, MaterialPageRoute(builder: ((context) => HomePage())));
+          Get.to(() => HomePage(), transition: Transition.noTransition);
         },
         icon: const Icon(Icons.home),
       ),

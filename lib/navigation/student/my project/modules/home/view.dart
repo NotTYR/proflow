@@ -16,6 +16,8 @@ import 'package:get/get.dart';
 import 'package:ProFlow/extensions.dart';
 import 'package:get_storage/get_storage.dart';
 
+import '../../../../../home_page.dart';
+
 // this is the home screen for the task list
 
 class MyProjects extends GetView<HomeController> {
@@ -28,7 +30,7 @@ class MyProjects extends GetView<HomeController> {
         title: Text('My Project'),
         leading: IconButton(
           onPressed: () {
-            Get.to(() => StudentPage(), transition: Transition.noTransition);
+            Get.to(() => HomePage(), transition: Transition.noTransition);
           },
           icon: Icon(Icons.home),
         ),

@@ -2,8 +2,12 @@ import 'package:ProFlow/extensions.dart';
 import 'package:ProFlow/navigation/student/create%20group/create_group.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../home_page.dart';
 
 class Chat extends StatefulWidget {
   @override
@@ -52,6 +56,12 @@ class _ChatState extends State<Chat> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Chat'),
+        leading: IconButton(
+          onPressed: () {
+            Get.to(() => HomePage(), transition: Transition.noTransition);
+          },
+          icon: Icon(Icons.home),
+        ),
       ),
       body: FutureBuilder(
           future: GetUsername(),
