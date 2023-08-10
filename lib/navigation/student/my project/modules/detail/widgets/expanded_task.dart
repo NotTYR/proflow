@@ -170,16 +170,21 @@ class _ExpandedTaskState extends State<ExpandedTask> {
                 label: _currentSliderValue.round().toString() + '%',
                 onChanged: (value) {
                   setState(() {
-                    if (value == 100) {
+                    _currentSliderValue = value.round();
+                  });
+                },
+                onChangeEnd: (value) {
+                  setState(() {
+                    if (value.round() == 100) {
                       homeCtrl.doneTodo(TaskData['title'], TaskData['assigned'],
                           TaskData['duedate'], 100);
+                      Get.back();
                     } else {
                       print('update');
                       homeCtrl.updateTodoProgress(
                           TaskData['title'],
                           TaskData['assigned'],
                           TaskData['duedate'],
-                          _currentSliderValue,
                           value.round());
                     }
                     _currentSliderValue = value.round();

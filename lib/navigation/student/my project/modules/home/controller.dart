@@ -139,15 +139,8 @@ class HomeController extends GetxController {
     tasks.refresh();
   }
 
-  void updateTodoProgress(String title, List assigned, String duedate,
-      int progress, int newprogress) {
-    var todo = {
-      'title': title,
-      'done': false,
-      'assigned': assigned,
-      'duedate': duedate,
-      'progress': progress
-    };
+  void updateTodoProgress(
+      String title, List assigned, String duedate, int newprogress) {
     var newtodo = {
       'title': title,
       'done': false,
@@ -155,27 +148,31 @@ class HomeController extends GetxController {
       'duedate': duedate,
       'progress': newprogress
     };
-    int index = doingTodos
-        .indexWhere((element) => mapEquals<String, dynamic>(todo, element));
+    int i = 0;
+    int index = 0;
+    for (final element in doingTodos) {
+      if (element['title'] == title &&
+          element['assigned'] == assigned &&
+          element['duedate'] == duedate) {
+        index = i;
+      }
+      i++;
+    }
     print(index);
     doingTodos[index] = newtodo;
   }
 
   void doneTodo(String title, List assigned, String duedate, int progress) {
-    var doingTodo = {
-      'title': title,
-      'done': false,
-      'assigned': assigned,
-      'duedate': duedate,
-      'progress': progress
-    };
-    print(doingTodo);
+    int i = 0;
+    int index = 0;
     for (final element in doingTodos) {
-      print(element);
+      if (element['title'] == title &&
+          element['assigned'] == assigned &&
+          element['duedate'] == duedate) {
+        index = i;
+      }
+      i++;
     }
-    int index = doingTodos.indexWhere(
-        (element) => mapEquals<String, dynamic>(doingTodo, element));
-    print(index);
     doingTodos.removeAt(index);
     var doneTodo = {
       'title': title,
