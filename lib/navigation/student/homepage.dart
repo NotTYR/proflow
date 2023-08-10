@@ -47,45 +47,40 @@ class _StudentPageState extends State<StudentPage> {
             ),
           ),
           Container(
-            width: MediaQuery.of(context).size.width * 0.6,
-            margin: EdgeInsets.only(
-              bottom: 6.0.hp,
-            ),
-            child: const FittedBox(
-              child: Text(
+              width: MediaQuery.of(context).size.width * 0.6,
+              margin: EdgeInsets.only(
+                bottom: 6.0.hp,
+              ),
+              child: const FittedBox(
+                  child: Text(
                 'Experience Redefined',
                 style: TextStyle(
                   color: Color.fromARGB(255, 187, 187, 187),
                   fontStyle: FontStyle.italic,
                 ),
-              ),
-            ),
-          ),
+              ))),
           Padding(
             padding: EdgeInsets.only(bottom: 3.0.hp),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(
+                SizedBox(
                   child: FeatureButton(
-                    buttonName: 'Forum',
-                    buttonIcon: Icons.question_answer,
-                    buttonRoute: ForumExp(),
-                  ),
+                      buttonName: 'Forum',
+                      buttonIcon: Icons.question_answer,
+                      buttonRoute: ForumExp()),
                 ),
-                Expanded(
+                SizedBox(
                   child: FeatureButton(
-                    buttonName: 'My Project',
-                    buttonIcon: Icons.list_alt_rounded,
-                    buttonRoute: MyProjects(),
-                  ),
+                      buttonName: 'My Project',
+                      buttonIcon: Icons.list_alt_rounded,
+                      buttonRoute: MyProjects()),
                 ),
-                Expanded(
+                SizedBox(
                   child: FeatureButton(
-                    buttonName: 'Chat',
-                    buttonIcon: Icons.chat,
-                    buttonRoute: Chat(),
-                  ),
+                      buttonName: 'Chat',
+                      buttonIcon: Icons.chat,
+                      buttonRoute: Chat()),
                 ),
               ],
             ),
@@ -106,7 +101,7 @@ class _StudentPageState extends State<StudentPage> {
               heroTag: _helpHeroTag,
             ),
           ),
-          SizedBox(width: 1.6.hp),
+          SizedBox(width: 0.2.hp),
           FloatingActionButton(
             onPressed: () async {
               try {
