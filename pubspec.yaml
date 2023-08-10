@@ -38,6 +38,7 @@ dependencies:
   chat_bubbles: ^1.4.0
   onboarding: ^3.1.0
   flutter_colorpicker: ^1.0.3
+  flutter_local_notifications: ^15.1.0+1
 
 dev_dependencies:
   flutter_test:
