@@ -1,3 +1,4 @@
+import 'package:ProFlow/navigation/student/homepage.dart';
 import 'package:ProFlow/navigation/student/my%20project/core/values/colors.dart';
 import 'package:ProFlow/navigation/student/my%20project/data/models/task.dart';
 import 'package:ProFlow/navigation/student/my%20project/modules/home/controller.dart';
@@ -26,13 +27,15 @@ class MyProjects extends GetView<HomeController> {
       appBar: AppBar(
         title: Text('My Project'),
         leading: IconButton(
-          onPressed: Get.back,
+          onPressed: () {
+            Get.to(() => StudentPage(), transition: Transition.noTransition);
+          },
           icon: Icon(Icons.home),
         ),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.settings),
-            tooltip: 'Show Snackbar',
+            tooltip: 'Settings',
             onPressed: () {
               Get.to(() => SettingsPage(), transition: Transition.noTransition);
             },

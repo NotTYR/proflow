@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../../home_page.dart';
 import 'new_post.dart';
@@ -12,8 +14,7 @@ class ForumAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         IconButton(
           onPressed: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => Post()));
+            Get.to(() => Post(), transition: Transition.noTransition);
           },
           icon: Icon(Icons.add),
         )
