@@ -3,7 +3,6 @@ import 'package:ProFlow/navigation/student/create%20group/create_group.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,6 +27,8 @@ class _ChatState extends State<Chat> {
 
   final TextEditingController _messageController = TextEditingController();
 
+  ScrollController _scrollController = ScrollController();
+
   void _sendMessage(String text) async {
     final docuid = await GetDocUid();
     final currgrp =
@@ -49,6 +50,13 @@ class _ChatState extends State<Chat> {
         .doc(docuid)
         .update({'chat': currchat});
     _messageController.clear();
+
+    // Scroll to the bottom after sending a message
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeOut,
+    );
   }
 
   @override
@@ -89,11 +97,13 @@ class _ChatState extends State<Chat> {
                           }
                           return Column(
                             children: [
-                              SizedBox(
-                                height: 2.0.hp,
-                              ),
                               Expanded(
                                 child: ListView.builder(
+                                  padding: EdgeInsets.only(
+                                    top: 2.0.hp,
+                                    bottom: 3.0.hp,
+                                  ),
+                                  controller: _scrollController,
                                   itemCount: _messages.length,
                                   itemBuilder: (context, index) {
                                     return MessageBubble(

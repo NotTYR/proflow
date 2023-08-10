@@ -40,6 +40,11 @@ class _ExpandedTaskState extends State<ExpandedTask> {
                 children: [
                   IconButton(
                     onPressed: () {
+                      if (_currentSliderValue.round() == 100) {
+                        homeCtrl.doneTodo(TaskData['title'],
+                            TaskData['assigned'], TaskData['duedate'], 100);
+                        // Get.back();
+                      }
                       Get.back();
                     },
                     icon: const Icon(Icons.arrow_back_rounded),
@@ -175,18 +180,18 @@ class _ExpandedTaskState extends State<ExpandedTask> {
                 },
                 onChangeEnd: (value) {
                   setState(() {
-                    if (value.round() == 100) {
-                      homeCtrl.doneTodo(TaskData['title'], TaskData['assigned'],
-                          TaskData['duedate'], 100);
-                      Get.back();
-                    } else {
-                      print('update');
-                      homeCtrl.updateTodoProgress(
-                          TaskData['title'],
-                          TaskData['assigned'],
-                          TaskData['duedate'],
-                          value.round());
-                    }
+                    // if (value.round() == 100) {
+                    //   // homeCtrl.doneTodo(TaskData['title'], TaskData['assigned'],
+                    //   //     TaskData['duedate'], 100);
+                    //   // Get.back();
+                    // } else {
+                    print('update');
+                    homeCtrl.updateTodoProgress(
+                        TaskData['title'],
+                        TaskData['assigned'],
+                        TaskData['duedate'],
+                        value.round());
+                    // }
                     _currentSliderValue = value.round();
                   });
                 },
