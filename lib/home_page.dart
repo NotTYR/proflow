@@ -25,12 +25,10 @@ class _HomePageState extends State<HomePage> {
         return FutureBuilder(
             future: GetDocUid(),
             builder: ((context, snapshot) {
-              print(snapshot.data);
               if (snapshot.hasData) {
                 if (snapshot.data == 'placeholder') {
                   return ProposalPage();
                 } else {
-                  print('in a group');
                   return StudentPage();
                 }
               } else {
