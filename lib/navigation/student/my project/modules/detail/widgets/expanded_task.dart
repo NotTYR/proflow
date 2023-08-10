@@ -9,6 +9,8 @@ import 'comments.dart';
 import 'package:ProFlow/navigation/student/my project/data/providers/task/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'doing_list.dart';
+
 class ExpandedTask extends StatefulWidget {
   final TaskData;
   const ExpandedTask({super.key, required this.TaskData});
@@ -132,6 +134,7 @@ class _ExpandedTaskState extends State<ExpandedTask> {
                         TaskData['duedate'],
                         style: TextStyle(
                           fontSize: 12.0.sp,
+                          color: getColorForDate(TaskData['duedate']),
                         ),
                       ),
                     ],

@@ -91,8 +91,7 @@ class _StudentPageState extends State<StudentPage> {
             try {
               await FirebaseAuth.instance.signOut();
               await GoogleSignIn().signOut();
-              Navigator.pop(context,
-                  MaterialPageRoute(builder: ((context) => GuestPage())));
+              Get.to(() => GuestPage(), transition: Transition.leftToRight);
             } catch (e) {
               print(e.toString());
             }
@@ -119,9 +118,9 @@ class FeatureButton extends StatelessWidget {
         children: [
           RawMaterialButton(
             onPressed: () {
-              Get.to(() => buttonRoute, transition: Transition.noTransition);
-              // Navigator.of(context)
-              //     .push(MaterialPageRoute(builder: (context) => buttonRoute));
+              // Get.to(() => buttonRoute, transition: Transition.noTransition);
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => buttonRoute));
             },
             fillColor: Color(0xFF3874CB),
             child: Icon(

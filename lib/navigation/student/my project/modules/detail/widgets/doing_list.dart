@@ -2,8 +2,7 @@ import 'package:ProFlow/extensions.dart';
 import 'package:ProFlow/navigation/student/my%20project/modules/home/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'add_task.dart';
+import 'package:intl/intl.dart';
 import 'expanded_task.dart';
 
 class DoingList extends StatelessWidget {
@@ -68,13 +67,35 @@ class DoingList extends StatelessWidget {
                                 horizontal: 4.0.wp,
                               ),
                               child: Container(
-                                constraints: BoxConstraints(maxWidth: 50.0.wp),
+                                width: 32.0.wp,
                                 child: Text(
                                   element['title'],
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                             ),
+                            SizedBox(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    element['progress'].toInt().toString() +
+                                        '%',
+                                    style: TextStyle(fontSize: 8.0.sp),
+                                  ),
+                                  Text(
+                                    element['duedate'],
+                                    style: TextStyle(
+                                      fontSize: 8.0.sp,
+                                      color:
+                                          getColorForDate(element['duedate']),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(width: 5.0.wp),
                             SizedBox(
                               height: 20,
                               child: TextButton(
@@ -91,7 +112,10 @@ class DoingList extends StatelessWidget {
                                           ),
                                       transition: Transition.rightToLeft);
                                 },
-                                child: Text('View details'),
+                                child: Text(
+                                  'View details',
+                                  style: TextStyle(fontSize: 9.0.sp),
+                                ),
                                 style: TextButton.styleFrom(
                                   padding: EdgeInsets.zero,
                                   tapTargetSize:
@@ -113,5 +137,51 @@ class DoingList extends StatelessWidget {
                 )
             ],
           ));
+  }
+}
+
+String formatDate(String dateStr) {
+  // Split the date string into day, month, and year parts
+  final dateParts = dateStr.split('/');
+
+  // Map the month number to its abbreviation
+  final monthMap = {
+    '1': 'Jan',
+    '2': 'Feb',
+    '3': 'Mar',
+    '4': 'Apr',
+    '5': 'May',
+    '6': 'Jun',
+    '7': 'Jul',
+    '8': 'Aug',
+    '9': 'Sep',
+    '10': 'Oct',
+    '11': 'Nov',
+    '12': 'Dec',
+  };
+
+  // Format the date as 'day Month'
+  return '${dateParts[1]} ${monthMap[dateParts[0]]}';
+}
+
+Color getColorForDate(String dateStr) {
+  final dateParts = dateStr.split('/');
+
+  final dueDate = DateTime(
+    int.parse(dateParts[2]), // year
+    int.parse(dateParts[1]), // month
+    int.parse(dateParts[0]), // day
+  );
+
+  final currentDate = DateTime.now();
+
+  if (currentDate.isBefore(dueDate)) {
+    return Colors.black; // Not reached, show black
+  } else if (currentDate.year == dueDate.year &&
+      currentDate.month == dueDate.month &&
+      currentDate.day == dueDate.day) {
+    return Colors.orange; // Same day, show yellow
+  } else {
+    return Colors.red; // Overdue, show red
   }
 }

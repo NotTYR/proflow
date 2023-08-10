@@ -76,7 +76,7 @@ class HomeController extends GetxController {
   }
 
   updateTask(
-      Task task, String title, List assigned, String duedate, double progress) {
+      Task task, String title, List assigned, String duedate, int progress) {
     var todos = task.todos ?? [];
     if (containeTodo(todos, title)) {
       return false;
@@ -100,7 +100,7 @@ class HomeController extends GetxController {
     return todos.any((element) => element['title'] == title);
   }
 
-  addTodo(String title, List assigned, String duedate, double progress) {
+  addTodo(String title, List assigned, String duedate, int progress) {
     var todo = {
       'title': title,
       'done': false,
