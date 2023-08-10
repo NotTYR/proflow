@@ -66,21 +66,21 @@ class _StudentPageState extends State<StudentPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
+                Expanded(
                   child: FeatureButton(
                     buttonName: 'Forum',
                     buttonIcon: Icons.question_answer,
                     buttonRoute: ForumExp(),
                   ),
                 ),
-                SizedBox(
+                Expanded(
                   child: FeatureButton(
                     buttonName: 'My Project',
                     buttonIcon: Icons.list_alt_rounded,
                     buttonRoute: MyProjects(),
                   ),
                 ),
-                SizedBox(
+                Expanded(
                   child: FeatureButton(
                     buttonName: 'Chat',
                     buttonIcon: Icons.chat,
@@ -95,14 +95,18 @@ class _StudentPageState extends State<StudentPage> {
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          FloatingActionButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => OnboardingPage()));
-            },
-            child: Icon(Icons.help_outline_outlined),
-            heroTag: _helpHeroTag,
+          SizedBox(
+            width: 15.0.hp,
+            child: FloatingActionButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => OnboardingPage()));
+              },
+              child: Icon(Icons.help_outline_outlined),
+              heroTag: _helpHeroTag,
+            ),
           ),
+          SizedBox(width: 1.6.hp),
           FloatingActionButton(
             onPressed: () async {
               try {
