@@ -155,10 +155,6 @@ class HomeController extends GetxController {
       'duedate': duedate,
       'progress': newprogress
     };
-    print(todo);
-    for (final element in doingTodos) {
-      print(element);
-    }
     int index = doingTodos
         .indexWhere((element) => mapEquals<String, dynamic>(todo, element));
     print(index);
@@ -173,8 +169,13 @@ class HomeController extends GetxController {
       'duedate': duedate,
       'progress': progress
     };
+    print(doingTodo);
+    for (final element in doingTodos) {
+      print(element);
+    }
     int index = doingTodos.indexWhere(
         (element) => mapEquals<String, dynamic>(doingTodo, element));
+    print(index);
     doingTodos.removeAt(index);
     var doneTodo = {
       'title': title,

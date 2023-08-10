@@ -59,7 +59,7 @@ class DoingList extends StatelessWidget {
                                         element['title'],
                                         element['assigned'],
                                         element['duedate'],
-                                        0);
+                                        element['progress']);
                                   }),
                             ),
                             Padding(

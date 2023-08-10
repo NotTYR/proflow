@@ -45,8 +45,6 @@ class TaskProvider {
     final doc = await GetDocUid();
     final document = await firestore.collection('groups').doc(doc).get();
     await firestore.collection('groups').doc(doc).update({'task': temptasks});
-    print('written task');
-    print(tasks);
   }
 }
 
