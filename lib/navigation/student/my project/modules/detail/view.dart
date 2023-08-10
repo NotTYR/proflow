@@ -23,6 +23,7 @@ class _DetailPageState extends State<DetailPage> {
   final homeCtrl = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
+    print('hi');
     var task = homeCtrl.task.value!;
     var color = HexColor.fromHex(task.color);
     return WillPopScope(
@@ -77,6 +78,7 @@ class _DetailPageState extends State<DetailPage> {
               Obx(() {
                 var totalTodos =
                     homeCtrl.doingTodos.length + homeCtrl.doneTodos.length;
+                print(totalTodos);
                 return Padding(
                   padding: EdgeInsets.only(
                     left: 16.0.wp,
