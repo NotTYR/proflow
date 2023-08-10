@@ -92,7 +92,7 @@ class _StudentPageState extends State<StudentPage> {
             try {
               await FirebaseAuth.instance.signOut();
               await GoogleSignIn().signOut();
-              Get.to(() => GuestPage(), transition: Transition.size);
+              Get.to(() => GuestPage(), transition: Transition.noTransition);
             } catch (e) {
               print('homepaeg.dart error');
               print(e.toString());
@@ -120,9 +120,9 @@ class FeatureButton extends StatelessWidget {
         children: [
           RawMaterialButton(
             onPressed: () {
-              // Get.to(() => buttonRoute, transition: Transition.noTransition);
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => buttonRoute));
+              Get.to(() => buttonRoute, transition: Transition.noTransition);
+              // Navigator.of(context)
+              //     .push(MaterialPageRoute(builder: (context) => buttonRoute));
             },
             fillColor: Color(0xFF3874CB),
             child: Icon(

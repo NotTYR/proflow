@@ -193,7 +193,7 @@ class _AddDialogState extends State<AddDialog> {
                   top: 5.0.wp,
                   left: 5.0.wp,
                   right: 5.0.wp,
-                  bottom: 2.0.wp,
+                  bottom: 0.0.wp,
                 ),
                 child: Text(
                   'Assign To',
@@ -253,15 +253,6 @@ class _AddDialogState extends State<AddDialog> {
                                 color: Colors.grey[400],
                               ),
                             ),
-                            // SizedBox(
-                            //   width: 4.0.wp,
-                            // ),
-                            // Text(
-                            //   'Date',
-                            //   style: TextStyle(
-                            //     fontSize: 12.0.sp,
-                            //   ),
-                            // ),
                             SizedBox(
                               width: 4.0.wp,
                             ),
@@ -279,29 +270,27 @@ class _AddDialogState extends State<AddDialog> {
                             SizedBox(
                               width: 4.0.wp,
                             ),
-                            // REFER TO THIS FOR DATE PICKER: https://www.youtube.com/watch?v=JK3zztXnDxs
-                            // includes how to use the values selected from the calendar - not done yet
+                            ElevatedButton(
+                              onPressed: () {
+                                _showDatePicker();
+                              },
+                              child: Text(
+                                'Select Date',
+                                style: TextStyle(
+                                  fontSize: 10.0.sp,
+                                ),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white70,
+                                foregroundColor: Colors.black,
+                                elevation: 0,
+                                side: BorderSide(
+                                  width: 0.5,
+                                ),
+                              ),
+                            )
                           ],
                         ),
-                        ElevatedButton(
-                          onPressed: () {
-                            _showDatePicker();
-                          },
-                          child: Text(
-                            'Select Date',
-                            style: TextStyle(
-                              fontSize: 10.0.sp,
-                            ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white70,
-                            foregroundColor: Colors.black,
-                            elevation: 0,
-                            side: BorderSide(
-                              width: 0.5,
-                            ),
-                          ),
-                        )
                       ],
                     ),
                   ],
