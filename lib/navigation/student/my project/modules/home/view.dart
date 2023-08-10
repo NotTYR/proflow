@@ -34,15 +34,6 @@ class MyProjects extends GetView<HomeController> {
           },
           icon: Icon(Icons.home),
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.settings),
-            tooltip: 'Settings',
-            onPressed: () {
-              Get.to(() => SettingsPage(), transition: Transition.noTransition);
-            },
-          ),
-        ],
       ),
       body: Obx(
         () => IndexedStack(
