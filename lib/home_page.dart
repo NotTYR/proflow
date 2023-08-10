@@ -1,4 +1,5 @@
 import 'package:ProFlow/navigation/teacher/homepage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -18,20 +19,26 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: GetDocUid(),
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance.collection('groups').snapshots(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasData) {
-          if (snapshot.data == 'placeholder') {
-            return ProposalPage();
-          } else {
-            return StudentPage();
-          }
-        } else {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
+        return FutureBuilder(
+            future: GetDocUid(),
+            builder: ((context, snapshot) {
+              print(snapshot.data);
+              if (snapshot.hasData) {
+                if (snapshot.data == 'placeholder') {
+                  return ProposalPage();
+                } else {
+                  print('in a group');
+                  return StudentPage();
+                }
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            }));
       },
     );
   }

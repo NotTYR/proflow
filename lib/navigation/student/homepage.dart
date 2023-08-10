@@ -10,6 +10,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ProFlow/guest_page.dart';
 import 'package:ProFlow/navigation/student/chat/chat_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ProFlow/main.dart';
 
 class StudentPage extends StatefulWidget {
   const StudentPage({super.key});
@@ -91,8 +92,9 @@ class _StudentPageState extends State<StudentPage> {
             try {
               await FirebaseAuth.instance.signOut();
               await GoogleSignIn().signOut();
-              Get.to(() => GuestPage(), transition: Transition.leftToRight);
+              Get.to(() => GuestPage(), transition: Transition.size);
             } catch (e) {
+              print('homepaeg.dart error');
               print(e.toString());
             }
           },

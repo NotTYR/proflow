@@ -9,6 +9,8 @@ import 'invalid_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ProFlow/extensions.dart';
+import 'sign_out.dart';
+import 'main.dart';
 
 class GuestPage extends StatefulWidget {
   const GuestPage({super.key});
@@ -82,11 +84,11 @@ class _GuestPageState extends State<GuestPage> {
                                 });
                                 try {
                                   //hi
-                                  final GoogleUser =
+                                  var GoogleUser =
                                       await GoogleSignIn().signIn();
-                                  final GoogleAuth =
+                                  var GoogleAuth =
                                       await GoogleUser!.authentication;
-                                  final email = await GoogleUser.email;
+                                  var email = await GoogleUser.email;
                                   print(email);
                                   if (RegExp(r'(\@student.hci.edu.sg)')
                                       .hasMatch(email.toString())) {
@@ -105,11 +107,14 @@ class _GuestPageState extends State<GuestPage> {
                                         await SharedPreferences.getInstance();
                                     final uid = await FirebaseAuth
                                         .instance.currentUser!.uid;
+                                    print('username' + username!);
+                                    print('uid' + uid);
+                                    print('email' + email);
                                     await prefs.setString('uid', uid);
-                                    await prefs.setString(
-                                        'username', username!);
+                                    await prefs.setString('username', username);
                                     await prefs.setString('email', email);
                                     bool containsuid = false;
+                                    print('still fine here :) guset_page.dart');
                                     await FirebaseFirestore.instance
                                         .collection('identity')
                                         .get()
@@ -121,75 +126,45 @@ class _GuestPageState extends State<GuestPage> {
                                                       .data()
                                                       .values
                                                       .contains(uid))
-                                                    {
-                                                      containsuid = true,
-                                                      prefs.setString(
-                                                          'identity',
-                                                          doc.data()[
-                                                              'identity'])
-                                                    }
+                                                    {containsuid = true}
                                                 },
+                                              print(
+                                                  'im fine here :) guest_page.dart'),
                                               if (containsuid == false)
                                                 {
                                                   print('registering'),
-                                                  //dont hv the guy in database
-                                                  if (RegExp(r'(\d)')
-                                                      .hasMatch(email))
-                                                    {
-                                                      print('student'),
-                                                      //student(contains digits)
-                                                      prefs.setString(
-                                                          'identity',
-                                                          'student'),
-                                                      FirebaseFirestore.instance
-                                                          .collection(
-                                                              'identity')
-                                                          .add({
-                                                        'uid': uid,
-                                                        'username': username
-                                                      })
-                                                    }
-                                                  else
-                                                    {
-                                                      //teacher
-                                                      print('not student'),
-                                                      prefs.setString(
-                                                          'identity',
-                                                          'teacher'),
-                                                      FirebaseFirestore.instance
-                                                          .collection(
-                                                              'identity')
-                                                          .add({
-                                                        'uid': uid,
-                                                        'identity': 'teacher'
-                                                      })
-                                                    }
+                                                  {
+                                                    prefs.setString(
+                                                        'identity', 'student'),
+                                                    FirebaseFirestore.instance
+                                                        .collection('identity')
+                                                        .add({
+                                                      'uid': uid,
+                                                      'username': username
+                                                    })
+                                                  }
                                                 },
                                               loading = false,
                                               notloading = true,
+                                              print(
+                                                  'wippe no error in guest_page.dart'),
                                               Navigator.of(context).push(
                                                   MaterialPageRoute(
                                                       builder: (context) =>
                                                           HomePage()))
                                             });
                                   } else {
-                                    GoogleSignIn().signOut();
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                InvalidLogin()));
+                                    signOut(context, InvalidLogin());
                                   }
                                 } on FirebaseAuthException catch (e) {
+                                  print('firebaseauth error. guest_page.dart');
                                   print(e.toString());
                                   loading = false;
                                   notloading = true;
                                   return null;
                                 } catch (e) {
+                                  print('idkwhat error. guest_page.dart');
                                   print(e);
-                                  loading = false;
-                                  notloading = true;
-                                  return null;
-                                } on PlatformException catch (e) {
                                   loading = false;
                                   notloading = true;
                                   return null;

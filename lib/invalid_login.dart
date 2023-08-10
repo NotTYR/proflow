@@ -1,12 +1,10 @@
 import 'package:ProFlow/extensions.dart';
+import 'package:ProFlow/sign_out.dart';
 import 'package:flutter/material.dart';
 import 'package:ProFlow/guest_page.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-
-void main() {
-  runApp(InvalidLogin());
-}
+import 'main.dart';
 
 class InvalidLogin extends StatelessWidget {
   @override
@@ -28,8 +26,7 @@ class InvalidLogin extends StatelessWidget {
         TextButton(
           child: const Text('Back to Login'),
           onPressed: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => GuestPage()));
+            signOut(context, GuestPage());
           },
         ),
       ],
